@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="toolbarViewModel"
+            type="com.tom.chef.ui.dashboard.toolBar.ToolBarViewModel" />
+        <variable
+            name="profile"
+            type="com.tom.chef.ui.dashboard.fragments.account.AccountViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        tools:visibility="visible"
+        android:elevation="@dimen/_4sdp"
+        android:visibility="@{toolbarViewModel.showToolBar?View.VISIBLE:View.GONE,default=gone}"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:paddingTop="@dimen/_30sdp"
+        android:background="@{toolbarViewModel.backCorner?@drawable/toolbar_back_rounded:@drawable/toolbar_back_not_rounded,default=@drawable/toolbar_back_not_rounded}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:onClick="@{()->toolbarViewModel.moveToProfile()}"
+            tools:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{toolbarViewModel.showUserProfile?View.VISIBLE:View.GONE,default=gone}"
+            app:layout_constraintBottom_toTopOf="@id/clearAll"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/userImage"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    app:civ_border_color="@color/colorPrimary"
+                    app:civ_border_width="@dimen/_1sdp"
+                    app:imageUrl="@{profile.profilePath}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/stripe_ic_unionpay" />
+
+                <ImageView
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:src="@{toolbarViewModel.userOnline?@drawable/user_online_back:@drawable/user_offline_back,default=@drawable/user_online_back}"
+                    app:layout_constraintBottom_toBottomOf="@id/userImage"
+                    app:layout_constraintEnd_toEndOf="@id/userImage" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/montserrat_medium_14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{profile.userName}"
+                    android:textColor="@color/black"
+                    tools:text="Hamid Raza" />
+
+                <TextView
+                    style="@style/montserrat_medium_12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:drawableTint="@color/colorPrimary"
+                    android:gravity="center"
+                    android:text="@{toolbarViewModel.userOnline?@string/available:@string/unavailable,default=@string/available}"
+                    android:textColor="@color/black45"
+                    tools:text="@string/available" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:onClick="@{()->toolbarViewModel.moveToNotifications()}"
+            tools:visibility="visible"
+            android:visibility="@{toolbarViewModel.showNotificationIcon?View.VISIBLE:View.GONE,default=gone}"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/icon_notification"
+            app:layout_constraintBottom_toTopOf="@id/clearAll"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            tools:visibility="visible"
+            android:id="@+id/imageView2"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/side_menu"
+            android:visibility="@{toolbarViewModel.showSideMenuIcon?View.VISIBLE:View.GONE,default=gone}"
+            app:layout_constraintBottom_toTopOf="@id/clearAll"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <LinearLayout
+            android:id="@+id/backLayout"
+            tools:visibility="gone"
+            android:visibility="@{toolbarViewModel.showBackButton?View.VISIBLE:View.GONE,default=gone}"
+            app:layout_constraintBottom_toTopOf="@id/clearAll"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+            <ImageView
+                android:onClick="@{()->toolbarViewModel.onBackClicked()}"
+                android:src="@drawable/back_button_icon"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"/>
+            <TextView
+                android:ellipsize="end"
+                android:maxLength="35"
+                android:textColor="@color/black02"
+                style="@style/montserrat_medium_16"
+                tools:text="#TM-011550455587"
+                android:text="@{toolbarViewModel.backButtonText}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <Button
+            tools:visibility="gone"
+            android:visibility="@{toolbarViewModel.showAddButton?View.VISIBLE:View.GONE,default=gone}"
+            style="@style/montserrat_semiBols_12"
+            app:layout_constraintBottom_toTopOf="@id/clearAll"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textAllCaps="false"
+            android:padding="@dimen/_1sdp"
+            android:text="Add Items"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+        <LinearLayout
+            tools:visibility="gone"
+            android:visibility="@{toolbarViewModel.showDishVariety?View.VISIBLE:View.GONE,default=gone}"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/clearAll"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                app:track="@drawable/rectangle_26242__1_"
+                style="@style/montserrat_semiBols_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dish Contains Variety    "
+                android:textColor="@color/colorPrimary"
+                app:thumbTint="@color/tumb_color"
+                app:trackTint="@color/black69_20" />
+
+        </LinearLayout>
+
+
+        <TextView
+            tools:visibility="gone"
+            android:visibility="@{toolbarViewModel.showCenterText?View.VISIBLE:View.GONE,default=gone}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:ellipsize="end"
+            android:maxLength="35"
+            android:textColor="@color/black02"
+            style="@style/montserrat_medium_16"
+            tools:text="Notifications"
+            android:text="@{toolbarViewModel.centerButtonText}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:paddingBottom="@dimen/_5sdp"
+            app:layout_constraintTop_toBottomOf="@id/backLayout"
+            android:visibility="@{toolbarViewModel.showClearButton?View.VISIBLE:View.GONE,default=gone}"
+            android:onClick="@{()->toolbarViewModel.deleteAllNotification()}"
+            style="@style/poppin_semiBol_12"
+            android:text="Clear All"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/redD4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
+
+
+

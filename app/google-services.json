@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "841264100756",
+    "firebase_url": "https://tom-app-a810c-default-rtdb.firebaseio.com",
+    "project_id": "tom-app-a810c",
+    "storage_bucket": "tom-app-a810c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841264100756:android:f272b13fa95bfda7384b81",
+        "android_client_info": {
+          "package_name": "com.tom.chef"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "841264100756-8d8q4hlkuuo78l6q0rptmaqi0hhdhfpe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCas_DKrdtdVM-HoR2rkmKSWNhZUYHXYY8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "841264100756-8d8q4hlkuuo78l6q0rptmaqi0hhdhfpe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="true"
+    >
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.tom.chef.ui.comman.documentUpload.DocumentViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:background="@drawable/background_otp_w"
+        android:elevation="@dimen/_2sdp"
+        android:layout_marginVertical="@dimen/_10sdp"
+        android:onClick="@{viewModel.onMenuClicked}"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp">
+        <ImageView
+            android:id="@+id/startIcon"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:src="@drawable/upload_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorPrimary" />
+
+        <ImageView
+            android:visibility="@{viewModel.showClearButton?View.VISIBLE:View.GONE,default=visible}"
+            android:id="@+id/moveNext"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:src="@drawable/ic_baseline_close_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorPrimary" />
+
+        <TextView
+            android:hint="@{viewModel.hintText}"
+            android:text="@{viewModel.documentPath}"
+            android:id="@+id/name"
+            style="@style/montserrat_medium_14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:textColor="@color/black1D"
+            app:layout_constraintEnd_toStartOf="@+id/moveNext"
+            app:layout_constraintStart_toEndOf="@id/startIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="Tarde License (pdf/jpg only)" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
