@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <dimen name="otp_box_height">@dimen/_50sdp</dimen>
+    <dimen name="otp_box_width">@dimen/_50sdp</dimen>
+</resources>

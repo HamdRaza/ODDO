@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#CA2124</color>
+    <color name="colorPrimaryDark">#1C486F</color>
+    <color name="colorAccent">#CB2E14</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="semi_gray">#353A47</color>
+    <color name="hint_text_color">#454242</color>
+    <color name="sing_up_button_back">#404553</color>
+    <color name="divider_line">#696969</color>
+    <color name="semiDark">#333333</color>
+    <color name="mediumGray">#44444487</color>
+    <color name="black45">#454242</color>
+    <color name="black51">#515151</color>
+    <color name="black575">#BF000000</color>
+    <color name="black53">#535353</color>
+    <color name="blackB1">#1B1B1B</color>
+    <color name="black1D">#1D2226</color>
+    <color name="black02">#020202</color>
+    <color name="black44">#444444</color>
+    <color name="black29">#292929</color>
+    <color name="gray_91">#9E9E9E</color>
+    <color name="gray_37">#373737</color>
+    <color name="redD1">#D14710</color>
+    <color name="redD4">#D44811</color>
+    <color name="redDa">#DA5B0F</color>
+    <color name="redDB20">#33DB5F0D</color>
+    <color name="textHintColor50">#80454242</color>
+    <color name="black_1d50">#801D2226</color>
+    <color name="black40">#66000000</color>
+    <color name="blackC40">#404553</color>
+    <color name="menuUnselected">#222222</color>
+
+    <color name="colorCredit">#5CB800</color>
+    <color name="ripple_color">#03000000</color>
+
+    <color name="appBackgroundColor">#FAFAFA</color>  <!--Update this-->
+
+    <color name="text_color_D">#D3D3D3</color>
+    <color name="black69_20">#33696969</color>
+    <color name="black69_31">#4F696969</color>
+</resources>

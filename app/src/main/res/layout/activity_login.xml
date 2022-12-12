@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+        <variable
+            name="viewModel"
+            type="com.tom.chef.ui.auth.logIn.LoginViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clipChildren="false"
+        android:clipToOutline="false"
+        android:clipToPadding="false">
+
+
+        <LinearLayout
+            android:id="@+id/langaugeBox"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_5sdp"
+            android:background="@drawable/langauge_back"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:src="@drawable/world_vector"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_20sdp" />
+
+            <TextView
+                android:gravity="center"
+                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+                android:textColor="@color/white"
+                style="@style/montserrat_semiBols_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EN" />
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/langaugeBox">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/logo"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_80sdp"
+                        android:src="@drawable/app_logo" />
+
+                    <TextView
+                        style="@style/poppin_semiBol_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:text="Welcome "
+                        android:textColor="@color/colorPrimary" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="@dimen/_80sdp"
+                            android:layout_height="@dimen/_50sdp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:onClick="@{viewModel.callGoogleLogIn}"
+                            app:cardCornerRadius="@dimen/_8sdp"
+                            app:cardElevation="@dimen/_3sdp"
+                            app:cardPreventCornerOverlap="@color/white">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingVertical="@dimen/_10sdp"
+                                android:src="@drawable/ic_google" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="@dimen/_80sdp"
+                            android:layout_height="@dimen/_50sdp"
+                            android:layout_margin="@dimen/_5sdp"
+                            android:onClick="@{()->viewModel.callFaceBook()}"
+                            app:cardCornerRadius="@dimen/_8sdp"
+                            app:cardElevation="@dimen/_3sdp"
+                            app:cardPreventCornerOverlap="@color/white">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingVertical="@dimen/_5sdp"
+                                android:src="@drawable/icon_facebook" />
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+
+
+                    <include
+                        android:id="@+id/dividerlayout"
+                        layout="@layout/divider_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginVertical="@dimen/_10sdp" />
+
+
+                    <EditText
+                        android:id="@+id/editTextTextEmailAddress"
+                        style="@style/input_back"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginVertical="@dimen/_5sdp"
+                        android:ems="10"
+                        android:hint="Email Address"
+                        android:inputType="textEmailAddress" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginVertical="@dimen/_5sdp"
+                        android:padding="0dp"
+                        app:counterEnabled="false"
+                        app:errorEnabled="false"
+                        app:expandedHintEnabled="false"
+                        app:helperTextEnabled="false"
+                        app:hintEnabled="false"
+                        app:passwordToggleEnabled="true">
+
+                        <EditText
+                            android:id="@+id/editTextTextPassword"
+                            style="@style/input_back"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Password"
+                            android:inputType="textPassword"
+                            android:paddingVertical="0dp"
+                            android:paddingEnd="@dimen/_30sdp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        style="@style/poppins_medium_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:onClick="@{viewModel.onResetClicked}"
+                        android:paddingVertical="@dimen/_5sdp"
+                        android:text="Forgot Password?"
+                        android:textColor="@color/colorPrimary" />
+
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/button_big"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:onClick="@{viewModel.logInClicked}"
+                        android:text="Login"
+                        app:cornerRadius="@dimen/_8sdp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/button_big"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50sdp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:backgroundTint="@color/white"
+                        android:onClick="@{viewModel.registerClicked}"
+                        android:text="Register"
+                        android:textColor="@color/colorPrimary"
+                        app:cornerRadius="@dimen/_8sdp" />
+
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

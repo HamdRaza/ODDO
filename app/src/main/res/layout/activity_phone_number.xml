@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+        <variable
+            name="viewModel"
+            type="com.tom.chef.ui.auth.phoneNumber.PhoneNumberViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginVertical="@dimen/_50sdp"
+            android:layout_marginHorizontal="@dimen/_20sdp">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_20sdp">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:alpha="0.1"
+                            android:background="@drawable/login_back_gradient"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"/>
+                        <LinearLayout
+                            android:paddingVertical="@dimen/_10sdp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:src="@drawable/app_logo"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_70sdp"/>
+
+
+                            <LinearLayout
+                                android:layout_marginVertical="@dimen/_20sdp"
+                                android:layout_marginHorizontal="@dimen/_10sdp"
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <RelativeLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight=".3"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:onClick="@{viewModel.showCountryCodeDialog}"
+                                        android:drawableTint="@color/black"
+                                        android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+                                        style="@style/input_back"
+                                        tools:text="+971"
+                                        android:text="@{viewModel.dialCode}"
+                                        android:id="@+id/countryCode"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center"
+                                        android:minHeight="@dimen/_40sdp"/>
+
+
+                                </RelativeLayout>
+
+                                <EditText
+                                    android:layout_weight=".7"
+                                    android:id="@+id/phone"
+                                    android:hint="Mobile Number"
+                                    style="@style/input_back"
+                                    android:layout_marginStart="@dimen/_10sdp"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:ems="10"
+                                    android:inputType="phone" />
+                            </LinearLayout>
+
+
+
+
+
+
+
+
+                            <TextView
+                                android:layout_marginVertical="@dimen/_20sdp"
+                                android:onClick="@{viewModel.verifyInput}"
+                                android:backgroundTint="#404553"
+                                style="@style/button_with_shadow_popin"
+                                android:layout_marginHorizontal="@dimen/_10sdp"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:text="Get OTP" />
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_3sdp"/>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

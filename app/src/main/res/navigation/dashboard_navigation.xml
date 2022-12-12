@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/homeFragment">
+
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_dashboard_home"/>
+    <action
+        android:id="@+id/action_global_homeFragment"
+        app:destination="@id/homeFragment" />
+    <fragment
+        android:id="@+id/pharmacyFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.pharmacy.PharmacyFragment"
+        android:label="PharmacyFragment"
+        tools:layout="@layout/fragment_pharmacy"/>
+    <action
+        android:id="@+id/action_global_pharmacyFragment"
+        app:destination="@id/pharmacyFragment" />
+    <fragment
+        android:id="@+id/servicesFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.services.ServiceCategoriesFragment"
+        android:label="ServicesFragment"
+        tools:layout="@layout/fragment_dashboard_service_categories"/>
+    <action
+        android:id="@+id/action_global_servicesFragment"
+        app:destination="@id/servicesFragment" />
+    <fragment
+        android:id="@+id/servicesMenuFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.services.subFragments.ServiceSubCategoryFragment"
+        android:label="ServicesMenuFragment"
+        tools:layout="@layout/fragment_services_sub_category"/>
+    <action
+        android:id="@+id/action_global_servicesMenuFragment"
+        app:destination="@id/servicesMenuFragment" />
+    <fragment
+        android:id="@+id/servicesSubMenuFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.services.subFragments.ServicesListFragment"
+        android:label="ServicesSubMenuFragment"
+        tools:layout="@layout/fragment_services_patient_count"/>
+    <action
+        android:id="@+id/action_global_servicesSubMenuFragment"
+        app:destination="@id/servicesSubMenuFragment" />
+    <fragment
+        tools:layout="@layout/fragment_services_reviewprice"
+        android:id="@+id/servicesReviewPriceFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.services.cart.ServicesCartFragment"
+        android:label="ServicesReviewPriceFragment" />
+    <action
+        android:id="@+id/action_global_servicesReviewPriceFragment"
+        app:destination="@id/servicesReviewPriceFragment" />
+    <fragment
+        tools:layout="@layout/fragment_show_filter"
+        android:id="@+id/pharmacyFilterFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.pharmacy.subFragments.filter.PharmacyFilterFragment"
+        android:label="PharmacyFilterFragment" />
+    <action
+        android:id="@+id/action_global_pharmacyFilterFragment"
+        app:destination="@id/pharmacyFilterFragment" />
+    <fragment
+        tools:layout="@layout/fragment_home_notification"
+        android:id="@+id/notificationFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.notification.NotificationFragment"
+        android:label="NotificationFragment" />
+    <action
+        android:id="@+id/action_global_notificationFragment"
+        app:destination="@id/notificationFragment" />
+    <fragment
+        tools:layout="@layout/fragment_home_profile"
+        android:id="@+id/profileFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.account.ProfileFragment"
+        android:label="ProfileFragment" />
+    <action
+        android:id="@+id/action_global_profileFragment"
+        app:destination="@id/profileFragment" />
+    <fragment
+        tools:layout="@layout/fragment_profile_edit"
+        android:id="@+id/editProfileFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.account.subFragments.editProfile.EditProfileFragment"
+        android:label="EditProfileFragment" />
+    <action
+        android:id="@+id/action_global_editProfileFragment"
+        app:destination="@id/editProfileFragment" />
+    <fragment
+        android:id="@+id/aboutProfileFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.account.subFragments.aboutUs.AboutProfileFragment"
+        android:label="AboutProfileFragment" />
+    <action
+        android:id="@+id/action_global_aboutProfileFragment"
+        app:destination="@id/aboutProfileFragment" />
+    <fragment
+        android:id="@+id/contactProfileFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.account.subFragments.contactUs.ContactProfileFragment"
+        android:label="ContactProfileFragment" />
+    <action
+        android:id="@+id/action_global_contactProfileFragment"
+        app:destination="@id/contactProfileFragment" />
+    <fragment
+        android:id="@+id/favProfileFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.account.subFragments.FavProfileFragment"
+        android:label="FavProfileFragment" />
+    <action
+        android:id="@+id/action_global_favProfileFragment"
+        app:destination="@id/favProfileFragment" />
+    <fragment
+        android:id="@+id/myOrderProfileFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.account.subFragments.myOders.MyOrderProfileFragment"
+        android:label="MyOrderProfileFragment" />
+    <action
+        android:id="@+id/action_global_myOrderProfileFragment"
+        app:destination="@id/myOrderProfileFragment" />
+    <fragment
+        android:id="@+id/myAddressProfileFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.account.subFragments.myAddress.MyAddressProfileFragment"
+        android:label="MyAddressProfileFragment" />
+    <action
+        android:id="@+id/action_global_myAddressProfileFragment"
+        app:destination="@id/myAddressProfileFragment" />
+    <fragment
+        android:id="@+id/pharmacyDetailsFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.pharmacy.subFragments.details.PharmacyDetailsFragment"
+        android:label="PharmacyDetailsFragment" />
+    <action
+        android:id="@+id/action_global_pharmacyDetailsFragment"
+        app:destination="@id/pharmacyDetailsFragment" />
+    <fragment
+        android:id="@+id/pharmacyAllProductsFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.pharmacy.subFragments.productsPage.PharmacyAllProductsFragment"
+        android:label="PharmacyAllProductsFragment" />
+    <action
+        android:id="@+id/action_global_pharmacyAllProductsFragment"
+        app:destination="@id/pharmacyAllProductsFragment" />
+    <fragment
+        android:id="@+id/pharmacyProductCartFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.pharmacy.subFragments.PharmacyProductCartFragment"
+        android:label="PharmacyProductCartFragment" />
+    <action
+        android:id="@+id/action_global_pharmacyProductCartFragment"
+        app:destination="@id/pharmacyProductCartFragment" />
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.tom.chef.ui.dashboard.fragments.account.subFragments.orderDetails.OrderDetailsFragment"
+        android:label="OrderDetailsFragment" />
+    <action
+        android:id="@+id/action_global_orderDetailsFragment"
+        app:destination="@id/orderDetailsFragment" />
+
+
+</navigation>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="true"
+    >
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.tom.chef.ui.dashboard.fragments.notification.NotificationItemViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:onClick="@{viewModel.onNotificationClicked}"
+        android:elevation="@dimen/_3sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/layout_with_shadow"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:paddingVertical="@dimen/_5sdp">
+
+        <ImageView
+            android:onClick="@{viewModel.onClearNotificationClick}"
+            android:paddingEnd="@dimen/_2sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/deleteNotification"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_baseline_close_24"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tint="@color/redD4" />
+
+        <TextView
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:text="@{viewModel.mTitle}"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textColor="@color/black02"
+            style="@style/poppin_semiBol_14"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/deleteNotification"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/name"
+            tools:text="RE01652455451"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:text="@{viewModel.mDescription}"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:textColor="@color/redD1"
+            style="@style/poppin_reqular_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/description"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            tools:text="Your order placed successfully. for more information please check the request..."
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:text="@{viewModel.mDate}"
+            android:textColor="@color/redD1"
+            style="@style/poppin_reqular_10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description"
+            tools:text="28/04/2022"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+        <variable
+            name="viewModel"
+            type="com.tom.chef.ui.auth.inPutDocuments.InputDocumentsViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginVertical="@dimen/_50sdp"
+            android:layout_marginHorizontal="@dimen/_20sdp">
+            <LinearLayout
+                android:paddingVertical="@dimen/_10sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:src="@drawable/app_logo"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_70sdp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    tools:itemCount="3"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:nestedScrollingEnabled="false"
+                    android:id="@+id/recycleView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/recycle_input_document"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/background_otp_w"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp">
+                    <ImageView
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:scaleType="fitCenter"
+                        android:id="@+id/leftIcon"
+                        android:paddingVertical="@dimen/_5sdp"
+                        android:src="@drawable/clock_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="wrap_content"/>
+                    <EditText
+                        app:layout_constraintStart_toEndOf="@id/leftIcon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:background="@color/transparent"
+                        android:hint="Food Prep. Time"
+                        style="@style/input_back"
+                        android:id="@+id/Address"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:ems="10"
+                        android:inputType="textEmailAddress" />
+
+                  <TextView
+                      android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+                      android:textColor="@color/white"
+                      android:background="@drawable/background_location_theme"
+                      android:paddingHorizontal="@dimen/_10sdp"
+                      android:gravity="center"
+                      style="@style/poppin_semiBol_18"
+                      android:text="mins"
+                      app:layout_constraintBottom_toBottomOf="parent"
+                      app:layout_constraintEnd_toEndOf="parent"
+                      app:layout_constraintTop_toTopOf="parent"
+                      android:layout_width="wrap_content"
+                      android:layout_height="0dp"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:onClick="@{(view)->viewModel.submitDocuments()}"
+                    android:id="@+id/next_button"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    style="@style/button_big"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:text="Submit" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
