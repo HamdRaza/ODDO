@@ -17,13 +17,10 @@
         android:clipToOutline="false"
         android:clipToPadding="false">
 
-
         <LinearLayout
             android:id="@+id/langaugeBox"
             android:layout_marginTop="@dimen/_30sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:paddingVertical="@dimen/_5sdp"
-            android:background="@drawable/langauge_back"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
@@ -31,22 +28,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:paddingHorizontal="@dimen/_5sdp"
-                android:src="@drawable/world_vector"
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_20sdp" />
-
-            <TextView
-                android:gravity="center"
-                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
-                android:textColor="@color/white"
-                style="@style/montserrat_semiBols_10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="EN" />
+            <include
+                android:id="@+id/layout_change_language"
+                layout="@layout/layout_change_language"/>
         </LinearLayout>
-
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
@@ -82,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/_25sdp"
-                        android:text="Welcome "
+                        android:text="WELCOME!"
                         android:textColor="@color/colorPrimary" />
 
 

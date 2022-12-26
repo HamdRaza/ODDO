@@ -18,18 +18,19 @@
         android:elevation="@dimen/_4sdp"
         android:visibility="@{toolbarViewModel.showToolBar?View.VISIBLE:View.GONE,default=gone}"
         android:paddingHorizontal="@dimen/_15sdp"
-        android:paddingTop="@dimen/_30sdp"
+        android:paddingTop="@dimen/_20sdp"
         android:background="@{toolbarViewModel.backCorner?@drawable/toolbar_back_rounded:@drawable/toolbar_back_not_rounded,default=@drawable/toolbar_back_not_rounded}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:layout_marginBottom="@dimen/_15sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:onClick="@{()->toolbarViewModel.moveToProfile()}"
             tools:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="@{toolbarViewModel.showUserProfile?View.VISIBLE:View.GONE,default=gone}"
-            app:layout_constraintBottom_toTopOf="@id/clearAll"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -39,8 +40,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/userImage"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
                     app:civ_border_color="@color/colorPrimary"
                     app:civ_border_width="@dimen/_1sdp"
                     app:imageUrl="@{profile.profilePath}"
@@ -86,33 +87,24 @@
         </LinearLayout>
 
         <ImageView
+            android:layout_marginBottom="@dimen/_15sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:onClick="@{()->toolbarViewModel.moveToNotifications()}"
             tools:visibility="visible"
             android:visibility="@{toolbarViewModel.showNotificationIcon?View.VISIBLE:View.GONE,default=gone}"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:src="@drawable/icon_notification"
-            app:layout_constraintBottom_toTopOf="@id/clearAll"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            tools:visibility="visible"
-            android:id="@+id/imageView2"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/side_menu"
-            android:visibility="@{toolbarViewModel.showSideMenuIcon?View.VISIBLE:View.GONE,default=gone}"
-            app:layout_constraintBottom_toTopOf="@id/clearAll"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
         <LinearLayout
+            android:layout_marginBottom="@dimen/_15sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/backLayout"
-            tools:visibility="gone"
+            tools:visibility="visible"
             android:visibility="@{toolbarViewModel.showBackButton?View.VISIBLE:View.GONE,default=gone}"
-            app:layout_constraintBottom_toTopOf="@id/clearAll"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:orientation="horizontal"
@@ -136,10 +128,11 @@
         </LinearLayout>
 
         <Button
-            tools:visibility="gone"
+            android:layout_marginBottom="@dimen/_15sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:visibility="visible"
             android:visibility="@{toolbarViewModel.showAddButton?View.VISIBLE:View.GONE,default=gone}"
             style="@style/montserrat_semiBols_12"
-            app:layout_constraintBottom_toTopOf="@id/clearAll"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:textAllCaps="false"
@@ -151,11 +144,12 @@
 
 
         <LinearLayout
-            tools:visibility="gone"
+            android:layout_marginBottom="@dimen/_15sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:visibility="visible"
             android:visibility="@{toolbarViewModel.showDishVariety?View.VISIBLE:View.GONE,default=gone}"
             android:orientation="horizontal"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/clearAll"
             app:layout_constraintEnd_toEndOf="parent"
             android:gravity="end"
             android:layout_width="wrap_content"
@@ -175,7 +169,8 @@
 
 
         <TextView
-            tools:visibility="gone"
+            android:layout_marginBottom="@dimen/_15sdp"
+            tools:visibility="visible"
             android:visibility="@{toolbarViewModel.showCenterText?View.VISIBLE:View.GONE,default=gone}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -191,13 +186,14 @@
             android:layout_height="wrap_content"/>
 
         <TextView
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:visibility="visible"
             android:paddingBottom="@dimen/_5sdp"
-            app:layout_constraintTop_toBottomOf="@id/backLayout"
             android:visibility="@{toolbarViewModel.showClearButton?View.VISIBLE:View.GONE,default=gone}"
             android:onClick="@{()->toolbarViewModel.deleteAllNotification()}"
             style="@style/poppin_semiBol_12"
             android:text="Clear All"
-            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@color/redD4"
             android:layout_width="wrap_content"

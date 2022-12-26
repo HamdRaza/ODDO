@@ -23,6 +23,7 @@ class NotificationItemViewModel(val mActivity: BaseActivity,val notificationMode
     val mDate = ObservableField<String>()
 
     init {
+        /*
         mTitle.set(notificationModel.title)
         mDescription.set(notificationModel.description)
         if (notificationModel.createdAt.isNotEmpty()){
@@ -31,7 +32,10 @@ class NotificationItemViewModel(val mActivity: BaseActivity,val notificationMode
         if (notificationModel.createdDate.isNotEmpty()){
             mDate.set(notificationModel.createdDate)
         }
-
+*/
+        mTitle.set("RE01652455451")
+        mDescription.set("Your order placed successfully. for more information please check the request...")
+        mDate.set("28/04/2022")
     }
 
     fun onClearNotificationClick(view: View) {

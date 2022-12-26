@@ -1,6 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.tom.chef.ui.comman.orders.OrderViewModel" />
+    </data>
+    <com.google.android.material.card.MaterialCardView
+        android:onClick="@{()->viewModel.onClicked()}"
+        style="@style/appCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_4sdp"
+        >
+        <LinearLayout
+            android:paddingBottom="@dimen/_12sdp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textColor="@color/white"
+                style="@style/montserrat_semiBol_11"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_3sdp"
+                android:background="@drawable/backgroun_status"
+                android:layout_gravity="end"
+                tools:text="PENDING"
+                android:text="@{viewModel.status}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_marginHorizontal="@dimen/_13sdp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="@{viewModel.orderNumber}"
+                    android:textColor="@color/colorPrimary"
+                    style="@style/montserrat_semiBols_14"
+                    tools:text="#TM-011550455587"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            tools:text="Pick Up Time : 03:45 PM"
+                            android:textColor="@color/black"
+                            style="@style/montserrat_medium_12"
+                            android:text="@{viewModel.pickUpTime}"
+                            android:layout_marginTop="@dimen/_6sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            tools:text="Pick Up Time : 03:45 PM"
+                            android:textColor="@color/black"
+                            style="@style/montserrat_medium_12"
+                            android:text="@{viewModel.pickUpTime}"
+                            android:layout_marginTop="@dimen/_6sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <TextView
+                        android:textColor="@color/colorPrimary"
+                        style="@style/montserrat_semiBols_13"
+                        tools:text="AED  100.00"
+                        android:text="@{viewModel.price}"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:alpha="0.5"
+                    android:background="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1sdp"/>
+
+                <TextView
+                    tools:text="5 Items"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@{viewModel.itemsCount}"
+                    style="@style/montserrat_semiBols_13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    tools:text="Shawarma x2, Chicken Roll x5, Sharja Shake x4 Butterscotch x6"
+                    android:text="@{viewModel.itemsNames}"
+                    android:textColor="@color/divider_line"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    style="@style/montserrat_reqular_13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

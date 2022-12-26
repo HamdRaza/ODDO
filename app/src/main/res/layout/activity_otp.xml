@@ -16,32 +16,48 @@
 
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/langaugeBox"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:paddingVertical="@dimen/_5sdp"
-            android:background="@drawable/langauge_back"
-            android:gravity="center"
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingVertical="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:paddingHorizontal="@dimen/_5sdp"
-                android:src="@drawable/world_vector"
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_20sdp" />
 
-            <TextView
-                android:gravity="center"
-                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
-                android:textColor="@color/white"
-                style="@style/montserrat_semiBols_10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="EN" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:background="@color/transparent"
+                android:padding="0dp"
+                app:counterEnabled="false"
+                app:errorEnabled="false"
+                app:hintEnabled="false"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:endIconTint="@color/white"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:focusable="false"
+                    android:id="@+id/languageInput"
+                    android:drawablePadding="-12dp"
+                    android:paddingBottom="0dp"
+                    android:paddingTop="0dp"
+                    android:drawableTint="@color/white"
+                    android:padding="0dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:drawableStart="@drawable/world_vector"
+                    style="@style/input_back.language"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="EN"/>
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
@@ -58,11 +74,6 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_marginVertical="@dimen/_10sdp"
-                    android:src="@drawable/app_logo"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_70sdp"/>
                 <LinearLayout
                     android:paddingVertical="@dimen/_10sdp"
                     app:layout_constraintTop_toTopOf="parent"
@@ -128,13 +139,13 @@
                         <TextView
                             android:textColor="@color/semiDark"
                             style="@style/poppin_reqular_13"
-                            android:text="Don’t received the OTP? "
+                            android:text="Didn't received the OTP? "
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                         <TextView
                             android:onClick="@{viewModel.resendOTP}"
                             android:paddingVertical="@dimen/_5sdp"
-                            android:id="@+id/logInButton"
+                            android:id="@+id/resendOtp"
                             android:textColor="@color/colorPrimary"
                             style="@style/poppin_semiBol_13"
                             android:text="RESEND OTP"

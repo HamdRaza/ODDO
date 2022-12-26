@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -20,6 +21,8 @@ import com.tom.chef.ui.auth.otp.OTPActivity
 import com.tom.chef.ui.allBottomSheets.BottomSheets
 import com.tom.chef.ui.auth.phoneNumber.PhoneNumberActivity
 import com.tom.chef.ui.auth.signUp.SignUpActivity
+import com.tom.chef.ui.comman.googleLogIn.GoogleLogInViewModel
+import com.tom.chef.ui.comman.googleLogIn.GoogleLoginInterface
 import com.tom.chef.ui.dashboard.MainActivity
 import com.tom.chef.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +33,7 @@ import javax.inject.Inject
 class LoginActivity : BaseActivity(), LoginInterface{
     private lateinit var binding: ActivityLoginBinding
     private lateinit var vm: LoginViewModel
+    lateinit var googleLogInViewModel: GoogleLogInViewModel
 
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
@@ -39,6 +43,21 @@ class LoginActivity : BaseActivity(), LoginInterface{
         }
     }
 
+    fun implementGoogleLogIn(){
+        googleLogInViewModel= GoogleLogInViewModel(registry = activityResultRegistry, context = this, sharedPreferenceManager = sharedPreferenceManager)
+        googleLogInViewModel.googleLoginInterface=object :GoogleLoginInterface{
+            override fun onLogInCompleted(requestGoogleLogIn: RequestGoogleLogIn) {
+                vm.moveToOTP()
+                //vm.callGoogleLogInAPI(requestGoogleLogIn = requestGoogleLogIn)
+            }
+        }
+        lifecycle.addObserver(googleLogInViewModel)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        implementGoogleLogIn()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
@@ -51,9 +70,9 @@ class LoginActivity : BaseActivity(), LoginInterface{
 
     }
     override fun init() {
-
-
-
+        val items = listOf("EN", "AR")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, items)
+        binding.layoutChangeLanguage.languageInput.setAdapter(adapter)
     }
 
     override fun logInClicked() {
@@ -134,33 +153,10 @@ class LoginActivity : BaseActivity(), LoginInterface{
         finishAffinity()
     }
 
-    var mGoogleSignInClient: GoogleSignInClient? = null
     override fun callGoogleLogIn() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso).also {
-            googleResultLauncher.launch(it.signInIntent)
-        }
+         googleLogInViewModel.callGoogleLogIn()
     }
 
-    private val googleResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
-        try {
-            val account = task.getResult(ApiException::class.java)
-            account?.let {
-                RequestGoogleLogIn(name = it.displayName!!, email = it.email!!, fcm_token = sharedPreferenceManager.getFcmToken).let {
-                    vm.moveToOTP()
-                //  vm.callGoogleLogInAPI(it)
-                }
-            }
-            mGoogleSignInClient?.signOut()
-        } catch (e: ApiException) {
-            Log.w("data", "Google sign in failed", e)
-        }
-    }
 
     override fun callGoogleLogInAPI(requestGoogleLogIn: RequestGoogleLogIn) {
         startAnim()

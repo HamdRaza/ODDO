@@ -218,6 +218,9 @@
     <style name="montserrat_medium_14" parent="montserrat_medium_500">
         <item name="android:textSize">@dimen/_12sdp</item>
     </style>
+    <style name="montserrat_medium_15" parent="montserrat_medium_500">
+        <item name="android:textSize">@dimen/_13sdp</item>
+    </style>
     <style name="montserrat_medium_16" parent="montserrat_medium_500">
         <item name="android:textSize">@dimen/_14sdp</item>
     </style>
@@ -248,14 +251,24 @@
     <style name="montserrat_semiBol_24" parent="montserrat_semiBols_600">
         <item name="android:textSize">@dimen/_17sdp</item>
     </style>
+    <style name="montserrat_semiBol_11" parent="montserrat_semiBols_600">
+        <item name="android:textSize">@dimen/_10sdp</item>
+    </style>
+    <style name="montserrat_reqular_10" parent="montserrat_reqular_400">
+        <item name="android:textSize">@dimen/_9sdp</item>
+    </style>
     <style name="montserrat_reqular_11" parent="montserrat_reqular_400">
         <item name="android:textSize">@dimen/_10sdp</item>
     </style>
+
     <style name="montserrat_reqular_15" parent="montserrat_reqular_400">
         <item name="android:textSize">@dimen/_13sdp</item>
     </style>
     <style name="montserrat_reqular_14" parent="montserrat_reqular_400">
         <item name="android:textSize">@dimen/_12sdp</item>
+    </style>
+    <style name="montserrat_reqular_13" parent="montserrat_reqular_400">
+        <item name="android:textSize">@dimen/_11sdp</item>
     </style>
 
     <style name="input_back">
@@ -269,6 +282,12 @@
         <item name="android:paddingEnd">@dimen/_10sdp</item>
         <item name="android:fontFamily">@font/poppins_semi_bold600</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="input_back.language" parent="input_back">
+        <item name="android:minHeight">@dimen/_30sdp</item>
+        <item name="background">@drawable/background_otp_filled</item>
+        <item name="android:background">@drawable/background_otp_filled</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="input_back_montserrat">
@@ -380,4 +399,26 @@
         <item name="tabSelectedTextColor">@color/black</item>
     </style>
 
+
+    <style name="actionButton" parent="montserrat_semiBols_14">
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">@dimen/_8sdp</item>
+        <item name="android:paddingBottom">@dimen/_8sdp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="actionButton.filled" parent="actionButton">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/action_button_filled</item>
+    </style>
+    <style name="actionButton.transparent" parent="actionButton">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:background">@drawable/action_button_transparent</item>
+    </style>
+
+    <style name="appCardView">
+        <item name="cardCornerRadius">@dimen/_2sdp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="cardElevation">@dimen/_2sdp</item>
+    </style>
 </resources>

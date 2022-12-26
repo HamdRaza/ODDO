@@ -36,7 +36,7 @@
                     tools:visibility="visible"
                     android:elevation="@dimen/_4sdp"
                     android:paddingHorizontal="@dimen/_15sdp"
-                    android:paddingTop="@dimen/_30sdp"
+                    android:paddingTop="@dimen/_20sdp"
                     android:paddingBottom="@dimen/_15sdp"
                     android:background="@drawable/toolbar_back_rounded"
                     android:layout_width="match_parent"

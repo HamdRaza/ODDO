@@ -35,7 +35,7 @@
     <color name="colorCredit">#5CB800</color>
     <color name="ripple_color">#03000000</color>
 
-    <color name="appBackgroundColor">#FAFAFA</color>  <!--Update this-->
+    <color name="appBackgroundColor">#F5F5F5</color>  <!--Update this-->
 
     <color name="text_color_D">#D3D3D3</color>
     <color name="black69_20">#33696969</color>

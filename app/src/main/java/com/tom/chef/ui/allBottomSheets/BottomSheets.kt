@@ -103,7 +103,7 @@ class BottomSheets {
         }
         resetOTPViewModel.setUpOTPView()
         resetOTPViewModel.startTimer()
-
+        binding.resendOtp.makeUnderLined()
         dialog.setCanceledOnTouchOutside(true)
         binding.closeButton.setOnClickListener {
             dialog.dismiss()

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="true"
+    >
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.tom.chef.ui.comman.financial.FinancialItemViewModel" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/appCardView"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginVertical="@dimen/_4sdp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_6sdp">
+
+            <ImageView
+                android:visibility="gone"
+                android:paddingEnd="@dimen/_2sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/deleteNotification"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_baseline_close_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:tint="@color/redD4" />
+
+            <TextView
+                android:id="@+id/name"
+                style="@style/montserrat_semiBols_14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@{viewModel.mTitle}"
+                android:textColor="@color/black02"
+                app:layout_constraintEnd_toStartOf="@+id/textView2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="RE01652455451" />
+
+            <TextView
+                android:id="@+id/description"
+                style="@style/montserrat_reqular_14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@{viewModel.mDescription}"
+                android:textColor="@color/redD1"
+                app:layout_constraintEnd_toStartOf="@+id/textView2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/name"
+                tools:text="Your order placed successfully. for more information please check the request..." />
+
+            <TextView
+                android:fontFamily="@font/montserrat_medium_500"
+                android:id="@+id/textView2"
+                style="@style/montserrat_reqular_11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_15sdp"
+                android:text="@{viewModel.mDate}"
+                android:textColor="@color/redD1"
+                app:layout_constraintBottom_toBottomOf="@+id/description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/name"
+                tools:text="28/04/2022" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

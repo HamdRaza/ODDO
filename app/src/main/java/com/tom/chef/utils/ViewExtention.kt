@@ -72,10 +72,7 @@ fun Window?.makeTransparentStatusBar(){
 }
 
 fun Window?.makeTransparentStatusBarBlack(){
-    this?.decorView?.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
-    this?.statusBarColor = Color.TRANSPARENT
-
+    this?.decorView?.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE or  View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
 }
 
 
@@ -112,4 +109,10 @@ fun String?.handleHull():String{
         return this
     }
     return ""
+}
+
+fun TextView.makeUnderLined(){
+    this.paint?.let {
+        it.isUnderlineText=true
+    }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import com.tom.chef.R
 import com.tom.chef.databinding.ActivitySignUpBinding
@@ -52,6 +53,11 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
         binding.viewModel = vm
         vm.mCallback = this
         binding.agreeText.setMovementMethod(LinkMovementMethod.getInstance());
+
+
+        val items = listOf("EN", "AR")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, items)
+        binding.layoutChangeLanguage.languageInput.setAdapter(adapter)
     }
 
     override fun getCountriesList() {

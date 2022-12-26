@@ -3,6 +3,7 @@ package com.tom.chef.ui.auth.inPutDocuments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tom.chef.R
@@ -45,6 +46,10 @@ class InputDocumentsActivity : BaseActivity(), InputDocumentInterface,DocumentIn
         window.makeTransparentStatusBarBlack()
         binding.viewModel = vm
         vm.inputDocumentInterface = this
+
+        val items = listOf("EN", "AR")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, items)
+        binding.layoutChangeLanguage.languageInput.setAdapter(adapter)
     }
 
     private fun loadMenuRecycle() {

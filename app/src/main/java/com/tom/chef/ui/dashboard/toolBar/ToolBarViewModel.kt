@@ -13,14 +13,12 @@ class ToolBarViewModel(val mActivity: BaseActivity) : ViewModel() {
     @JvmField
     var backCorner=ObservableField<Boolean>(false)
     @JvmField
-    var userOnline=ObservableField<Boolean>(false)
+    var userOnline=ObservableField<Boolean>(true)
     @JvmField
     var showUserProfile=ObservableField<Boolean>(false)
 
     @JvmField
     var showNotificationIcon=ObservableField<Boolean>(false)
-    @JvmField
-    var showSideMenuIcon=ObservableField<Boolean>(false)
     @JvmField
     var showBackButton=ObservableField<Boolean>(false)
     @JvmField

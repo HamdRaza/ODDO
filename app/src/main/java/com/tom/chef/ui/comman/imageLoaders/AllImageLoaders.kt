@@ -77,6 +77,15 @@ class AllImageLoaders : ViewModel {
             }
 
         }
+        @JvmStatic
+        @BindingAdapter("updateExpanded")
+        fun updateExpanded(view: ImageView, boolean: Boolean) {
+            if (boolean){
+                view.rotation=180f
+            }else{
+                view.rotation=0f
+            }
+        }
     }
 
 

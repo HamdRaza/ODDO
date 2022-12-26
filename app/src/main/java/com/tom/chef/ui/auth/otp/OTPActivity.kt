@@ -3,6 +3,7 @@ package com.tom.chef.ui.auth.otp
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import com.tom.chef.R
@@ -40,6 +41,10 @@ class OTPActivity : BaseActivity(), OTPInterface {
         vm.mCallback = this
         vm.startTimer()
         vm.setUpOTPView()
+        val items = listOf("    EN", "    AR")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, items)
+        binding.languageInput.setAdapter(adapter)
+        binding.resendOtp.makeUnderLined()
     }
 
     override fun submitClicked() {

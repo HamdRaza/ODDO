@@ -4,6 +4,9 @@ import android.view.View
 import androidx.databinding.ObservableField
 import com.tom.chef.newBase.BaseActivity
 import com.tom.chef.ui.comman.ViewModel
+import com.tom.chef.ui.dashboard.fragments.account.subFragments.changePassword.ChangePasswordFragment
+import com.tom.chef.ui.dashboard.fragments.account.subFragments.faq.FAQFragment
+import com.tom.chef.ui.dashboard.fragments.account.subFragments.financial.FinanceFragment
 
 class ProfileItemViewModel(val mActivity: BaseActivity, val item: String) : ViewModel {
 
@@ -21,7 +24,18 @@ class ProfileItemViewModel(val mActivity: BaseActivity, val item: String) : View
 
     fun onMenuClicked(view: View){
         when(item){
+            "Change Password"->{
+                mActivity.replaceFragment(ChangePasswordFragment())
+            }
+            "Financial"->{
+                mActivity.replaceFragment(FinanceFragment())
+            }
+            "FAQ"->{
+                mActivity.replaceFragment(FAQFragment())
+            }
+            else->{
 
+            }
         }
     }
 

@@ -86,4 +86,6 @@ class ProfileFragment : BaseFragment(), ProfileInterface,AccountInterface {
         mainActivity.vm.onBackButtonClicked()
     }
 
+
+
 }

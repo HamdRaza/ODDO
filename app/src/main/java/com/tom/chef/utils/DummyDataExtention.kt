@@ -14,7 +14,7 @@ fun Activity.getAllFilterTypes():List<String>{
 
 
 fun Activity.getProfileMenuList():List<String>{
-    return listOf("Edit Profile","Change Password","My Address","My Orders","Wallet","Favourites","About Us","Contact Us")
+    return listOf("Edit Profile","Change Password","Menu Setup","Order History","Financial","FAQ","Support","Select Language")
 }
 
 fun Activity.getDocumentMenu():List<DocumentItem>{

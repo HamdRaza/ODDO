@@ -44,7 +44,7 @@ class NotificationFragment : BaseFragment(),NotificationsItemInterface,Notificat
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mActivity.toolbarVM.manageToolBar(showToolbar = true, showBackButton = true, showClearButton = false, backButtonText = "Notification")
+        mActivity.toolbarVM.manageToolBar(showToolbar = true, showBackButton = true, showClearButton = true, backButtonText = "Notification")
         mainActivity.toolbarVM.makeBackRound(isRound = true)
         binding.viewModel=notificationViewModel
         notificationViewModel.notificationInterface=this
@@ -63,16 +63,15 @@ class NotificationFragment : BaseFragment(),NotificationsItemInterface,Notificat
             recycleView.isNestedScrollingEnabled = false
             recycleView.adapter = mNotificationAdapter
         }
-        Log.i("loadNotification","000")
-        getAllNotifications()
+        loadDummyNotifications()
+        updateNotificationDummy()
+        //getAllNotifications()
     }
 
     private fun getAllNotifications(){
-        Log.i("loadNotification","001")
         mainActivity.vm.userAlNotifications.value?.let {
             if (it is UiState.Success){
                 stopAnim()
-                Log.i("loadNotification","002")
                 val viewModels = ArrayList<ViewModel>()
                 it.data.forEach{
                     val model=NotificationItemViewModel(mActivity,it)
@@ -108,21 +107,42 @@ class NotificationFragment : BaseFragment(),NotificationsItemInterface,Notificat
             }
         }
     }
+    val allNotifications=ArrayList<NotificationModel>()
+    fun loadDummyNotifications(){
+        for (i in 0 until 20){
+            allNotifications.add(NotificationModel())
+        }
+    }
+    fun updateNotificationDummy(){
+        val viewModels = ArrayList<ViewModel>()
+        allNotifications.forEach{
+            val model=NotificationItemViewModel(mActivity,it)
+            model.notificationsItemInterface=this
+            viewModels.add(model)
+        }
+        mNotificationAdapter.setList(viewModels)
+        notificationViewModel.showNoResult.set(viewModels.isEmpty())
+    }
 
     override fun deleteNotification(notificationModel: NotificationModel) {
-        notificationViewModel.deleteThisNotification(notificationModel)
+        allNotifications.removeFirstOrNull()
+        updateNotificationDummy()
+        //notificationViewModel.deleteThisNotification(notificationModel)
     }
 
 
 
     override fun confirmDeleteAll() {
+        allNotifications.clear()
+        updateNotificationDummy()
+        /*
         val viewModel= ConfirmDialogViewModel()
         viewModel.showDeleteNotificationAll()
         ConfirmationDialog(viewModel = viewModel,object : ConfirmDialogInterface {
             override fun onYesClicked() {
                  notificationViewModel.deleteConfirmed()
             }
-        }).show(mActivity.supportFragmentManager,"limitDialog")
+        }).show(mActivity.supportFragmentManager,"limitDialog")*/
     }
 
 

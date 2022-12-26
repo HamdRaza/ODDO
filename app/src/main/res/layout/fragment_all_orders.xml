@@ -4,6 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <variable
+            name="viewModel"
+            type="com.tom.chef.ui.dashboard.fragments.home.subFragments.allOrders.AllOrderViewModel" />
      </data>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -16,6 +19,8 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="@dimen/_10sdp"
+                app:orderAdopter="@{viewModel.orderAdopter}"
                 android:paddingBottom="@dimen/_10sdp"
                 tools:itemCount="5"
                 android:nestedScrollingEnabled="false"
@@ -25,7 +30,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
             </androidx.recyclerview.widget.RecyclerView>
 
