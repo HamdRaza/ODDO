@@ -7,6 +7,8 @@ import com.tom.chef.ui.comman.ViewModel
 import com.tom.chef.ui.dashboard.fragments.account.subFragments.changePassword.ChangePasswordFragment
 import com.tom.chef.ui.dashboard.fragments.account.subFragments.faq.FAQFragment
 import com.tom.chef.ui.dashboard.fragments.account.subFragments.financial.FinanceFragment
+import com.tom.chef.ui.dashboard.fragments.account.subFragments.orderHistory.OrderHistoryFragment
+import com.tom.chef.ui.dashboard.fragments.account.subFragments.support.SupportFragment
 
 class ProfileItemViewModel(val mActivity: BaseActivity, val item: String) : ViewModel {
 
@@ -32,6 +34,12 @@ class ProfileItemViewModel(val mActivity: BaseActivity, val item: String) : View
             }
             "FAQ"->{
                 mActivity.replaceFragment(FAQFragment())
+            }
+            "Order History"->{
+                mActivity.replaceFragment(OrderHistoryFragment())
+            }
+            "Support"->{
+                mActivity.replaceFragment(SupportFragment())
             }
             else->{
 

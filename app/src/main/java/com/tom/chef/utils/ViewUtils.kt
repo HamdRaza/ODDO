@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.*
@@ -655,4 +656,13 @@ fun Address.userAddressComplete(showBuilding:Boolean=false):String{
         append("  ")
         append(location)
     }
+}
+
+fun Activity.startEmailIntent(email:String, subject: String?) {
+
+    val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+        data = Uri.parse("mailto:$email")
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+    }
+    startActivity(Intent.createChooser(emailIntent, "Send feedback"))
 }

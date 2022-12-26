@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.tom.chef.ui.dashboard.fragments.account.subFragments.support.SupportViewModel" />
+     </data>
+    <androidx.core.widget.NestedScrollView
+        android:background="@color/appBackgroundColor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_marginTop="@dimen/_20sdp"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/_30sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <com.google.android.material.card.MaterialCardView
+                android:onClick="@{()->viewModel.onPhoneClicked()}"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                style="@style/appCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    
+                    <ImageView
+                        android:src="@drawable/phone_icon"
+                        android:layout_marginVertical="@dimen/_16sdp"
+                        android:layout_marginHorizontal="@dimen/_12sdp"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"/>
+                    <TextView
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:textColor="@color/colorPrimary"
+                        android:fontFamily="@font/montserrat_bold_700"
+                        style="@style/montserrat_semiBols_14"
+                        android:text="+971 5232 *651616"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:onClick="@{()->viewModel.onEmailClicked()}"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                style="@style/appCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@drawable/mail_icon"
+                        android:layout_marginVertical="@dimen/_16sdp"
+                        android:layout_marginHorizontal="@dimen/_12sdp"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"/>
+                    <TextView
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:textColor="@color/colorPrimary"
+                        android:fontFamily="@font/montserrat_bold_700"
+                        style="@style/montserrat_semiBols_14"
+                        android:text="Info@tom.com"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:onClick="@{()->viewModel.onLiveChatClicked()}"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                style="@style/appCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@drawable/live_chat_icon"
+                        android:layout_marginVertical="@dimen/_16sdp"
+                        android:layout_marginHorizontal="@dimen/_12sdp"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"/>
+                    <TextView
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:textColor="@color/colorPrimary"
+                        android:fontFamily="@font/montserrat_bold_700"
+                        style="@style/montserrat_semiBols_14"
+                        android:text="Live Chat"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:onClick="@{()->viewModel.onWhatsAppClicked()}"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                style="@style/appCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@drawable/whats_app_icon"
+                        android:layout_marginVertical="@dimen/_16sdp"
+                        android:layout_marginHorizontal="@dimen/_12sdp"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"/>
+                    <TextView
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:textColor="@color/colorPrimary"
+                        android:fontFamily="@font/montserrat_bold_700"
+                        style="@style/montserrat_semiBols_14"
+                        android:text="Chat on Whatsapp"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>
