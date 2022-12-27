@@ -14,4 +14,6 @@ interface MainInterface {
     fun askNotificationPermission()
     fun checkForIntent()
     fun moveToLogInScreen()
+    fun updateUserStatus(boolean: Boolean)
+
 }

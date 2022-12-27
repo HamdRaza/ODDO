@@ -1,6 +1,27 @@
 package com.tom.chef.utils
 
 import android.app.Activity
+
+fun String.orignalName():String{
+    when(this){
+        "PENDING"->{
+            return "Pending"
+        }
+        "ACCEPTED"->{
+            return "Accepted"
+        }
+        "REJECTED"->{
+            return "Rejected"
+        }
+        "COMPLETED"->{
+            return "Delivered"
+        }
+        else->{
+            return this
+        }
+    }
+}
+
 fun Activity.getAllFilterTypes():List<String>{
     val list=ArrayList<String>()
     list.add("Rating High to Low")

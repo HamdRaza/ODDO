@@ -1,5 +1,6 @@
 package com.tom.chef.ui.dashboard
 
+import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,6 +18,20 @@ class MainViewModel @Inject constructor(val unUsed: NotificationRepository )  : 
 
     lateinit var mainInterface: MainInterface
 
+    @JvmField
+    var showFilterSelector=ObservableField<Boolean>()
+
+    fun hideFilterView(){
+        showFilterSelector.set(false)
+    }
+    fun makeUserOnline(){
+        mainInterface.updateUserStatus(boolean = true)
+        hideFilterView()
+    }
+    fun makeUserOffline(){
+        mainInterface.updateUserStatus(boolean = false)
+        hideFilterView()
+    }
     fun onBackButtonClicked()=mainInterface.onBackButtonClicked()
 
     var userProfile = MutableLiveData<User>()

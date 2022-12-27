@@ -5,4 +5,6 @@ interface ToolBarInterface {
     fun moveToProfile(){}
     fun moveToNotifications(){}
     fun deleteAllNotification(){}
+    fun addNewMenuItem(){}
+    fun showUpdateStatus(){}
 }

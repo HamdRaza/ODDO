@@ -3,6 +3,7 @@ package com.tom.chef.ui.dashboard.fragments.account
 import android.app.Activity
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
+import com.tom.chef.R
 import com.tom.chef.models.auth.User
 import com.tom.chef.utils.makeNull
 import com.tom.chef.utils.maskPhone
@@ -12,9 +13,9 @@ class AccountViewModel(val mActivity: Activity) :ViewModel() {
     lateinit var accountInterface: AccountInterface
 
     @JvmField
-    val profilePath=ObservableField<String?>()
+    val profilePath=ObservableField<Any?>()
     @JvmField
-    val coverImage=ObservableField<String?>()
+    val coverImage=ObservableField<Any?>()
     @JvmField
     val userName=ObservableField<String>()
     @JvmField
@@ -33,6 +34,8 @@ class AccountViewModel(val mActivity: Activity) :ViewModel() {
         userPhone.set("+923441562554")
         userAddress.set("Al Quoz - Al Quoz 2 - Dubai - United Arab Emirates")
         backTitle.set("My Profile")
+        profilePath.set(R.drawable.dummy_profile_icon)
+        coverImage.set(R.drawable.dummy_profile_back)
     }
 
     fun updateProfile(user: User){

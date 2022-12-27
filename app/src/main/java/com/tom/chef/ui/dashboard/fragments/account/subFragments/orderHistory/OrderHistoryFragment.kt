@@ -51,7 +51,7 @@ class OrderHistoryFragment :  BaseFragment(),OrderInterface{
         childFragmentManager.findFragmentById(mainActivity.binding.fragmentView.id).let { fragment->
             if (fragment !is OrderDetailsFragment) {
                 val orderDetailsFragment=OrderDetailsFragment()
-                orderDetailsFragment.arguments= bundleOf(Pair("tabName","Delivered"))
+                orderDetailsFragment.arguments= bundleOf(Pair("tabName","Delivered"), Pair("fromOrderHistory",true))
                 mainActivity.replaceFragment(orderDetailsFragment)
             }
         }

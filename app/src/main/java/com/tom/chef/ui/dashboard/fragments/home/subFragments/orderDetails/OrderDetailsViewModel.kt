@@ -2,6 +2,8 @@ package com.tom.chef.ui.dashboard.fragments.home.subFragments.orderDetails
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
+import com.tom.chef.newBase.BaseActivity
+import com.tom.chef.ui.allBottomSheets.rejectOffer.RejectOfferBottomSheet
 import com.tom.chef.ui.comman.orderItem.OrderItemAdopter
 import com.tom.chef.ui.comman.orderItem.OrderItemInterface
 import com.tom.chef.ui.comman.orderItem.OrderItemViewModel
@@ -9,7 +11,7 @@ import com.tom.chef.ui.comman.orders.OrderAdopter
 import com.tom.chef.ui.comman.orders.OrderInterface
 import com.tom.chef.ui.comman.orders.OrderViewModel
 
-class OrderDetailsViewModel:ViewModel(),OrderItemInterface {
+class OrderDetailsViewModel(var baseActivity: BaseActivity):ViewModel(),OrderItemInterface {
     lateinit var orderDetailsInterface: OrderDetailsInterface
     fun onAcceptClicked(){
         status.set("Accepted")
@@ -17,9 +19,11 @@ class OrderDetailsViewModel:ViewModel(),OrderItemInterface {
         updateStatus()
     }
     fun onRejectClicked(){
-        status.set("Rejected")
-        orderDetailsInterface.onRejectClicked()
-        updateStatus()
+        RejectOfferBottomSheet().showRejectOffer(context = baseActivity){
+            status.set("Rejected")
+            orderDetailsInterface.onRejectClicked()
+            updateStatus()
+        }
     }
     fun onFoodPreparedClicked(){
         status.set("Completed")
@@ -49,6 +53,8 @@ class OrderDetailsViewModel:ViewModel(),OrderItemInterface {
     val showRequestExtraTime=ObservableField<Boolean>(false)
     @JvmField
     val showChefNote=ObservableField<Boolean>(false)
+    @JvmField
+    val showDriverBox=ObservableField<Boolean>(true)
 
     @JvmField
     val pickUpTime=ObservableField<String>()
@@ -99,7 +105,8 @@ class OrderDetailsViewModel:ViewModel(),OrderItemInterface {
 
 
 
-    fun fillOrderItems(){
+    fun fillOrderItems(fromOrderHistory:Boolean){
+        showDriverBox.set(!fromOrderHistory)
         val viewModels=ArrayList<com.tom.chef.ui.comman.ViewModel>()
         for (i in 0 until 2){
             val viewModel= OrderItemViewModel()

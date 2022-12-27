@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="true"
+    >
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.tom.chef.ui.comman.menuItems.files.FileViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:background="@drawable/background_file_name"
+        android:paddingHorizontal="@dimen/_5sdp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/_1sdp">
+        <TextView
+            android:includeFontPadding="false"
+            android:alpha="0.5"
+            android:paddingHorizontal="@dimen/_2sdp"
+            android:paddingVertical="@dimen/_2sdp"
+            android:textColor="@color/colorPrimary"
+            android:text="@{viewModel.titleText}"
+            style="@style/montserrat_medium_12"
+            tools:text="Image.jpeg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:onClick="@{()->viewModel.onDeleteClicked()}"
+            android:src="@drawable/ic_link_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tint="@color/colorPrimary" />
+    </LinearLayout>
+</layout>

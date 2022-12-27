@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="true"
+    >
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.tom.chef.ui.comman.menuItems.packageMenu.PackageViewModel" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_marginVertical="@dimen/_5sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+       <LinearLayout
+           android:orientation="vertical"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+           <LinearLayout
+               tools:visibility="visible"
+               android:visibility="@{viewModel.isAdded?View.GONE:View.VISIBLE,default=visible}"
+               android:paddingBottom="@dimen/_5sdp"
+               android:orientation="vertical"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <LinearLayout
+                   android:layout_marginVertical="@dimen/_5sdp"
+                   android:layout_marginHorizontal="@dimen/_10sdp"
+                   android:gravity="center"
+                   android:layout_gravity="center"
+                   android:orientation="horizontal"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+
+                   <TextView
+                       android:layout_weight="1"
+                       android:textColor="@color/black02"
+                       style="@style/montserrat_semiBols_14"
+                       android:text="Package Details"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"/>
+
+                   <TextView
+                       android:onClick="@{()->viewModel.onArabicClicked()}"
+                       style="@style/montserrat_semiBols_12"
+                       android:textColor="@color/white"
+                       android:paddingHorizontal="@dimen/_10sdp"
+                       android:paddingVertical="@dimen/_10sdp"
+                       app:backgroundTint="@color/colorPrimary"
+                       android:background="@drawable/backgroun_order"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Add Arabic Details " />
+               </LinearLayout>
+
+
+
+               <EditText
+                   android:text="@={viewModel.title}"
+                   tools:visibility="visible"
+                   android:layout_marginBottom="@dimen/_5sdp"
+                   android:layout_marginTop="@dimen/_10sdp"
+                   android:hint="Package title"
+                   android:layout_marginHorizontal="@dimen/_10sdp"
+                   style="@style/input_back"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:ems="10"
+                   android:inputType="textPersonName" />
+
+
+               <EditText
+                   android:text="@={viewModel.price}"
+                   tools:visibility="visible"
+                   android:layout_marginBottom="@dimen/_5sdp"
+                   android:layout_marginVertical="@dimen/_5sdp"
+                   android:hint="Package price"
+                   android:layout_marginHorizontal="@dimen/_10sdp"
+                   style="@style/input_back"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:ems="10"
+                   android:inputType="number" />
+               <EditText
+                   android:text="@={viewModel.sufficient}"
+                   tools:visibility="visible"
+                   android:layout_marginBottom="@dimen/_5sdp"
+                   android:layout_marginVertical="@dimen/_5sdp"
+                   android:hint="Sufficient For"
+                   android:layout_marginHorizontal="@dimen/_10sdp"
+                   style="@style/input_back"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:ems="10"
+                   android:inputType="number" />
+
+               <EditText
+                   android:text="@={viewModel.Quantity}"
+                   tools:visibility="visible"
+                   android:layout_marginBottom="@dimen/_5sdp"
+                   android:layout_marginVertical="@dimen/_5sdp"
+                   android:hint="Quantity e.g 1 plate"
+                   android:layout_marginHorizontal="@dimen/_10sdp"
+                   style="@style/input_back"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:ems="10"
+                   android:inputType="number" />
+
+               <com.google.android.material.button.MaterialButton
+                   android:text="@{viewModel.buttonText}"
+                   android:onClick="@{()->viewModel.onAddNewClicked()}"
+                   android:layout_marginBottom="@dimen/_10sdp"
+                   style="@style/button_big"
+                   android:layout_marginHorizontal="@dimen/_10sdp"
+                   android:layout_marginTop="@dimen/_10sdp"
+                   android:layout_width="match_parent"
+                   android:layout_height="@dimen/_50sdp"
+                   tools:text="Add New Package " />
+
+
+           </LinearLayout>
+
+           <LinearLayout
+               tools:visibility="visible"
+               android:visibility="@{viewModel.isAdded?View.VISIBLE:View.GONE,default=gone}"
+               android:orientation="horizontal"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+               <LinearLayout
+                   android:layout_weight="1"
+                   android:layout_width="0dp"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical"
+                   android:paddingHorizontal="@dimen/_15sdp"
+                   android:paddingVertical="@dimen/_10sdp"
+                   app:layout_constraintBottom_toBottomOf="parent"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintStart_toEndOf="@+id/shapeableImageView"
+                   app:layout_constraintTop_toTopOf="parent">
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal">
+
+                       <TextView
+                           style="@style/montserrat_semiBols_16"
+                           android:layout_width="0dp"
+                           android:layout_height="wrap_content"
+                           android:layout_weight="1"
+                           android:text="@{viewModel.title}"
+                           android:textColor="@color/black"
+                           tools:text="Meat Samosa" />
+
+                       <TextView
+                           style="@style/montserrat_semiBols_15"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:fontFamily="@font/montserrat_bold_700"
+                           android:text='@{@string/AED + @string/space + viewModel.price}'
+                           android:textColor="@color/colorPrimary"
+                           tools:text="AED 20.3" />
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:paddingTop="@dimen/_10sdp"
+                       android:orientation="horizontal"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content">
+                       <LinearLayout
+                           android:gravity="center"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:orientation="horizontal">
+
+                           <ImageView
+                               android:layout_width="@dimen/_20sdp"
+                               android:layout_height="@dimen/_20sdp"
+                               android:src="@drawable/icon_person_order" />
+
+                           <TextView
+                               style="@style/montserrat_medium_12"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:layout_marginHorizontal="@dimen/_5sdp"
+                               android:text="@{viewModel.sufficient + @string/space+ @string/people}"
+                               android:textColor="@color/semiDark"
+                               tools:text="4 People" />
+                       </LinearLayout>
+                       <LinearLayout
+                           android:layout_marginStart="@dimen/_10sdp"
+                           android:gravity="center"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:orientation="horizontal">
+
+                           <ImageView
+                               android:layout_width="@dimen/_20sdp"
+                               android:layout_height="@dimen/_20sdp"
+                               android:src="@drawable/forck" />
+
+                           <TextView
+                               style="@style/montserrat_medium_12"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:layout_marginHorizontal="@dimen/_5sdp"
+                               android:text="@{viewModel.Quantity+ @string/space +@string/piece}"
+                               android:textColor="@color/semiDark"
+                               tools:text="4 People" />
+                       </LinearLayout>
+                   </LinearLayout>
+               </LinearLayout>
+               <ImageView
+                   android:layout_gravity="center"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"/>
+               <ImageView
+                   android:onClick="@{()->viewModel.onEditClicked()}"
+                   android:paddingVertical="@dimen/_10sdp"
+                   android:paddingHorizontal="@dimen/_10sdp"
+                   android:src="@drawable/edit_icon"
+                   android:layout_gravity="center"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"/>
+               <ImageView
+                   android:onClick="@{()->viewModel.onDeleteClicked()}"
+                   android:paddingVertical="@dimen/_10sdp"
+                   android:paddingHorizontal="@dimen/_10sdp"
+                   android:src="@drawable/delete_icon"
+                   android:layout_gravity="center"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"/>
+           </LinearLayout>
+       </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

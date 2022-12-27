@@ -70,6 +70,9 @@
         <activity
             android:screenOrientation="portrait"
             android:name=".ui.auth.inPutDocuments.InputDocumentsActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.location.LocationPickerActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

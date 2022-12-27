@@ -65,6 +65,14 @@
         <item name="cornerSizeBottomLeft">@dimen/_10sdp</item>
         <item name="cornerSizeBottomRight">@dimen/_10sdp</item>
     </style>
+    <style name="customRoundedImageViewFull3" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">0dp</item>
+        <item name="cornerSizeTopLeft">@dimen/_3sdp</item>
+        <item name="cornerSizeTopRight">@dimen/_3sdp</item>
+        <item name="cornerSizeBottomLeft">@dimen/_3sdp</item>
+        <item name="cornerSizeBottomRight">@dimen/_3sdp</item>
+    </style>
     <style name="roundImage15" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">0dp</item>
@@ -227,6 +235,9 @@
     <style name="montserrat_semiBols_10" parent="montserrat_semiBols_600">
         <item name="android:textSize">@dimen/_9sdp</item>
     </style>
+    <style name="montserrat_semiBols_8" parent="montserrat_semiBols_600">
+        <item name="android:textSize">@dimen/_8sdp</item>
+    </style>
     <style name="montserrat_semiBols_15" parent="montserrat_semiBols_600">
         <item name="android:textSize">@dimen/_13sdp</item>
     </style>
@@ -274,13 +285,13 @@
     <style name="input_back">
         <item name="android:gravity">center_vertical</item>
         <item name="android:minHeight">@dimen/_40sdp</item>
-        <item name="android:textSize">@dimen/_10sdp</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
         <item name="hintTextColor">@color/hint_text_color</item>
         <item name="background">@drawable/background_otp_w</item>
         <item name="android:background">@drawable/background_otp_w</item>
         <item name="android:paddingStart">@dimen/_10sdp</item>
         <item name="android:paddingEnd">@dimen/_10sdp</item>
-        <item name="android:fontFamily">@font/poppins_semi_bold600</item>
+        <item name="android:fontFamily">@font/montserrat_medium_500</item>
         <item name="android:textColor">@color/black</item>
     </style>
     <style name="input_back.language" parent="input_back">

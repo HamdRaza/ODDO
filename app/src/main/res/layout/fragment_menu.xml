@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.tom.chef.ui.dashboard.fragments.menu.MenuViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@color/appBackgroundColor">
+
+
+
+        <LinearLayout
+            android:id="@+id/tabSelectorTop"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="@dimen/_30sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioGroup
+                android:id="@+id/tabSelector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RadioButton
+                    android:fontFamily="@font/montserrat_regular_400"
+                    android:layout_marginHorizontal="@dimen/_2sdp"
+                    android:id="@+id/currentOrder"
+                    style="@style/montserrat_medium_12"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/menu_tab_back"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="All Dishes"
+                    android:textColor="@color/menu_tab_color"/>
+
+                <RadioButton
+                    android:fontFamily="@font/montserrat_regular_400"
+                    android:layout_marginHorizontal="@dimen/_2sdp"
+                    android:id="@+id/scheduledOrder"
+                    style="@style/montserrat_medium_12"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_weight="1"
+                    android:background="@drawable/menu_tab_back"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="Variety Dishes"
+                    android:textColor="@color/menu_tab_color"/>
+            </RadioGroup>
+        </LinearLayout>
+
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tabSelectorTop"/>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

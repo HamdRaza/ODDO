@@ -13,63 +13,106 @@
         android:layout_marginVertical="@dimen/_5sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <LinearLayout
-            android:paddingVertical="@dimen/_10sdp"
-            android:paddingHorizontal="@dimen/_15sdp"
-            android:orientation="vertical"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:text="@{viewModel.itemName}"
-                    android:layout_weight="1"
-                    tools:text="Meat Samosa"
-                    android:textColor="@color/black"
-                    style="@style/montserrat_semiBols_16"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:text="@{viewModel.price}"
-                    android:fontFamily="@font/montserrat_bold_700"
-                    tools:text="AED 20.3"
-                    android:textColor="@color/colorPrimary"
-                    style="@style/montserrat_semiBols_15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
+            <com.google.android.material.imageview.ShapeableImageView
+                tools:visibility="visible"
+                android:visibility="@{viewModel.fromOrderDetails?View.VISIBLE:View.GONE,default=gone}"
+                app:layout_constraintHeight_min="@dimen/_90sdp"
+                app:imageUrl="@{viewModel.itemImage}"
+                android:elevation="@dimen/_2sdp"
+                android:id="@+id/shapeableImageView"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:shapeAppearanceOverlay="@style/customRoundedImageViewFull3"
+                tools:src="@drawable/dummy_profile_icon" />
 
             <LinearLayout
-                android:paddingBottom="@dimen/_5sdp"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/_6sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:src="@drawable/icon_person_order"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/shapeableImageView"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/montserrat_semiBols_16"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@{viewModel.itemName}"
+                        android:textColor="@color/black"
+                        tools:text="Meat Samosa" />
+
+                    <TextView
+                        style="@style/montserrat_semiBols_15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold_700"
+                        android:text="@{viewModel.price}"
+                        android:textColor="@color/colorPrimary"
+                        tools:text="AED 20.3" />
+                </LinearLayout>
                 <TextView
-                    android:text="@{viewModel.peopleCount}"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
-                    android:layout_weight="1"
-                    tools:text="4 People"
-                    android:textColor="@color/semiDark"
-                    style="@style/montserrat_medium_15"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:fontFamily="@font/montserrat_bold_700"
-                    tools:text="X 2"
-                    android:textColor="@color/black"
-                    style="@style/montserrat_semiBols_16"
-                    android:text="@{viewModel.total}"
+                    tools:visibility="visible"
+                    android:visibility="@{viewModel.fromOrderDetails?View.VISIBLE:View.GONE,default=gone}"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:lines="2"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    style="@style/montserrat_medium_12"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.itemDescription}"
+                    android:textColor="@color/divider_line"
+                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing "/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/_5sdp">
+
+                    <ImageView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:src="@drawable/icon_person_order" />
+
+                    <TextView
+                        style="@style/montserrat_medium_15"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:text="@{viewModel.peopleCount}"
+                        android:textColor="@color/semiDark"
+                        tools:text="4 People" />
+
+                    <TextView
+                        style="@style/montserrat_semiBols_16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold_700"
+                        android:text="@{viewModel.total}"
+                        android:textColor="@color/black"
+                        tools:text="X 2" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
 </layout>

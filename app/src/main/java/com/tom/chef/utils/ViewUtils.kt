@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.text.*
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
@@ -665,4 +666,10 @@ fun Activity.startEmailIntent(email:String, subject: String?) {
         putExtra(Intent.EXTRA_SUBJECT, subject)
     }
     startActivity(Intent.createChooser(emailIntent, "Send feedback"))
+}
+fun Context.openAppSystemSettings() {
+    startActivity(Intent().apply {
+        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        data = Uri.fromParts("package", packageName, null)
+    })
 }

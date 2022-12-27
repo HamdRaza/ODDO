@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.tom.chef.ui.comman.menuItems.MenuItemViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:id="@+id/infoBox"
+        app:layout_constraintTop_toBottomOf="@id/topBackgroundImage"
+        app:layout_constraintBottom_toBottomOf="@id/topBackgroundImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
+            app:cardCornerRadius="@dimen/_3sdp"
+            android:elevation="0dp"
+            app:cardElevation="@dimen/_1sdp"
+            app:cardBackgroundColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/allText"
+            app:layout_constraintTop_toTopOf="@id/allText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="horizontal"/>
+
+        <LinearLayout
+            android:paddingVertical="@dimen/_15sdp"
+            android:id="@+id/allText"
+            android:elevation="@dimen/_10sdp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/shapeableImageView"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                style="@style/montserrat_semiBols_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Meat Samosa "
+                android:text="@{viewModel.itemName}"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:lines="2"
+                android:layout_marginTop="@dimen/_5sdp"
+                style="@style/montserrat_medium_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.itemDescription}"
+                android:textColor="@color/divider_line"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing "/>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@+id/stock"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/stock">
+
+
+                    <LinearLayout
+                        android:visibility="@{viewModel.isThisVariant?View.GONE:View.VISIBLE,default=visible}"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"
+                            android:src="@drawable/icon_person_order" />
+
+                        <TextView
+                            android:layout_gravity="center_vertical"
+                            style="@style/montserrat_reqular_10"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_5sdp"
+                            android:layout_weight="1"
+                            android:text="@{viewModel.servingForPeople}"
+                            android:textColor="@color/semiDark"
+                            tools:text="4 People" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:visibility="@{viewModel.isThisVariant?View.VISIBLE:View.GONE,default=visible}"
+                        android:textColor="@color/colorPrimary"
+                        android:fontFamily="@font/montserrat_bold_700"
+                        style="@style/montserrat_semiBols_10"
+                        android:text="Price On Selection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:checked="true"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/stock"
+                    style="@style/montserrat_semiBols_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="@dimen/_20sdp"
+                    android:minHeight="@dimen/_20sdp"
+                    android:text="In Stock  "
+                    android:textColor="@color/colorPrimary"
+                    app:layout_constraintEnd_toStartOf="@+id/priceLayout"
+                    app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+                    app:switchPadding="0dp"
+                    app:thumbTint="@color/tumb_color"
+                    app:track="@drawable/rectangle_26242__1_"
+                    app:trackTint="@color/black69_20" />
+
+                <LinearLayout
+                    tools:visibility="visible"
+                    android:visibility="@{viewModel.isThisVariant?View.GONE:View.VISIBLE,default=visible}"
+                    android:gravity="end"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/stock"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:id="@+id/priceLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/montserrat_semiBols_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_bold_700"
+                        android:text="@{viewModel.itemPrice}"
+                        android:textColor="@color/colorPrimary"
+                        tools:text="AED 20.3" />
+                    <TextView
+                        android:layout_gravity="center"
+                        android:alpha="0.5"
+                        android:text="@{viewModel.itemOldPrice}"
+                        android:textColor="@color/colorPrimary"
+                        android:fontFamily="@font/montserrat_bold_700"
+                        style="@style/montserrat_semiBols_8"
+                        tools:text="AED 20.3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/priceLayout"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/stock"
+                    app:layout_constraintVertical_bias="0"
+                    app:veriantsNamesAdopter="@{viewModel.variantItemAdopter}"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/recycle_item_veriants" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </LinearLayout>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            app:layout_constraintHeight_min="@dimen/_100sdp"
+            app:imageUrl="@{viewModel.itemImage}"
+            android:paddingHorizontal="@dimen/_5sdp"
+            android:paddingVertical="@dimen/_5sdp"
+            android:elevation="@dimen/_2sdp"
+            android:id="@+id/shapeableImageView"
+            android:layout_width="@dimen/_110sdp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@id/allText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/allText"
+            app:shapeAppearanceOverlay="@style/customRoundedImageViewFull3"
+            tools:src="@drawable/dummy_profile_icon" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

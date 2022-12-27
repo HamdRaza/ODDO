@@ -26,7 +26,6 @@
         <LinearLayout
             android:layout_marginBottom="@dimen/_15sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:onClick="@{()->toolbarViewModel.moveToProfile()}"
             tools:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,6 +34,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:onClick="@{()->toolbarViewModel.moveToProfile()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -59,6 +59,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
+                android:onClick="@{()->toolbarViewModel.showUpdateStatus()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -127,8 +128,11 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
-        <Button
-            android:layout_marginBottom="@dimen/_15sdp"
+        <com.google.android.material.button.MaterialButton
+            android:onClick="@{()->toolbarViewModel.addNewMenuItem()}"
+            android:paddingHorizontal="@dimen/_5sdp"
+            app:cornerRadius="@dimen/_6sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:visibility="visible"
             android:visibility="@{toolbarViewModel.showAddButton?View.VISIBLE:View.GONE,default=gone}"
@@ -136,7 +140,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:textAllCaps="false"
-            android:padding="@dimen/_1sdp"
+            android:paddingVertical="@dimen/_1sdp"
             android:text="Add Items"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -144,7 +148,7 @@
 
 
         <LinearLayout
-            android:layout_marginBottom="@dimen/_15sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:visibility="visible"
             android:visibility="@{toolbarViewModel.showDishVariety?View.VISIBLE:View.GONE,default=gone}"
@@ -156,6 +160,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.switchmaterial.SwitchMaterial
+                android:onCheckedChanged="@{(view,bool)->toolbarViewModel.onSwitched(view,bool)}"
                 app:track="@drawable/rectangle_26242__1_"
                 style="@style/montserrat_semiBols_10"
                 android:layout_width="wrap_content"
@@ -163,7 +168,7 @@
                 android:text="Dish Contains Variety    "
                 android:textColor="@color/colorPrimary"
                 app:thumbTint="@color/tumb_color"
-                app:trackTint="@color/black69_20" />
+                app:trackTint="@color/divider_line" />
 
         </LinearLayout>
 

@@ -65,4 +65,9 @@
     
     <string name="available">Available</string>
     <string name="unavailable">Unavailable</string>
+    <string name="people">People</string>
+    <string name="sufficient">Sufficient</string>
+    <string name="piece">Piece</string>
+    <string name="AED">AED</string>
+    <string name="space">\u0020</string>
 </resources>

@@ -9,13 +9,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.tom.chef.databinding.DialogServiceLimitReachedBinding
 
-class ConfirmationDialog(val viewModel: ConfirmDialogViewModel,val confirmDialogInterface: ConfirmDialogInterface) : DialogFragment() {
+class ConfirmationDialog(val viewModel: ConfirmDialogViewModel,val confirmDialogInterface: ConfirmDialogInterface,var isDissmissAble:Boolean=true) : DialogFragment() {
     lateinit var binding: DialogServiceLimitReachedBinding
     lateinit var myDialog: Dialog
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireActivity())
         binding = DialogServiceLimitReachedBinding.inflate(requireActivity().layoutInflater)
         binding.viewModel=viewModel
+        isCancelable=isDissmissAble
         viewModel.confirmDialogInterface=confirmDialogInterface
         viewModel.confirmDialogCurrentInterface=object :ConfirmDialogCurrentInterface{
             override fun onDismissClicked() {

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.tom.chef.ui.comman.menuItems.packageMenu.PackageViewModel" />
+    </data>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_16sdp"
+        app:cardBackgroundColor="@color/white">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.balysv.materialripple.MaterialRippleLayout
+                android:layout_gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:clickable="false"
+                    android:visibility="gone"
+                    android:id="@+id/closeButton"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/ic_baseline_close_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:tint="@color/colorPrimary" />
+            </com.balysv.materialripple.MaterialRippleLayout>
+
+            <LinearLayout
+                android:paddingTop="@dimen/_5sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:textColor="@color/colorPrimary"
+                    style="@style/montserrat_semiBol_24"
+                    android:text="Add Arabic Details"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:layoutDirection="rtl"
+                    android:text="@={viewModel.arabicTitle}"
+                    tools:visibility="visible"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:hint="إسم العرض"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    style="@style/input_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName" />
+
+
+                <EditText
+                    android:layoutDirection="rtl"
+                    android:text="@={viewModel.price}"
+                    tools:visibility="visible"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginVertical="@dimen/_5sdp"
+                    android:hint="السعر "
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    style="@style/input_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number" />
+                <EditText
+                    android:layoutDirection="rtl"
+                    android:text="@={viewModel.sufficient}"
+                    tools:visibility="visible"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginVertical="@dimen/_5sdp"
+                    android:hint="كافي ل ( عدد الأشخاص)"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    style="@style/input_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number" />
+
+                <EditText
+                    android:layoutDirection="rtl"
+                    android:text="@={viewModel.Quantity}"
+                    tools:visibility="visible"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginVertical="@dimen/_5sdp"
+                    android:hint="الكمية على سبيل المثال: طبق/ حبة"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    style="@style/input_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/next_button"
+                    android:layout_marginBottom="@dimen/_30sdp"
+                    style="@style/button_big"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50sdp"
+                    android:text="Submit" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

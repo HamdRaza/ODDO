@@ -89,4 +89,11 @@ class ConfirmDialogViewModel :ViewModel() {
         noButton.set("No")
     }
 
+
+    fun locationPermissionRequired(){
+        heading.set("Location permission required")
+        subHeading.set("Location permission is required. Please provide location permission from settings")
+        noButton.set("Exit")
+        yesButton.set("Settings")
+    }
 }

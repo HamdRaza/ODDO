@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="true"
+    >
+
+    <data>
+        <variable
+            name="editProfile"
+            type="com.tom.chef.ui.dashboard.fragments.account.subFragments.editProfile.EditProfileViewModel" />
+        <variable
+            name="viewModel"
+            type="com.tom.chef.ui.dashboard.fragments.account.AccountViewModel" />
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/appBackgroundColor">
+
+        <androidx.core.widget.NestedScrollView
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:paddingBottom="@dimen/_20sdp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/toolbar"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible"
+                    android:elevation="@dimen/_4sdp"
+                    android:paddingHorizontal="@dimen/_15sdp"
+                    android:paddingTop="@dimen/_20sdp"
+                    android:paddingBottom="@dimen/_15sdp"
+                    android:background="@drawable/toolbar_back_rounded"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+
+                    <LinearLayout
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+                        <ImageView
+                            android:onClick="@{()->viewModel.onBackClicked()}"
+                            android:src="@drawable/back_button_icon"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"/>
+                        <TextView
+                            android:ellipsize="end"
+                            android:maxLength="35"
+                            android:textColor="@color/black02"
+                            style="@style/montserrat_medium_16"
+                            android:text="Edit Profile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.google.android.material.imageview.ShapeableImageView
+                    app:coverImage="@{viewModel.coverImage}"
+                    tools:visibility="visible"
+                    android:layout_marginTop="-25dp"
+                    app:shapeAppearanceOverlay="@style/roundImage15Bottom"
+                    android:id="@+id/topBackgroundImage"
+                    android:layout_width="match_parent"
+                    android:scaleType="centerCrop"
+                    android:layout_height="@dimen/_180sdp"
+                    tools:src="@drawable/dummy_profile_back"
+                    app:layout_constraintTop_toBottomOf="@id/toolbar" />
+                <ImageView
+                    android:layout_margin="@dimen/_10sdp"
+                    android:onClick="@{()->editProfile.changeBackground()}"
+                    android:elevation="@dimen/_5sdp"
+                    app:layout_constraintEnd_toEndOf="@id/topBackgroundImage"
+                    app:layout_constraintBottom_toBottomOf="@id/topBackgroundImage"
+                    android:src="@drawable/camera_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    app:imageUrl="@{viewModel.profilePath}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/topBackgroundImage"
+                    app:layout_constraintTop_toBottomOf="@id/topBackgroundImage"
+                    android:paddingHorizontal="@dimen/_5sdp"
+                    android:paddingVertical="@dimen/_5sdp"
+                    android:elevation="@dimen/_2sdp"
+                    android:id="@+id/shapeableImageView"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_120sdp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:shapeAppearanceOverlay="@style/customRoundedImageViewFull"
+                    tools:src="@drawable/dummy_profile_icon" />
+
+
+                <ImageView
+                    android:onClick="@{()->editProfile.changeProfile()}"
+                    android:elevation="@dimen/_5sdp"
+                    app:layout_constraintEnd_toEndOf="@id/shapeableImageView"
+                    app:layout_constraintBottom_toBottomOf="@id/shapeableImageView"
+                    android:src="@drawable/camera_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/shapeableImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        tools:visibility="visible"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_30sdp"
+                        android:hint="Enter Full Name"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        style="@style/input_back"
+                        android:id="@+id/fullName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+                    <EditText
+                        tools:visibility="visible"
+                        android:layout_marginVertical="@dimen/_5sdp"
+                        android:hint="Enter Brand Name"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        style="@style/input_back"
+                        android:id="@+id/brandName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+                    <EditText
+                        tools:visibility="visible"
+                        android:paddingVertical="@dimen/_10sdp"
+                        android:gravity="start"
+                        android:layout_marginVertical="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:hint="What's your story ?"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        style="@style/input_back"
+                        android:id="@+id/yourStory"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_100sdp"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+                    
+                    <LinearLayout
+                        tools:visibility="visible"
+                        android:layout_marginVertical="@dimen/_5sdp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:background="@drawable/background_otp_w"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:layout_gravity="bottom"
+                                android:paddingHorizontal="@dimen/_10sdp"
+                                android:src="@drawable/icon_location"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                            <TextView
+                                android:textColor="@color/black"
+                                style="@style/montserrat_semiBols_14"
+                                android:layout_weight="1"
+                                android:text="My Location"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"/>
+                            <TextView
+                                android:onClick="@{()->editProfile.editLocation()}"
+                                android:paddingHorizontal="@dimen/_20sdp"
+                                android:paddingVertical="@dimen/_6sdp"
+                                android:textColor="@color/white"
+                                android:background="@drawable/backgroun_edit"
+                                style="@style/montserrat_semiBols_14"
+                                android:text="Edit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_marginTop="@dimen/_5sdp"
+                            style="@style/montserrat_reqular_11"
+                            android:paddingBottom="@dimen/_10sdp"
+                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:text="Al Quoz - Al Quoz 2 - Dubai - United Arab Emirates"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:fontFamily="@font/poppins_medium_500"
+                        android:textColor="@color/colorPrimary"
+                        style="@style/poppin_semiBol_16"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:text="Menu Settings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:textColor="@color/black"
+                        style="@style/montserrat_semiBols_15"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:text="Chef Timings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                    <LinearLayout
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:orientation="horizontal"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+
+                            android:layout_weight="1"
+                            android:hint="Starting Time"
+                            style="@style/input_back"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textPersonName" />
+                        <View
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"/>
+                        <EditText
+                            android:layout_weight="1"
+                            android:hint="Ending Time"
+                            style="@style/input_back"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textPersonName" />
+                    </LinearLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        app:endIconTint="@color/colorPrimary"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginVertical="@dimen/_5sdp"
+                        android:padding="0dp"
+                        app:counterEnabled="false"
+                        app:errorEnabled="false"
+                        app:expandedHintEnabled="false"
+                        app:helperTextEnabled="false"
+                        app:hintEnabled="false">
+
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            android:paddingEnd="@dimen/_30sdp"
+                            android:paddingVertical="0dp"
+                            android:id="@+id/selectCousine"
+                            style="@style/input_back"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Select Cousine"
+                            android:inputType="none"
+                            android:focusable="false"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        app:endIconTint="@color/colorPrimary"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginVertical="@dimen/_5sdp"
+                        android:padding="0dp"
+                        app:counterEnabled="false"
+                        app:errorEnabled="false"
+                        app:expandedHintEnabled="false"
+                        app:helperTextEnabled="false"
+                        app:hintEnabled="false">
+
+                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                            android:paddingEnd="@dimen/_30sdp"
+                            android:paddingVertical="0dp"
+                            android:id="@+id/selectType"
+                            style="@style/input_back"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Order Type"
+                            android:inputType="none"
+                            android:focusable="false"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginVertical="@dimen/_5sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:layout_weight="0.7"
+                            android:hint="Food Preparation Time"
+                            style="@style/input_back"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textPersonName" />
+                        <View
+                            android:layout_width="@dimen/_10sdp"
+                            android:layout_height="@dimen/_10sdp"/>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_weight="0.3"
+                            app:endIconTint="@color/colorPrimary"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:padding="0dp"
+                            app:counterEnabled="false"
+                            app:errorEnabled="false"
+                            app:expandedHintEnabled="false"
+                            app:helperTextEnabled="false"
+                            app:hintEnabled="false">
+
+                            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                                android:paddingEnd="@dimen/_30sdp"
+                                android:paddingVertical="0dp"
+                                android:id="@+id/selectUnit"
+                                style="@style/input_back"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Unit"
+                                android:inputType="none"
+                                android:focusable="false"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                    </LinearLayout>
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:layout_marginVertical="@dimen/_10sdp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        app:track="@drawable/rectangle_26242__1_"
+                        style="@style/montserrat_semiBols_14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Weekly Menu Mode"
+                        android:textColor="@color/black"
+                        app:thumbTint="@color/tumb_color"
+                        app:trackTint="@color/black69_20" />
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:onClick="@{()->editProfile.onSaveClicked()}"
+                        android:layout_marginBottom="@dimen/_30sdp"
+                        style="@style/button_big"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_30sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50sdp"
+                        android:text="Save Profile" />
+                </LinearLayout>
+
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
+
+
+

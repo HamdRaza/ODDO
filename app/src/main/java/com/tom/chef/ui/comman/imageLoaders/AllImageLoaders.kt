@@ -38,17 +38,13 @@ class AllImageLoaders : ViewModel {
         @JvmStatic
         @BindingAdapter("imageUrl")
         fun loadImage(view: ImageView, url: Any?) {
-            if (url is String){
-                view.context?.let {
-                    Glide.with(it).load(url).placeholder(AppCompatResources.getDrawable(it,R.drawable.app_logo)).into(view)
+            if (url is String || url is Int || url is Uri){
+                url.let { path->
+                    view.context?.let {
+                        Glide.with(it).load(path).placeholder(AppCompatResources.getDrawable(it,R.drawable.app_logo)).into(view)
+                    }
+                    return
                 }
-                return
-            }
-            if (url is Uri){
-                view.context?.let {
-                    Glide.with(it).load(url).placeholder(AppCompatResources.getDrawable(it,R.drawable.app_logo)).into(view)
-                }
-                return
             }
             view.context?.let {
                 Glide.with(it).load(AppCompatResources.getDrawable(it,R.drawable.app_logo)).into(view)
@@ -56,12 +52,14 @@ class AllImageLoaders : ViewModel {
         }
         @JvmStatic
         @BindingAdapter("coverImage")
-        fun coverImage(view: ImageView, url: String?) {
-            url?.let { path->
-                view.context?.let {
-                    Glide.with(it).load(path).placeholder(AppCompatResources.getDrawable(it,R.drawable.app_logo)).into(view)
+        fun coverImage(view: ImageView, url: Any?) {
+            if (url is String || url is Int || url is Uri){
+                url.let { path->
+                    view.context?.let {
+                        Glide.with(it).load(path).placeholder(AppCompatResources.getDrawable(it,R.drawable.app_logo)).into(view)
+                    }
+                    return
                 }
-                return
             }
             view.context?.let {
                 Glide.with(it).load(AppCompatResources.getDrawable(it,R.drawable.app_logo)).into(view)

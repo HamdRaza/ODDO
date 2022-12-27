@@ -205,6 +205,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:visibility="@{viewModel.showDriverBox?View.VISIBLE:View.INVISIBLE,default=visible}"
                     style="@style/appCardView"
                     android:layout_marginVertical="@dimen/_10sdp"
                     android:layout_width="match_parent"

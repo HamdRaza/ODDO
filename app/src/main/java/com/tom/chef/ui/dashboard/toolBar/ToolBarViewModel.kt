@@ -8,7 +8,7 @@ import com.tom.chef.newBase.BaseActivity
 class ToolBarViewModel(val mActivity: BaseActivity) : ViewModel() {
 
     lateinit var toolBarInterface: ToolBarInterface
-
+    var variantToggle:VariantToggle?=null
 
     @JvmField
     var backCorner=ObservableField<Boolean>(false)
@@ -57,11 +57,16 @@ class ToolBarViewModel(val mActivity: BaseActivity) : ViewModel() {
         toolBarInterface.onBackClicked()
     }
 
-
+    fun showUpdateStatus()=toolBarInterface.showUpdateStatus()
     fun moveToProfile()=toolBarInterface.moveToProfile()
     fun moveToNotifications()=toolBarInterface.moveToNotifications()
 
     fun deleteAllNotification()=toolBarInterface.deleteAllNotification()
 
-
+    fun addNewMenuItem(){
+        toolBarInterface.addNewMenuItem()
+    }
+    fun onSwitched(view: View,boolean: Boolean){
+        variantToggle?.updated(boolean = boolean)
+    }
 }

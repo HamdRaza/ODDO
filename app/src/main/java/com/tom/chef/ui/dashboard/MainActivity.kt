@@ -21,6 +21,7 @@ import com.tom.chef.ui.dashboard.fragments.account.AccountInterface
 import com.tom.chef.ui.dashboard.fragments.account.AccountViewModel
 import com.tom.chef.ui.dashboard.fragments.account.ProfileFragment
 import com.tom.chef.ui.dashboard.fragments.home.HomeFragment
+import com.tom.chef.ui.dashboard.fragments.menu.addNew.AddNewFragment
 import com.tom.chef.ui.dashboard.fragments.notification.NotificationFragment
 import com.tom.chef.ui.dashboard.toolBar.ToolBarInterface
 import com.tom.chef.ui.dashboard.toolBar.ToolBarViewModel
@@ -279,5 +280,21 @@ class MainActivity : BaseActivity(),ToolBarInterface,MainInterface,AccountInterf
 
     override fun deleteAllNotification() {
         vm.clearAllNotifications()
+    }
+
+    override fun addNewMenuItem() {
+        supportFragmentManager.findFragmentById(binding.fragmentView.id).let { fragment->
+            if (fragment !is AddNewFragment) {
+                replaceFragment(AddNewFragment())
+            }
+        }
+    }
+
+    override fun showUpdateStatus() {
+           vm.showFilterSelector.set(true)
+    }
+
+    override fun updateUserStatus(boolean: Boolean) {
+        toolbarVM.userOnline.set(boolean)
     }
 }
