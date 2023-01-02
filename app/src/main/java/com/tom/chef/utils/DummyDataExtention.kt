@@ -1,6 +1,9 @@
 package com.tom.chef.utils
 
 import android.app.Activity
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
 
 fun String.orignalName():String{
     when(this){
@@ -22,6 +25,18 @@ fun String.orignalName():String{
     }
 }
 
+fun getAllDate():List<String>{
+    val list=ArrayList<String>()
+    val calender=Calendar.getInstance()
+    for (i in 0 until 10){
+        list.add(calender.time.getFormated())
+        calender.set(Calendar.DAY_OF_YEAR,calender.get(Calendar.DAY_OF_YEAR)+1)
+    }
+    return list
+}
+fun Date.getFormated():String{
+    return SimpleDateFormat("MMM EEE d").format(this)
+}
 fun Activity.getAllFilterTypes():List<String>{
     val list=ArrayList<String>()
     list.add("Rating High to Low")
