@@ -303,18 +303,6 @@ open class BaseActivity : AppCompatActivity() {
 
 
 
-
-
-
-
-    val getLocation=registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        it?.let {
-            it.data?.extras?.let {
-
-            }
-        }
-    }
-
     val startLoginActivity=registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         it?.let {
             it.data?.extras?.let {

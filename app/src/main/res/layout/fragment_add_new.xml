@@ -228,6 +228,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:visibility="@{viewModel.haveVariant?View.VISIBLE:View.GONE,default=visible}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:menuPackageAdopter="@{viewModel.packageAdopter}"
                 android:nestedScrollingEnabled="false"

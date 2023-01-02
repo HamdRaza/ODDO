@@ -6,4 +6,5 @@ interface SignUpInterface {
     fun moveToOTP()
     fun getCountriesList()
     fun showCountryCodeDialog()
+    fun pickLocation()
 }

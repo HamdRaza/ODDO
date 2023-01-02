@@ -86,6 +86,7 @@
 
 
                     <LinearLayout
+                        tools:visibility="gone"
                         android:visibility="@{viewModel.isThisVariant?View.GONE:View.VISIBLE,default=visible}"
                         android:orientation="horizontal"
                         android:layout_width="wrap_content"
@@ -118,23 +119,43 @@
 
                 </LinearLayout>
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:checked="true"
-                    app:layout_constraintTop_toTopOf="parent"
+                <LinearLayout
+                    android:layout_marginEnd="-10dp"
                     android:id="@+id/stock"
-                    style="@style/montserrat_semiBols_8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="@dimen/_20sdp"
-                    android:minHeight="@dimen/_20sdp"
-                    android:text="In Stock  "
-                    android:textColor="@color/colorPrimary"
-                    app:layout_constraintEnd_toStartOf="@+id/priceLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/linearLayout2"
-                    app:switchPadding="0dp"
-                    app:thumbTint="@color/tumb_color"
-                    app:track="@drawable/rectangle_26242__1_"
-                    app:trackTint="@color/black69_20" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        style="@style/montserrat_semiBols_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="In Stock  "
+                        android:textColor="@color/colorPrimary" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:checked="true"
+                        android:minWidth="@dimen/_20sdp"
+                        android:minHeight="@dimen/_5sdp"
+                        android:scaleX="0.6"
+                        android:scaleY="0.6"
+                        android:switchMinWidth="@dimen/_10sdp"
+                        android:textColor="@color/colorPrimary"
+                        android:thumbTextPadding="0dp"
+                        app:layout_constraintEnd_toStartOf="@+id/priceLayout"
+                        app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:switchPadding="0dp"
+                        app:thumbTint="@color/tumb_color"
+                        app:track="@drawable/rectangle_26242__1_"
+                        app:trackTint="@color/black69_20" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     tools:visibility="visible"

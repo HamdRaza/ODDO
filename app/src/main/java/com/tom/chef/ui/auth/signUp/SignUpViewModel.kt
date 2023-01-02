@@ -16,6 +16,7 @@ class SignUpViewModel(val mActivity: BaseActivity,val dial_code:String) : ViewMo
     fun moveToOTP()=mCallback.moveToOTP()
     fun getCountriesList()=mCallback.getCountriesList()
     fun showCountryCodeDialog(view: View)=mCallback.showCountryCodeDialog()
+    fun pickLocation()=mCallback.pickLocation()
     var counries    = MutableLiveData<ResponseCountries>()
     @JvmField
     var dialCode=ObservableField<String>()

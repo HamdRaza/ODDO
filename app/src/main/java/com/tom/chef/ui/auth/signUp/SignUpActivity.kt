@@ -7,6 +7,7 @@ import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import com.tom.chef.R
 import com.tom.chef.databinding.ActivitySignUpBinding
@@ -16,6 +17,7 @@ import com.tom.chef.newBase.BaseActivity
 import com.tom.chef.ui.auth.otp.OTPActivity
 import com.tom.chef.ui.allBottomSheets.DialCodeSheet
 import com.tom.chef.ui.auth.termsCondition.TermsAndConditionActivity
+import com.tom.chef.ui.location.LocationPickerActivity
 import com.tom.chef.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -174,5 +176,14 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
         return true
     }
 
+    override fun pickLocation() {
+        getLocation.launch(LocationPickerActivity.getIntent(this))
+    }
+    val getLocation=registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        it?.let {
+            it.data?.extras?.let {
 
+            }
+        }
+    }
 }
