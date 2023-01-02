@@ -45,7 +45,7 @@ class MyFirebaseMessagingService  : FirebaseMessagingService() {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setStyle(NotificationCompat.BigTextStyle())
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setSmallIcon(R.mipmap.ic_launcher_foreground)
+                .setSmallIcon(R.mipmap.ic_tom_chef)
                 .setContentIntent(notificationIntent(this))
                 .setAutoCancel(true)
             val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager

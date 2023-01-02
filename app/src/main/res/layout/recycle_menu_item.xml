@@ -109,10 +109,11 @@
                     </LinearLayout>
 
                     <TextView
+                        android:includeFontPadding="false"
                         android:visibility="@{viewModel.isThisVariant?View.VISIBLE:View.GONE,default=visible}"
                         android:textColor="@color/colorPrimary"
                         android:fontFamily="@font/montserrat_bold_700"
-                        style="@style/montserrat_semiBols_10"
+                        style="@style/montserrat_semiBols_8"
                         android:text="Price On Selection"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -120,7 +121,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginEnd="-10dp"
+                    android:layout_marginEnd="-5dp"
                     android:id="@+id/stock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -130,6 +131,8 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
+                        android:layout_gravity="center"
+                        android:includeFontPadding="false"
                         style="@style/montserrat_semiBols_8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -142,8 +145,8 @@
                         android:checked="true"
                         android:minWidth="@dimen/_20sdp"
                         android:minHeight="@dimen/_5sdp"
-                        android:scaleX="0.6"
-                        android:scaleY="0.6"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8"
                         android:switchMinWidth="@dimen/_10sdp"
                         android:textColor="@color/colorPrimary"
                         android:thumbTextPadding="0dp"

@@ -38,7 +38,7 @@
         <!-- Set the splash screen background, animated icon, and animation duration. -->
         <item name="windowSplashScreenBackground">@color/white</item>
         <item name="postSplashScreenTheme">@style/AppTheme</item>
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_splash_new</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_tom_chef_splash</item>
     </style>
 
     <style name="RippleStyleBlack" parent="RippleStyleWhite">
