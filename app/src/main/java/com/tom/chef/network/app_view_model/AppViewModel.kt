@@ -70,7 +70,18 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
             }
         }
     }
-
+    fun signUp2API(requestSignUp2: RequestSignUp2,callBack:(ResponseChefLogIn)->Unit){
+        viewModelScope.launch {
+            try {
+                appRepository.signUp2API(requestSignUp2).collect {
+                    callBack.invoke(it)
+                }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
 
     // Use For Resend OTP
     private var _resendOTPLiveData = SingleLiveEvent<ResponseSuccess>()

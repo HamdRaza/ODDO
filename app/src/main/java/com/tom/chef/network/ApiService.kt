@@ -13,84 +13,118 @@ import retrofit2.http.*
 interface ApiService {
 
     // LOGIN API
-    @POST("auth/email_login")
+    @POST("chef_login")
     @FormUrlEncoded
     suspend fun loginAPI(
-        @Field("user_device_type") device_type: String = Constants.DEVICE_TYPE,
-        @Field("user_device_token") fcm_token: String,
         @Field("email") email: String,
         @Field("password") password: String,
+        @Field("user_device_token") fcm_token: String,
+        @Field("user_device_type") device_type: String = Constants.DEVICE_TYPE,
     ): ResponseChefLogIn
 
-
-    @POST("auth/signup")
+    //first_name:Chef
+//last_name:Mb
+//email:kiyara@gmail.com
+//dial_code:971
+//mobile:5465656
+//address:safdsfds
+//latitude:22.54545
+//longitude:55.34454
+//agree_terms:1
+//password:Hello@1985
+//confirm_password:Hello@1985
+    @POST("chef_register")
     @FormUrlEncoded
     suspend fun signUpAPI(
-        @Field("first_name") first_name: String ,
+        @Field("first_name") first_name: String,
         @Field("last_name") last_name: String,
-        @Field("dial_code") dial_code: String,
-        @Field("phone") phone: String,
-        @Field("device_type") device_type: String = Constants.DEVICE_TYPE,
-        @Field("fcm_token") fcm_token: String,
         @Field("email") email: String,
+        @Field("dial_code") dial_code: String,
+        @Field("mobile") mobile: String,
+        @Field("address") address: String,
+        @Field("latitude") latitude: String,
+        @Field("longitude") longitude: String,
+        @Field("agree_terms") agree_terms: String,
         @Field("password") password: String,
-    ):ResponseChefLogIn
+        @Field("confirm_password") confirm_password: String,
+    ): ResponseChefLogIn
+
+    //    temp_id:40
+//    trade_license
+//    passport
+//    visa_copy
+//    emirates_id
+//    bank_account_proof
+//    preparation_time:15
+//    preparation_unit:mins,hour,day
+    @Multipart
+    @POST("chefregister_step2")
+    suspend fun signUp2API(
+        @Part("temp_id") temp_id: RequestBody,
+        @Part trade_license: MultipartBody.Part?,
+        @Part passport: MultipartBody.Part?,
+        @Part visa_copy: MultipartBody.Part?,
+        @Part emirates_id: MultipartBody.Part?,
+        @Part bank_account_proof: MultipartBody.Part?,
+        @Part("preparation_time") access_token: RequestBody,
+        @Part("preparation_unit") preparation_unit: RequestBody
+    ): ResponseChefLogIn
 
     @POST("auth/resend_phone_code")
     @FormUrlEncoded
     suspend fun resendPhoneOTP(
-        @Field("user_id") user_id:String
-    ):ResponseSuccess
+        @Field("user_id") user_id: String
+    ): ResponseSuccess
 
     @POST("auth/confirm_phone_code")
     @FormUrlEncoded
     suspend fun verifyPhoneOTP(
-      @Field("user_id") user_id:String,
-      @Field("otp") otp:String
+        @Field("user_id") user_id: String,
+        @Field("otp") otp: String
     ): ResponseOTPVerify
 
 
     @POST("auth/forgot_password")
     @FormUrlEncoded
     suspend fun forgotPassword(
-        @Field("phone") phone:String="",
-        @Field("email") email:String="",
-        @Field("type") type:String="",
-        @Field("dial_code") dial_code:String
+        @Field("phone") phone: String = "",
+        @Field("email") email: String = "",
+        @Field("type") type: String = "",
+        @Field("dial_code") dial_code: String
     ): ResponseForgotPassword
 
     @POST("auth/reset_password")
     @FormUrlEncoded
     suspend fun resetPassword(
-        @Field("password_reset_code") password_reset_code:String,
-        @Field("password") password:String,
-        @Field("password_confirmation") password_confirmation:String,
-        @Field("otp") otp:String
-    ):ResponseSuccess
+        @Field("password_reset_code") password_reset_code: String,
+        @Field("password") password: String,
+        @Field("password_confirmation") password_confirmation: String,
+        @Field("otp") otp: String
+    ): ResponseSuccess
 
     @POST("auth/resend_forgot_password_otp")
     @FormUrlEncoded
     suspend fun resendForgotPasswordOTP(
-        @Field("password_reset_code") password_reset_code:String,
-        @Field("type") type:String,
-    ):ResponseSuccess
+        @Field("password_reset_code") password_reset_code: String,
+        @Field("type") type: String,
+    ): ResponseSuccess
 
 
     @POST("auth/social_login")
     @FormUrlEncoded
     suspend fun googleLogIn(
-        @Field("name") name:String,
-        @Field("email") email:String,
-        @Field("fcm_token") fcm_token:String,
-        @Field("device_type") device_type:String=Constants.DEVICE_TYPE,
+        @Field("name") name: String,
+        @Field("email") email: String,
+        @Field("fcm_token") fcm_token: String,
+        @Field("device_type") device_type: String = Constants.DEVICE_TYPE,
     ): ResponseGoogleLogIn
 
 
     @POST("auth/get_user_by_token")
     @FormUrlEncoded
     suspend fun userByToken(
-        @Field("access_token") access_token:String
-    ):ResponseGoogleLogIn
+        @Field("access_token") access_token: String
+    ): ResponseGoogleLogIn
 
 
     @GET("countries")
@@ -100,7 +134,7 @@ interface ApiService {
     @POST("my_profile")
     @FormUrlEncoded
     suspend fun myProfile(
-        @Field("access_token") access_token:String
+        @Field("access_token") access_token: String
     ): ResponseProfile
 
 
@@ -116,9 +150,9 @@ interface ApiService {
     @FormUrlEncoded
     suspend fun changePassword(
         @Field(Constants.TOKEN_KEY) access_token: String,
-        @Field("old_password") old_password:String,
-        @Field("new_password") new_password:String
-    ):ResponseSuccess
+        @Field("old_password") old_password: String,
+        @Field("new_password") new_password: String
+    ): ResponseSuccess
 
 }
 

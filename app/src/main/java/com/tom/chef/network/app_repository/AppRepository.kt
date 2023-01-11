@@ -29,6 +29,14 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
         }
     }.flowOn(Dispatchers.IO)
 
+    fun signUp2API(requestSignUp2: RequestSignUp2): Flow<ResponseChefLogIn> = flow {
+        try {
+            emit(apiServiceImple.signUp2API(requestSignUp2))
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
     fun resendPhoneOTP(user_id: String): Flow<ResponseSuccess> = flow {
         try {
             emit(apiServiceImple.resendPhoneOTP(user_id = user_id))

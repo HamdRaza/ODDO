@@ -6,7 +6,7 @@ import android.net.ConnectivityManager
 
 object NetworkUtils {
     const val API_KEY = "dummy_key"
-    const val BASE_URL="https://jarsite.com/healthy_wealthy/api/v1/"
+    const val BASE_URL="https://jarsite.com/tom/api/v1/"
 
     fun isNetworkConnected(activity: Activity): Boolean {
         val cm = activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
