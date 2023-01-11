@@ -136,7 +136,6 @@ dependencies {
     implementation 'com.github.kittinunf.fuel:fuel-json:2.3.1'
     implementation "com.airbnb.android:lottie:5.2.0"
     implementation 'androidx.work:work-runtime:2.7.1'
-    implementation 'androidx.wear:wear:1.2.0'
 }
 repositories {
     mavenCentral()

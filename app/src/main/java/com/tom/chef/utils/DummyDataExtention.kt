@@ -34,6 +34,7 @@ fun getAllDate():List<String>{
     }
     return list
 }
+
 fun Date.getFormated():String{
     return SimpleDateFormat("MMM EEE d").format(this)
 }

@@ -19,7 +19,6 @@ import com.tom.chef.models.auth.RequestLogIn
 import com.tom.chef.newBase.BaseActivity
 import com.tom.chef.ui.auth.otp.OTPActivity
 import com.tom.chef.ui.allBottomSheets.BottomSheets
-import com.tom.chef.ui.allBottomSheets.carManBottomSheet.CarManBottomSheet
 import com.tom.chef.ui.auth.phoneNumber.PhoneNumberActivity
 import com.tom.chef.ui.auth.signUp.SignUpActivity
 import com.tom.chef.ui.comman.googleLogIn.GoogleLogInViewModel
@@ -188,10 +187,8 @@ class LoginActivity : BaseActivity(), LoginInterface{
     }
 
     override fun callFaceBook() {
-        CarManBottomSheet().carManBottomSheet(this)
-        /*
         startActivity(MainActivity.getIntent(this))
-        finishAffinity()*/
+        finishAffinity()
     }
 
 }

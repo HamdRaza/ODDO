@@ -12,7 +12,6 @@ import com.tom.chef.ui.comman.menuItems.packageMenu.PackageAdopter;
 import com.tom.chef.ui.comman.menuItems.veriants.VeriantItemAdopter;
 import com.tom.chef.ui.comman.orderItem.OrderItemAdopter;
 import com.tom.chef.ui.comman.orders.OrderAdopter;
-import com.tom.chef.ui.comman.timer.TimerItemAdapter;
 
 public class DataBindingAdaptersJava {
     @BindingAdapter({"orderAdopter"})
@@ -49,9 +48,5 @@ public class DataBindingAdaptersJava {
         recyclerView.setAdapter(fileNamesAdopter);
     }
 
-    @BindingAdapter({"timerItemAdopter"})
-    public static void timerItemAdopter(@NonNull RecyclerView recyclerView, TimerItemAdapter timerItemAdapter) {
-        recyclerView.setAdapter(timerItemAdapter);
-    }
 
 }
