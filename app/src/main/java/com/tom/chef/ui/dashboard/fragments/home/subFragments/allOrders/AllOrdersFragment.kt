@@ -12,6 +12,7 @@ import com.tom.chef.R
 import com.tom.chef.databinding.FragmentAllOrdersBinding
 import com.tom.chef.databinding.FragmentDashboardHomeBinding
 import com.tom.chef.databinding.FragmentDashboardHomeCurrentorderBinding
+import com.tom.chef.models.OrderListResponse
 import com.tom.chef.network.app_view_model.AppViewModel
 import com.tom.chef.newBase.BaseFragment
 import com.tom.chef.ui.comman.menu.HomeMenuInterface
@@ -54,7 +55,6 @@ class AllOrdersFragment : BaseFragment(), OrderInterface {
         )
         status = arguments?.getString("tabName", "").handleHull()
         allOrderViewModel = AllOrderViewModel()
-        allOrderViewModel.fillOrders(status = status, orderInterface = this)
         binding.viewModel = allOrderViewModel
         return binding.root
     }
@@ -64,7 +64,7 @@ class AllOrdersFragment : BaseFragment(), OrderInterface {
         getOrders()
     }
 
-    override fun onOrderClicked() {
+    override fun onOrderClicked(data: OrderListResponse.ODataItem) {
         childFragmentManager.findFragmentById(mainActivity.binding.fragmentView.id)
             .let { fragment ->
                 if (fragment !is OrderDetailsFragment) {
@@ -84,8 +84,17 @@ class AllOrdersFragment : BaseFragment(), OrderInterface {
 //4- delivered
 //15- rejected
     private fun getOrders() {
+        var orderType="1"
+        when(status){
+            "PENDING"->{
+                orderType="2"
+            }
+            "ACCEPTED"->{
+
+            }
+        }
         appViewModel.orderListAPI(
-            "1",
+            order_type = orderType,
             "1",
             "15",
             "0",
@@ -93,8 +102,9 @@ class AllOrdersFragment : BaseFragment(), OrderInterface {
         )
         appViewModel.orderListLive.observe(mActivity) {
             if (it.status == "1") {
-
-                Toast.makeText(requireContext(), "Fetch Successful", Toast.LENGTH_SHORT).show()
+                it?.oData?.let {
+                    allOrderViewModel.fillOrders(list = it, orderInterface = this)
+                }
             }
         }
     }

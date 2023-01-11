@@ -1,5 +1,6 @@
 package com.tom.chef.ui.dashboard.fragments.home.subFragments.allOrders
 
+import com.tom.chef.models.OrderListResponse
 import com.tom.chef.ui.comman.ViewModel
 import com.tom.chef.ui.comman.orders.OrderInterface
 import com.tom.chef.ui.comman.orders.OrderAdopter
@@ -10,12 +11,11 @@ class AllOrderViewModel : ViewModel {
 
     var orderAdopter = OrderAdopter(ArrayList())
 
-    fun fillOrders(status: String, orderInterface: OrderInterface) {
+    fun fillOrders(list:List<OrderListResponse.ODataItem>, orderInterface: OrderInterface) {
         val viewModels = ArrayList<ViewModel>()
-        for (i in 0 until 10) {
-            val viewModel = OrderViewModel()
-            viewModel.status.set(status.orignalName())
-            viewModel.orderInterface = orderInterface
+        list.forEach {
+            val viewModel = OrderViewModel(data = it)
+            viewModel.orderInterface=orderInterface
             viewModels.add(viewModel)
         }
         orderAdopter.setList(viewModels)

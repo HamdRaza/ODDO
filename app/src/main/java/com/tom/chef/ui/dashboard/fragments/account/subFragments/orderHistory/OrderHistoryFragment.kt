@@ -10,6 +10,7 @@ import com.tom.chef.databinding.FragmentAllOrdersBinding
 import com.tom.chef.databinding.FragmentDashboardHomeBinding
 import com.tom.chef.databinding.FragmentDashboardHomeCurrentorderBinding
 import com.tom.chef.databinding.FragmentOrderHistoryBinding
+import com.tom.chef.models.OrderListResponse
 import com.tom.chef.newBase.BaseFragment
 import com.tom.chef.ui.comman.menu.HomeMenuInterface
 import com.tom.chef.ui.comman.menu.HomeMenuViewModel
@@ -38,7 +39,7 @@ class OrderHistoryFragment :  BaseFragment(),OrderInterface{
         mainActivity.toolbarVM.makeBackRound(isRound = true)
 
         orderHistoryViewModel= OrderHistoryViewModel()
-        orderHistoryViewModel.fillOrders(status = "Request for payment", orderInterface = this)
+       // orderHistoryViewModel.fillOrders(status = "Request for payment", orderInterface = this)
         binding.viewModel=orderHistoryViewModel
         return binding.root
     }
@@ -47,7 +48,7 @@ class OrderHistoryFragment :  BaseFragment(),OrderInterface{
 
     }
 
-    override fun onOrderClicked() {
+    override fun onOrderClicked(data: OrderListResponse.ODataItem) {
         childFragmentManager.findFragmentById(mainActivity.binding.fragmentView.id).let { fragment->
             if (fragment !is OrderDetailsFragment) {
                 val orderDetailsFragment=OrderDetailsFragment()
