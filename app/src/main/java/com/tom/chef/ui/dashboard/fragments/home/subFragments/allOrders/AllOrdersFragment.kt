@@ -40,6 +40,7 @@ class AllOrdersFragment : BaseFragment(), OrderInterface {
     }
 
     lateinit var status: String
+    lateinit var type: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,6 +55,7 @@ class AllOrdersFragment : BaseFragment(), OrderInterface {
             )
         )
         status = arguments?.getString("tabName", "").handleHull()
+        type = arguments?.getString("type", "").handleHull()
         allOrderViewModel = AllOrderViewModel()
         binding.viewModel = allOrderViewModel
         return binding.root
@@ -81,23 +83,49 @@ class AllOrdersFragment : BaseFragment(), OrderInterface {
     //order_status
 //0-Pending
 //1,2,3,6,7- accepted
-//4- delivered
 //15- rejected
+//4- delivered
     private fun getOrders() {
-        var orderType="1"
-        when(status){
-            "PENDING"->{
-                orderType="2"
+        var orderStatus = "0"
+        var orderType = "1"
+        when (type) {
+            "current" -> {
+                orderType = "1"
             }
-            "ACCEPTED"->{
-
+            "past" -> {
+                orderType = "2"
+            }
+            "scheduled" -> {
+                orderType = "3"
             }
         }
+        when (status) {
+//            "PENDING", "ACCEPTED", "REJECTED", "COMPLETED"
+            "PENDING" -> {
+                orderStatus = "0"
+            }
+            "ACCEPTED" -> {
+                orderStatus = "1"
+            }
+            "REJECTED" -> {
+                orderStatus = "15"
+            }
+            "COMPLETED" -> {
+                orderStatus = "4"
+            }
+        }
+//        appViewModel.orderListAPI(
+//            "2",
+//            "1",
+//            "15",
+//            "1",
+//            "Asia/Kolkata"
+//        )
         appViewModel.orderListAPI(
             order_type = orderType,
             "1",
             "15",
-            "0",
+            order_status = orderStatus,
             "Asia/Kolkata"
         )
         appViewModel.orderListLive.observe(mActivity) {

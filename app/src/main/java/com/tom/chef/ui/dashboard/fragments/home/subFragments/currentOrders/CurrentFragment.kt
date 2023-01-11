@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class CurrentFragment :  BaseFragment(),CurrentOrderInterface{
+class CurrentFragment : BaseFragment(), CurrentOrderInterface {
     private lateinit var binding: FragmentDashboardHomeCurrentorderBinding
 
     lateinit var currentOrderViewModel: CurrentOrderViewModel
@@ -29,27 +29,39 @@ class CurrentFragment :  BaseFragment(),CurrentOrderInterface{
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentDashboardHomeCurrentorderBinding.bind(inflater.inflate(R.layout.fragment_dashboard_home_currentorder, container, false))
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentDashboardHomeCurrentorderBinding.bind(
+            inflater.inflate(
+                R.layout.fragment_dashboard_home_currentorder,
+                container,
+                false
+            )
+        )
 
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        currentOrderViewModel=CurrentOrderViewModel()
-        currentOrderViewModel.currentOrderInterface=this
-        binding.viewModel=currentOrderViewModel
+        currentOrderViewModel = CurrentOrderViewModel()
+        currentOrderViewModel.currentOrderInterface = this
+        binding.viewModel = currentOrderViewModel
         loadAllTabs()
     }
-    private fun loadAllTabs(){
-        val fragments=ArrayList<Fragment>()
-        listOf("PENDING","ACCEPTED","REJECTED","COMPLETED").forEach {
+
+    private fun loadAllTabs() {
+        val fragments = ArrayList<Fragment>()
+        listOf("PENDING", "ACCEPTED", "REJECTED", "COMPLETED").forEach {
             binding.tab.addTab(binding.tab.newTab().setText(it))
-            val newFragment=AllOrdersFragment()
-            newFragment.arguments= bundleOf(Pair("tabName",it))
+            val newFragment = AllOrdersFragment()
+            newFragment.arguments = bundleOf(Pair("tabName", it), Pair("type", "current"))
             fragments.add(newFragment)
         }
-        binding.pageView.adapter= ViewStateAdapter(fragments,childFragmentManager,lifecycle)
+        binding.pageView.adapter = ViewStateAdapter(fragments, childFragmentManager, lifecycle)
         binding.tab.handleClick(binding.pageView)
     }
 

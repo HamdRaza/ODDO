@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class ScheduledFragment :  BaseFragment(),ScheduledOrderInterface{
+class ScheduledFragment : BaseFragment(), ScheduledOrderInterface {
     private lateinit var binding: FragmentDashboardHomeScheduledorderBinding
 
     lateinit var scheduledOrderViewModel: ScheduledOrderViewModel
@@ -27,27 +27,39 @@ class ScheduledFragment :  BaseFragment(),ScheduledOrderInterface{
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentDashboardHomeScheduledorderBinding.bind(inflater.inflate(R.layout.fragment_dashboard_home_scheduledorder, container, false))
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentDashboardHomeScheduledorderBinding.bind(
+            inflater.inflate(
+                R.layout.fragment_dashboard_home_scheduledorder,
+                container,
+                false
+            )
+        )
 
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        scheduledOrderViewModel=ScheduledOrderViewModel()
-        scheduledOrderViewModel.scheduledOrderInterface=this
-        binding.viewModel=scheduledOrderViewModel
+        scheduledOrderViewModel = ScheduledOrderViewModel()
+        scheduledOrderViewModel.scheduledOrderInterface = this
+        binding.viewModel = scheduledOrderViewModel
         loadAllTabs()
     }
-    private fun loadAllTabs(){
-        val fragments=ArrayList<Fragment>()
-        listOf("PENDING","ACCEPTED","REJECTED","COMPLETED").forEach {
+
+    private fun loadAllTabs() {
+        val fragments = ArrayList<Fragment>()
+        listOf("PENDING", "ACCEPTED", "REJECTED", "COMPLETED").forEach {
             binding.tab.addTab(binding.tab.newTab().setText(it))
-            val newFragment= AllOrdersFragment()
-            newFragment.arguments= bundleOf(Pair("tabName",it))
+            val newFragment = AllOrdersFragment()
+            newFragment.arguments = bundleOf(Pair("tabName", it), Pair("type", "scheduled"))
             fragments.add(newFragment)
         }
-        binding.pageView.adapter= ViewStateAdapter(fragments,childFragmentManager,lifecycle)
+        binding.pageView.adapter = ViewStateAdapter(fragments, childFragmentManager, lifecycle)
         binding.tab.handleClick(binding.pageView)
     }
 }
