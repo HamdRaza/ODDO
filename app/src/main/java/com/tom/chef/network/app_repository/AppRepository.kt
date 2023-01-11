@@ -1,5 +1,6 @@
 package com.tom.chef.network.app_repository
 
+import com.tom.chef.models.OrderListResponse
 import com.tom.chef.models.ResponseSuccess
 import com.tom.chef.models.auth.*
 import com.tom.chef.models.profile.*
@@ -16,7 +17,7 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
     fun loginAPI(requestLogIn: RequestLogIn): Flow<ResponseChefLogIn> = flow {
         try {
             emit(apiServiceImple.loginAPI(requestLogIn))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }.flowOn(Dispatchers.IO)
@@ -24,7 +25,7 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
     fun signUpAPI(requestSignUp: RequestSignUp): Flow<ResponseChefLogIn> = flow {
         try {
             emit(apiServiceImple.signUpAPI(requestSignUp))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }.flowOn(Dispatchers.IO)
@@ -32,7 +33,7 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
     fun signUp2API(requestSignUp2: RequestSignUp2): Flow<ResponseChefLogIn> = flow {
         try {
             emit(apiServiceImple.signUp2API(requestSignUp2))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }.flowOn(Dispatchers.IO)
@@ -40,7 +41,7 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
     fun resendPhoneOTP(user_id: String): Flow<ResponseSuccess> = flow {
         try {
             emit(apiServiceImple.resendPhoneOTP(user_id = user_id))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }.flowOn(Dispatchers.IO)
@@ -48,31 +49,33 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
     fun verifyPhoneOTP(user_id: String, otp: String): Flow<ResponseOTPVerify> = flow {
         try {
             emit(apiServiceImple.verifyPhoneOTP(user_id = user_id, otp = otp))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }.flowOn(Dispatchers.IO)
 
-    fun forgotPassword(requestResetPassword: RequestResetPassword): Flow<ResponseForgotPassword> = flow {
-        try {
-            emit(apiServiceImple.forgotPassword(requestResetPassword))
-        }catch (e:Exception){
-            e.printStackTrace()
-        }
-    }.flowOn(Dispatchers.IO)
+    fun forgotPassword(requestResetPassword: RequestResetPassword): Flow<ResponseForgotPassword> =
+        flow {
+            try {
+                emit(apiServiceImple.forgotPassword(requestResetPassword))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }.flowOn(Dispatchers.IO)
 
-    fun resendForgotPasswordOTP(postResendForgotPasswordOTP: PostResendForgotPasswordOTP): Flow<ResponseSuccess> = flow {
-        try {
-            emit(apiServiceImple.resendForgotPasswordOTP(postResendForgotPasswordOTP))
-        }catch (e:Exception){
-            e.printStackTrace()
-        }
-    }.flowOn(Dispatchers.IO)
+    fun resendForgotPasswordOTP(postResendForgotPasswordOTP: PostResendForgotPasswordOTP): Flow<ResponseSuccess> =
+        flow {
+            try {
+                emit(apiServiceImple.resendForgotPasswordOTP(postResendForgotPasswordOTP))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }.flowOn(Dispatchers.IO)
 
     fun resetPassword(postResetPasssword: PostResetPasssword): Flow<ResponseSuccess> = flow {
         try {
             emit(apiServiceImple.resetPassword(postResetPasssword))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
@@ -81,7 +84,7 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
     fun googleLogIn(requestGoogleLogIn: RequestGoogleLogIn): Flow<ResponseGoogleLogIn> = flow {
         try {
             emit(apiServiceImple.googleLogin(requestGoogleLogIn))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }.flowOn(Dispatchers.IO)
@@ -89,7 +92,7 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
     fun userByToken(token: String): Flow<ResponseGoogleLogIn> = flow {
         try {
             emit(apiServiceImple.userByToken(token = token))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }.flowOn(Dispatchers.IO)
@@ -97,7 +100,7 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
     fun getCountries(): Flow<ResponseCountries> = flow {
         try {
             emit(apiServiceImple.getCountries())
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }.flowOn(Dispatchers.IO)
@@ -106,28 +109,49 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
     fun myProfile(): Flow<ResponseProfile> = flow {
         try {
             emit(apiServiceImple.myProfile())
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }.flowOn(Dispatchers.IO)
 
 
+    fun updateProfile(requestUpdateProfile: RequestUpdateProfile): Flow<ResponseProfileUpdate> =
+        flow {
+            try {
+                emit(apiServiceImple.updateProfile(requestUpdateProfile))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }.flowOn(Dispatchers.IO)
 
-
-    fun updateProfile(requestUpdateProfile: RequestUpdateProfile):Flow<ResponseProfileUpdate> = flow {
-        try {
-            emit(apiServiceImple.updateProfile(requestUpdateProfile))
-        }catch (e:Exception){
-            e.printStackTrace()
-        }
-    }.flowOn(Dispatchers.IO)
-    fun changePassword(oldPassword:String, newPasword:String):Flow<ResponseSuccess> = flow {
+    fun changePassword(oldPassword: String, newPasword: String): Flow<ResponseSuccess> = flow {
         try {
             emit(apiServiceImple.changePassword(oldPassword = oldPassword, newPasword = newPasword))
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }.flowOn(Dispatchers.IO)
 
+    fun orderListAPI(
+        order_type: String,
+        page: String,
+        limit: String,
+        order_status: String,
+        user_timezone: String
+    ): Flow<OrderListResponse> = flow {
+        try {
+            emit(
+                apiServiceImple.orderListAPI(
+                    order_type = order_type,
+                    page = page,
+                    limit = limit,
+                    order_status = order_status,
+                    user_timezone = user_timezone
+                )
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
 
 }

@@ -1,5 +1,6 @@
 package com.tom.chef.network
 
+import com.tom.chef.models.OrderListResponse
 import com.tom.chef.models.ResponseSuccess
 import com.tom.chef.models.auth.*
 import com.tom.chef.models.profile.ResponseProfile
@@ -69,6 +70,26 @@ interface ApiService {
         @Part("preparation_time") access_token: RequestBody,
         @Part("preparation_unit") preparation_unit: RequestBody
     ): ResponseChefLogIn
+
+    //    access_token:{{access_token}}
+//order_type:2
+//page:1
+//limit:15
+////search_key:TOM-1000-10150
+//order_status:1
+////from_date:2022-10-05
+////to_date:2022-10-08
+//user_timezone:Asia/Kolkata
+    @POST("chef/order_list")
+    @FormUrlEncoded
+    suspend fun orderListAPI(
+        @Field("access_token") access_token: String,
+        @Field("order_type") order_type: String,
+        @Field("page") page: String,
+        @Field("limit") limit: String,
+        @Field("order_status") order_status: String,
+        @Field("user_timezone") user_timezone: String,
+    ): OrderListResponse
 
     @POST("auth/resend_phone_code")
     @FormUrlEncoded

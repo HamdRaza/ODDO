@@ -26,7 +26,7 @@ class SplashScreen : AppCompatActivity() {
 
     fun callToNextActivity(){
         Handler(mainLooper).postDelayed({
-            sharedPreferenceManager.isLogedIn=false
+//            sharedPreferenceManager.isLogedIn=false
             if (sharedPreferenceManager.isLogedIn){
                 startActivity(MainActivity.getIntent(this).putExtras(intent.extras.handleEmpty()))
             }else{

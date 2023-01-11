@@ -6,18 +6,19 @@ import com.tom.chef.ui.comman.orders.OrderAdopter
 import com.tom.chef.ui.comman.orders.OrderViewModel
 import com.tom.chef.utils.orignalName
 
-class AllOrderViewModel: ViewModel {
+class AllOrderViewModel : ViewModel {
 
-    var orderAdopter=OrderAdopter(ArrayList())
+    var orderAdopter = OrderAdopter(ArrayList())
 
-    fun fillOrders(status:String,orderInterface: OrderInterface){
-        val viewModels=ArrayList<ViewModel>()
-        for (i in 0 until 10){
-            val viewModel=OrderViewModel()
+    fun fillOrders(status: String, orderInterface: OrderInterface) {
+        val viewModels = ArrayList<ViewModel>()
+        for (i in 0 until 10) {
+            val viewModel = OrderViewModel()
             viewModel.status.set(status.orignalName())
-            viewModel.orderInterface=orderInterface
+            viewModel.orderInterface = orderInterface
             viewModels.add(viewModel)
         }
         orderAdopter.setList(viewModels)
     }
+
 }

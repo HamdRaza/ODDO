@@ -1,5 +1,6 @@
 package com.tom.chef.network
 
+import com.tom.chef.models.OrderListResponse
 import com.tom.chef.models.ResponseSuccess
 import com.tom.chef.models.auth.*
 import com.tom.chef.models.profile.*
@@ -141,6 +142,23 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
             access_token = sharedPreferenceManager.getAccessToken.toString(),
             old_password = oldPassword,
             new_password = newPasword
+        )
+    }
+
+    suspend fun orderListAPI(
+        order_type: String,
+        page: String,
+        limit: String,
+        order_status: String,
+        user_timezone: String
+    ): OrderListResponse {
+        return apiService.orderListAPI(
+            access_token = sharedPreferenceManager.getAccessToken.toString(),
+            order_type = order_type,
+            page = page,
+            limit = limit,
+            order_status = order_status,
+            user_timezone = user_timezone
         )
     }
 

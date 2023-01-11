@@ -33,4 +33,7 @@ class OrderViewModel:ViewModel {
     fun onClicked(){
         orderInterface.onOrderClicked()
     }
+    fun update(){
+
+    }
 }
