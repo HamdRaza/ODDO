@@ -58,8 +58,7 @@ class LoginActivity : BaseActivity(), LoginInterface{
 
     override fun logInClicked() {
         if (validate()){
-            vm.moveToOTP()
-           // loginPostAPI(email = binding.editTextTextEmailAddress.getLocalText(), password = binding.editTextTextPassword.getLocalText(), fcm_token = sharedPreferenceManager.getFcmToken)
+            loginPostAPI(email = binding.editTextTextEmailAddress.getLocalText(), password = binding.editTextTextPassword.getLocalText(), fcm_token = sharedPreferenceManager.getFcmToken)
         }
     }
     override fun registerClicked() {
@@ -110,9 +109,12 @@ class LoginActivity : BaseActivity(), LoginInterface{
             if (!it.status.checkForSuccess()){
                 myToast(it.message)
                 return@loginAPI
+            }else{
+                myToast("Login Successful")
+                sharedPreferenceManager.saveUser(it.oData, it.accessToken)
+                vm.moveToDashboard()
+                //vm.moveToOTP()
             }
-            sharedPreferenceManager.saveUser(it.oData,it.accessToken)
-            vm.moveToDashboard()
 
             /* Move to OTP get check
             it.oData?.let {user->

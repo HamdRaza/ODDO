@@ -41,12 +41,17 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
         init()
         vm.getCountriesList()
-        binding.agreeText.makeLinks(Pair(getString(R.string.terms_conditionsClick),View.OnClickListener {
-            startActivity(TermsAndConditionActivity.getIntent(this))
-        }))
+        binding.agreeText.makeLinks(
+            Pair(
+                getString(R.string.terms_conditionsClick),
+                View.OnClickListener {
+                    startActivity(TermsAndConditionActivity.getIntent(this))
+                })
+        )
     }
-    private fun init(){
-        vm = SignUpViewModel(this,"+971")
+
+    private fun init() {
+        vm = SignUpViewModel(this, "+971")
         window.setWhiteColor(this)
         window.makeTransparentStatusBarBlack()
         binding.viewModel = vm
@@ -55,7 +60,7 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
     }
 
     override fun getCountriesList() {
-        val country1=ResponseCountries.OData(
+        val country1 = ResponseCountries.OData(
             active = "1",
             created_at = "",
             deleted = 0,
@@ -66,13 +71,13 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
             updated_at = ""
         )
 
-        val responseCountries=ResponseCountries(
+        val responseCountries = ResponseCountries(
             oData = listOf(country1),
             status = 1,
             message = ""
         )
 
-        vm.counries.value=responseCountries
+        vm.counries.value = responseCountries
         /*
         startAnim()
         viewModel.getAllCountries()
@@ -90,26 +95,30 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
 
     override fun showCountryCodeDialog() {
         vm.counries.value?.oData?.let {
-            DialCodeSheet().dailCodeSheet(this,"Select Dail Code",it){
+            DialCodeSheet().dailCodeSheet(this, "Select Dail Code", it) {
                 vm.updateDialCode("+${it.dial_code}")
             }
         }
     }
 
     override fun registerClicked() {
-        if (validate()){
+        if (validate()) {
             vm.moveToOTP()
-            /*
-            val requestSignUp=RequestSignUp(
-                dial_code = binding.countryCode.getLocalText().removePlus(),
-                password = binding.password.getLocalText(),
-                email = binding.email.getLocalText(),
+
+            val requestSignUp = RequestSignUp(
                 first_name = binding.firstName.getLocalText(),
                 last_name = binding.lastName.getLocalText(),
-                phone = binding.phone.getLocalText(),
-                fcm_token = sharedPreferenceManager.getFcmToken
+                email = binding.email.getLocalText(),
+                dial_code = binding.countryCode.getLocalText().removePlus(),
+                mobile = binding.phone.getLocalText(),
+                address = binding.Address.getLocalText(),
+                latitude = "22.54545",
+                longitude = "55.34454",
+                agree_terms = "1",
+                password = binding.password.getLocalText(),
+                confirm_password = binding.password.getLocalText(),
             )
-            signUpPostAPI(requestSignUp)*/
+            signUpPostAPI(requestSignUp)
         }
     }
 
@@ -122,47 +131,49 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
         finish()
     }
 
-    private fun signUpPostAPI(requestSignUp: RequestSignUp){
+    private fun signUpPostAPI(requestSignUp: RequestSignUp) {
         startAnim()
-        viewModel.signUpAPI(requestSignUp){
+        viewModel.signUpAPI(requestSignUp) {
             stopAnim()
-            if (!it.status.checkForSuccess()){
+            if (!it.status.checkForSuccess()) {
                 myToast(it.message)
                 return@signUpAPI
+            } else {
+                myToast("Register Successful123")
+                sharedPreferenceManager.saveUser(it.oData, it.accessToken)
+                vm.moveToOTP()
+                finishAffinity()
             }
-            sharedPreferenceManager.saveUser(it.oData,it.accessToken)
-            vm.moveToOTP()
-            finishAffinity()
         }
     }
 
 
-    fun validate():Boolean{
+    fun validate(): Boolean {
         val valid = Validation
-        listOf(binding.firstName,binding.lastName,binding.email,binding.phone).forEach {
-            if (valid.checkIsEmpty(it)){
+        listOf(binding.firstName, binding.lastName, binding.email, binding.phone).forEach {
+            if (valid.checkIsEmpty(it)) {
                 return false
             }
         }
-        if (valid.checkIsEmpty(binding.countryCode)){
+        if (valid.checkIsEmpty(binding.countryCode)) {
             myToast("Country code required")
             return false
         }
-        listOf(binding.firstName,binding.lastName).forEach {
-            if (!valid.isAvalidName(it)){
+        listOf(binding.firstName, binding.lastName).forEach {
+            if (!valid.isAvalidName(it)) {
                 return false
             }
         }
-        if (!valid.checkIsAnEmail(binding.email)){
+        if (!valid.checkIsAnEmail(binding.email)) {
             return false
         }
-        if (!valid.isAValidMobile(binding.phone)){
+        if (!valid.isAValidMobile(binding.phone)) {
             return false
         }
-        if (!valid.isAValidPassword(binding.password)){
+        if (!valid.isAValidPassword(binding.password)) {
             return false
         }
-        if (!valid.isAgree(this,binding.agree)){
+        if (!valid.isAgree(this, binding.agree)) {
             return false
         }
         return true
