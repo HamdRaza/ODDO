@@ -41,6 +41,7 @@ class MainActivity : BaseActivity(), ToolBarInterface, MainInterface, AccountInt
     lateinit var binding: ActivityMainBinding
     val vm: MainViewModel by viewModels()
     val appViewModel: AppViewModel by viewModels()
+    private lateinit var accountVM: AccountViewModel
 
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
@@ -91,9 +92,9 @@ class MainActivity : BaseActivity(), ToolBarInterface, MainInterface, AccountInt
         binding.toolbar.toolbarViewModel = toolbarVM
         toolbarVM.toolBarInterface = this
 
-        val accountViewModel = AccountViewModel(this)
-        accountViewModel.accountInterface = this
-        binding.toolbar.profile = accountViewModel
+        accountVM = AccountViewModel(this)
+        accountVM.accountInterface = this
+        binding.toolbar.profile = accountVM
 
         window.setWhiteColor(this)
         window.makeTransparentStatusBarBlack()
@@ -168,6 +169,11 @@ class MainActivity : BaseActivity(), ToolBarInterface, MainInterface, AccountInt
 
 
     override fun callMyProfileAPI() {
+        vm.userProfile.observe(this) {
+            it?.let {
+                accountVM.updateProfile(it)
+            }
+        }
         appViewModel.getProfile()
         appViewModel.getProfileLive.observe(this) {
             stopAnim()

@@ -1,119 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:clickable="true"
-    >
+    android:clickable="true">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.tom.chef.ui.dashboard.fragments.account.AccountViewModel" />
 
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/appBackgroundColor">
 
         <androidx.core.widget.NestedScrollView
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="0dp"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:paddingBottom="@dimen/_20sdp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/_20sdp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/toolbar"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/toolbar_back_rounded"
                     android:elevation="@dimen/_4sdp"
                     android:paddingHorizontal="@dimen/_15sdp"
                     android:paddingTop="@dimen/_20sdp"
                     android:paddingBottom="@dimen/_15sdp"
-                    android:background="@drawable/toolbar_back_rounded"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible">
 
 
                     <LinearLayout
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:orientation="horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
                         <ImageView
-                            android:onClick="@{()->viewModel.onBackClicked()}"
-                            android:src="@drawable/back_button_icon"
                             android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"/>
+                            android:layout_height="@dimen/_20sdp"
+                            android:onClick="@{()->viewModel.onBackClicked()}"
+                            android:src="@drawable/back_button_icon" />
+
                         <TextView
+                            style="@style/montserrat_medium_16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:maxLength="35"
-                            android:textColor="@color/black02"
-                            style="@style/montserrat_medium_16"
-                            tools:text="My Profile"
                             android:text="@{viewModel.backTitle}"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                            android:textColor="@color/black02"
+                            tools:text="My Profile" />
                     </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_marginTop="-25dp"
 
-                    app:shapeAppearanceOverlay="@style/roundImage15Bottom"
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/topBackgroundImage"
                     android:layout_width="match_parent"
-                    android:scaleType="centerCrop"
                     android:layout_height="@dimen/_180sdp"
+                    android:layout_marginTop="-25dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/dummy_profile_back"
-                    app:layout_constraintTop_toBottomOf="@id/toolbar" />
+                    app:coverImage="@{viewModel.coverImage}"
+                    app:layout_constraintTop_toBottomOf="@id/toolbar"
+                    app:shapeAppearanceOverlay="@style/roundImage15Bottom" />
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/infoBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:id="@+id/infoBox"
-                    app:layout_constraintTop_toBottomOf="@id/topBackgroundImage"
                     app:layout_constraintBottom_toBottomOf="@id/topBackgroundImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    app:layout_constraintTop_toBottomOf="@id/topBackgroundImage">
 
                     <androidx.cardview.widget.CardView
-                        android:layout_marginStart="@dimen/_50sdp"
-                        app:cardCornerRadius="@dimen/_3sdp"
-                        android:elevation="0dp"
-                        app:cardElevation="@dimen/_1sdp"
-                        android:background="@color/white"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         android:id="@+id/linearLayout"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/_100sdp"
-                        android:orientation="horizontal"/>
+                        android:layout_marginStart="@dimen/_50sdp"
+                        android:background="@color/white"
+                        android:elevation="0dp"
+                        android:orientation="horizontal"
+                        app:cardCornerRadius="@dimen/_3sdp"
+                        app:cardElevation="@dimen/_1sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <LinearLayout
-                        android:elevation="@dimen/_10sdp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:elevation="@dimen/_10sdp"
                         android:orientation="vertical"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/shapeableImageView"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -122,74 +125,76 @@
                             style="@style/montserrat_bold_18"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:text="Hamid Raza"
                             android:text="@{viewModel.userName}"
-                            android:textColor="@color/redD1" />
+                            android:textColor="@color/redD1"
+                            tools:text="Hamid Raza" />
 
                         <LinearLayout
-                            android:layout_marginTop="@dimen/_15sdp"
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:orientation="horizontal">
+
                             <ImageView
-                                android:src="@drawable/location_icon_vector"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/location_icon_vector" />
+
                             <TextView
-                                tools:text="Al Quoz - Al Quoz 2 - Dubai - United Arab Emirates"
                                 android:id="@+id/email"
                                 style="@style/montserrat_medium_12"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{viewModel.userAddress}"
-                                android:textColor="@color/divider_line" />
+                                android:textColor="@color/divider_line"
+                                tools:text="Al Quoz - Al Quoz 2 - Dubai - United Arab Emirates" />
                         </LinearLayout>
 
 
                     </LinearLayout>
 
                     <com.google.android.material.imageview.ShapeableImageView
-                        android:paddingHorizontal="@dimen/_5sdp"
-                        android:paddingVertical="@dimen/_5sdp"
-                        android:elevation="@dimen/_2sdp"
                         android:id="@+id/shapeableImageView"
                         android:layout_width="@dimen/_100sdp"
                         android:layout_height="@dimen/_120sdp"
+                        android:elevation="@dimen/_2sdp"
+                        android:paddingHorizontal="@dimen/_5sdp"
+                        android:paddingVertical="@dimen/_5sdp"
                         android:scaleType="centerCrop"
+                        android:src="@drawable/dummy_profile_icon"
+                        app:imageUrl="@{viewModel.profilePath}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:shapeAppearanceOverlay="@style/customRoundedImageViewFull"
-                        android:src="@drawable/dummy_profile_icon" />
+                        app:shapeAppearanceOverlay="@style/customRoundedImageViewFull" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 <LinearLayout
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@id/infoBox"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/infoBox">
+
                     <androidx.recyclerview.widget.RecyclerView
-                        android:paddingTop="@dimen/_10sdp"
-                        android:nestedScrollingEnabled="false"
                         android:id="@+id/recycleView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:listitem="@layout/recycle_profile_menu"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
+                        android:nestedScrollingEnabled="false"
+                        android:paddingTop="@dimen/_10sdp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/recycle_profile_menu" />
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_marginTop="@dimen/_10sdp"
-                        style="@style/button_with_shadow_popin"
-                        android:layout_marginBottom="@dimen/_15sdp"
                         android:id="@+id/logOut"
+                        style="@style/button_with_shadow_popin"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:background="@drawable/shedow_background"
-                        >
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:background="@drawable/shedow_background">
 
                         <ImageView
                             android:id="@+id/moveNext"
@@ -207,19 +212,16 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/_15sdp"
+                            android:text="Logout"
                             android:textColor="@color/white"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/moveNext"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            android:text="Logout" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
-
-
-
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
