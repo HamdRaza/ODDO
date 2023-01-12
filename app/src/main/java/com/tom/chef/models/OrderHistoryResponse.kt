@@ -23,7 +23,7 @@ data class OrderHistoryResponse(
         @SerializedName("chef_withdraw_status_txt")
         val chefWithdrawStatusTxt: String,
         @SerializedName("delivery_date_time")
-        val deliveryDateTime: Any,
+        val deliveryDateTime: String,
         @SerializedName("food_names")
         val foodNames: String,
         @SerializedName("grand_total")

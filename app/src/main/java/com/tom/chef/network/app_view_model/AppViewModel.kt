@@ -408,19 +408,15 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
         }
     }
 
-    private var _getOrderListLive = SingleLiveEvent<OrderHistoryResponse>()
-    val getOrderListLive: SingleLiveEvent<OrderHistoryResponse>
-        get() = _getOrderListLive
+    private var _getOrderHistoryLive = SingleLiveEvent<OrderHistoryResponse>()
+    val getOrderHistoryLive: SingleLiveEvent<OrderHistoryResponse>
+        get() = _getOrderHistoryLive
 
-    fun getOrderList(
-        id: String
-    ) {
+    fun getOrderHistory() {
         viewModelScope.launch {
             try {
-                appRepository.getOrderList(
-                    id = id
-                ).collect {
-                    _getOrderListLive.value = it
+                appRepository.getOrderHistory().collect {
+                    _getOrderHistoryLive.value = it
                 }
             } catch (e: HttpException) {
                 e.printStackTrace()

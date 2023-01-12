@@ -195,12 +195,9 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
         )
     }
 
-    suspend fun getOrderList(
-        id: String
-    ): OrderHistoryResponse {
-        return apiService.getOrderList(
-            access_token = sharedPreferenceManager.getAccessToken.toString(),
-            id = id
+    suspend fun getOrderHistory(): OrderHistoryResponse {
+        return apiService.getOrderHistory(
+            access_token = sharedPreferenceManager.getAccessToken.toString()
         )
     }
 

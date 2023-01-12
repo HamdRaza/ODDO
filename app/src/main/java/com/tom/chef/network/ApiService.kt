@@ -127,9 +127,8 @@ interface ApiService {
 
     @POST("chef/order_history")
     @FormUrlEncoded
-    suspend fun getOrderList(
-        @Field("access_token") access_token: String,
-        @Field("id") id: String
+    suspend fun getOrderHistory(
+        @Field("access_token") access_token: String
     ): OrderHistoryResponse
 
     @POST("auth/resend_phone_code")

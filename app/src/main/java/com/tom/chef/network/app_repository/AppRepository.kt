@@ -201,14 +201,10 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
         }
     }.flowOn(Dispatchers.IO)
 
-    fun getOrderList(
-        id: String
-    ): Flow<OrderHistoryResponse> = flow {
+    fun getOrderHistory(): Flow<OrderHistoryResponse> = flow {
         try {
             emit(
-                apiServiceImple.getOrderList(
-                    id = id
-                )
+                apiServiceImple.getOrderHistory()
             )
         } catch (e: Exception) {
             e.printStackTrace()
