@@ -123,10 +123,10 @@ class AllOrdersFragment : BaseFragment(), OrderInterface {
 //        )
         appViewModel.orderListAPI(
             order_type = orderType,
-            "1",
-            "15",
+            page = "1",
+            limit = "15",
             order_status = orderStatus,
-            "Asia/Kolkata"
+            user_timezone = "Asia/Kolkata"
         )
         appViewModel.orderListLive.observe(mActivity) {
             if (it.status == "1") {

@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tom.chef.app.SingleLiveEvent
+import com.tom.chef.models.CommonResponse
 import com.tom.chef.models.OrderListResponse
+import com.tom.chef.models.ProfileResponse
 import com.tom.chef.models.ResponseSuccess
 import com.tom.chef.models.auth.*
 import com.tom.chef.models.profile.RequestUpdateProfile
@@ -43,7 +45,7 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
 
     // USE FOR LOGIN API
 
-    fun loginAPI(logIn: RequestLogIn, callBack: (ResponseChefLogIn) -> Unit) {
+    fun loginAPI(logIn: RequestLogIn, callBack: (LoginResponse) -> Unit) {
         viewModelScope.launch {
             try {
                 appRepository.loginAPI(logIn).collect {
@@ -58,7 +60,7 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
 
 
     // USE For SignUp API
-    fun signUpAPI(requestSignUp: RequestSignUp, callBack: (ResponseChefLogIn) -> Unit) {
+    fun signUpAPI(requestSignUp: RequestSignUp, callBack: (Signup1Response) -> Unit) {
         viewModelScope.launch {
             try {
                 appRepository.signUpAPI(requestSignUp).collect {
@@ -71,7 +73,7 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
         }
     }
 
-    fun signUp2API(requestSignUp2: RequestSignUp2, callBack: (ResponseChefLogIn) -> Unit) {
+    fun signUp2API(requestSignUp2: RequestSignUp2, callBack: (CommonResponse) -> Unit) {
         viewModelScope.launch {
             try {
                 appRepository.signUp2API(requestSignUp2).collect {
@@ -278,16 +280,74 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
 
 
     // Use for change user password
-    private var _changePasswordLive = SingleLiveEvent<ResponseSuccess>()
-    val changePasswordLive: SingleLiveEvent<ResponseSuccess>
+    private var _changePasswordLive = SingleLiveEvent<CommonResponse>()
+    val changePasswordLive: SingleLiveEvent<CommonResponse>
         get() = _changePasswordLive
 
-    fun changePassword(oldPassword: String, newPassword: String) {
+    fun changePassword(current_password: String,
+                       new_password: String,
+                       confirm_password: String) {
         viewModelScope.launch {
             try {
-                appRepository.changePassword(oldPassword = oldPassword, newPasword = newPassword)
+                appRepository.changePassword(current_password = current_password,
+                    new_password = new_password,
+                    confirm_password = confirm_password)
                     .collect {
                         _changePasswordLive.value = it
+                    }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
+    private var _getProfileLive = SingleLiveEvent<ProfileResponse>()
+    val getProfileLive: SingleLiveEvent<ProfileResponse>
+        get() = _getProfileLive
+
+    fun getProfile() {
+        viewModelScope.launch {
+            try {
+                appRepository.getProfile()
+                    .collect {
+                        _getProfileLive.value = it
+                    }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
+    private var _setAvailabilityLive = SingleLiveEvent<CommonResponse>()
+    val setAvailabilityLive: SingleLiveEvent<CommonResponse>
+        get() = _setAvailabilityLive
+
+    fun setAvailability(available: String) {
+        viewModelScope.launch {
+            try {
+                appRepository.setAvailability(available)
+                    .collect {
+                        _setAvailabilityLive.value = it
+                    }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
+    private var _logoutLive = SingleLiveEvent<CommonResponse>()
+    val logoutLive: SingleLiveEvent<CommonResponse>
+        get() = _logoutLive
+
+    fun logout() {
+        viewModelScope.launch {
+            try {
+                appRepository.logout()
+                    .collect {
+                        _logoutLive.value = it
                     }
             } catch (e: HttpException) {
                 e.printStackTrace()

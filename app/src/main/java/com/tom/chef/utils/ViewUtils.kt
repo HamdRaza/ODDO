@@ -61,13 +61,13 @@ fun <A : Activity> Activity.startNextActivity(activity: Class<A>) {
     }
 }
 
-fun Context.myToast(message:String?){
-   if(!message.isNullOrEmpty() && !message.contains("Unable to resolve host")){
-       Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-   }
+fun Context.myToast(message: String?) {
+    if (!message.isNullOrEmpty() && !message.contains("Unable to resolve host")) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 }
 
-fun Context.dialogMsgOk(message:String,title:String="Alert",buttonText:String="OK"){
+fun Context.dialogMsgOk(message: String, title: String = "Alert", buttonText: String = "OK") {
     MaterialAlertDialogBuilder(this)
         .setTitle("$title")
         .setMessage(message)
@@ -79,7 +79,7 @@ fun Context.dialogMsgOk(message:String,title:String="Alert",buttonText:String="O
         .show()
 }
 
-fun TextView.htmlToString(htmlString: String){
+fun TextView.htmlToString(htmlString: String) {
     val formatedString = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         Html.fromHtml(htmlString, Html.FROM_HTML_MODE_COMPACT)
     } else {
@@ -89,56 +89,56 @@ fun TextView.htmlToString(htmlString: String){
 }
 
 
-
 fun View.showBottomSnackBar(message: String?) {
     message?.let {
         Snackbar.make(this, message, Snackbar.LENGTH_SHORT).show()
     }
 }
 
-fun Context.showDT(message: Any?){
-    if(BuildConfig.DEBUG){
-        Log.i("Log",message.toString())
-        Toast.makeText(this,message.toString(),Toast.LENGTH_SHORT).show()
+fun Context.showDT(message: Any?) {
+    if (BuildConfig.DEBUG) {
+        Log.i("Log", message.toString())
+        Toast.makeText(this, message.toString(), Toast.LENGTH_SHORT).show()
     }
 }
 
-fun Context.VectorToBitMapDes(id:Int): BitmapDescriptor?{
+fun Context.VectorToBitMapDes(id: Int): BitmapDescriptor? {
     this.VectorToBitMap(id)?.let {
-       return BitmapDescriptorFactory.fromBitmap(it)
+        return BitmapDescriptorFactory.fromBitmap(it)
     }
     return null
 }
 
-fun Context.VectorToBitMap(id:Int): Bitmap?{
-    ContextCompat.getDrawable(this,id)?.let {
-        it.setBounds(0,0,it.intrinsicWidth,it.intrinsicHeight)
-        val bitmap= Bitmap.createBitmap(it.minimumWidth,it.intrinsicHeight, Bitmap.Config.ARGB_8888)
-        val canvas= Canvas(bitmap)
+fun Context.VectorToBitMap(id: Int): Bitmap? {
+    ContextCompat.getDrawable(this, id)?.let {
+        it.setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
+        val bitmap =
+            Bitmap.createBitmap(it.minimumWidth, it.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
         it.draw(canvas)
         return bitmap
     }
     return null
 }
 
-fun LocalDate.getCurrentMonth():String{
+fun LocalDate.getCurrentMonth(): String {
     return SimpleDateFormat("MMM", Locale.ENGLISH).format(this)
 }
 
 
-fun LifecycleOwner.IncludeAutoUpdate(viewPager: ViewPager2){
+fun LifecycleOwner.IncludeAutoUpdate(viewPager: ViewPager2) {
     val job = lifecycleScope.launch(Dispatchers.Main, start = CoroutineStart.LAZY) {
-        var lastMoved=0
+        var lastMoved = 0
         repeat(5000) {
             delay(5000)
             try {
                 viewPager.adapter?.let {
-                    if(it.itemCount>lastMoved+1){
-                        viewPager.setCurrentItem(lastMoved+1,true)
+                    if (it.itemCount > lastMoved + 1) {
+                        viewPager.setCurrentItem(lastMoved + 1, true)
                         lastMoved++
-                    }else{
-                        viewPager.setCurrentItem(0,true)
-                        lastMoved=0
+                    } else {
+                        viewPager.setCurrentItem(0, true)
+                        lastMoved = 0
                     }
                 }
             } catch (e: Exception) {
@@ -149,68 +149,71 @@ fun LifecycleOwner.IncludeAutoUpdate(viewPager: ViewPager2){
     job.start()
 }
 
-fun View.getLocalText():String{
-    if (this is TextInputEditText){
+fun View.getLocalText(): String {
+    if (this is TextInputEditText) {
         return this.text.toString()
     }
-    if (this is EditText){
+    if (this is EditText) {
         return this.text.toString()
     }
-    if (this is TextView){
+    if (this is TextView) {
         return this.text.toString()
     }
-    if (this is CountryCodePicker){
+    if (this is CountryCodePicker) {
         return this.selectedCountryCode
     }
     return ""
 }
-fun String.handleStartingZero():String{
-    if (this.startsWith("0")){
-        this.subSequence(IntRange(1,this.length-1)).toString().handleStartingZero()
+
+fun String.handleStartingZero(): String {
+    if (this.startsWith("0")) {
+        this.subSequence(IntRange(1, this.length - 1)).toString().handleStartingZero()
     }
     return this
 }
-fun String.removePlus():String{
-    return this.replace("+","")
+
+fun String.removePlus(): String {
+    return this.replace("+", "")
 }
-fun String.addPlus():String{
+
+fun String.addPlus(): String {
     return "+${this.removePlus()}"
 }
 
-fun View.setLocalError(string: String?){
-    if (this is TextInputEditText){
-        this.error=string
+fun View.setLocalError(string: String?) {
+    if (this is TextInputEditText) {
+        this.error = string
         return
     }
-    if (this is EditText){
-        this.error=string
+    if (this is EditText) {
+        this.error = string
         return
     }
-    if (this is TextView){
-        this.error=string
+    if (this is TextView) {
+        this.error = string
         return
     }
 }
 
 
-
-fun Int.intToBool():Boolean{
-    return this==1
+fun Int.intToBool(): Boolean {
+    return this == 1
 }
 
-fun Boolean.boolToInt():Int{
-    if (this){
+fun Boolean.boolToInt(): Int {
+    if (this) {
         return 1
     }
     return 0
 }
-fun Any.getErrorMessage():String{
-    if (this is JSONObject){
-       return buildString {
+
+fun Any.getErrorMessage(): String {
+    if (this is JSONObject) {
+        return buildString {
             this@getErrorMessage.keys().forEach {
-                   if (this@getErrorMessage.has(it)){
-                       append(this@getErrorMessage.getString(it))
-                   }
+                if (this@getErrorMessage.has(it)) {
+                    append(this@getErrorMessage.getString(it))
+                }
             }
         }.toString()
 
@@ -219,8 +222,8 @@ fun Any.getErrorMessage():String{
 }
 
 
-fun Long.getMinSec():String {
-    if (this<1000){
+fun Long.getMinSec(): String {
+    if (this < 1000) {
         return "0:00 sec"
     }
 
@@ -231,7 +234,7 @@ fun Long.getMinSec():String {
 }
 
 
-fun List<EditText>.getOTP():String{
+fun List<EditText>.getOTP(): String {
     return buildString {
         this@getOTP.forEach {
             append(it.getLocalText())
@@ -240,31 +243,32 @@ fun List<EditText>.getOTP():String{
 }
 
 
-fun List<EditText>.validOTP():Boolean{
+fun List<EditText>.validOTP(): Boolean {
     this.getOTP().let {
-        if (it.length==4){
+        if (it.length == 4) {
             return true
         }
     }
     firstOrNull()?.context?.myToast("OTP not valid")
     return false
 }
-fun Any?.checkForSuccess():Boolean{
-    if (this is Int){
+
+fun Any?.checkForSuccess(): Boolean {
+    if (this is Int) {
         return this.intToBool()
     }
-    if (this is Double){
+    if (this is Double) {
         return this.toInt().intToBool()
     }
-    if (this is Long){
+    if (this is Long) {
         return this.toInt().intToBool()
     }
-    if (this is String){
-        when(this){
-            "1"->{
+    if (this is String) {
+        when (this) {
+            "1" -> {
                 return true
             }
-            else->{
+            else -> {
                 return false
             }
         }
@@ -272,138 +276,161 @@ fun Any?.checkForSuccess():Boolean{
     return false
 }
 
-fun String?.makeNull():String?{
-    if (this.isNullOrEmpty()){
+fun String?.makeNull(): String? {
+    if (this.isNullOrEmpty()) {
         return null
     }
-    if (this.trim().isEmpty()){
+    if (this.trim().isEmpty()) {
         return null
     }
     return this
 }
-fun Int?.makeNullString():String?{
-    if (this==null){
+
+fun Int?.makeNullString(): String? {
+    if (this == null) {
         return null
     }
     return this.toString()
 }
 
-fun String?.addPriceTag():String{
-    if (this==null){
+fun String?.addPriceTag(): String {
+    if (this == null) {
         return ""
     }
     return "AED ${this}"
 }
-fun String.addCreditTag(isCredit:Boolean):String{
-    if(isCredit){
+
+fun String.addCreditTag(isCredit: Boolean): String {
+    if (isCredit) {
         return "+ ${this}"
     }
     return "- ${this}"
 }
-fun String?.addStockUnit(type:Int):String{
-    if (this.isNullOrEmpty()){
+
+fun String?.addStockUnit(type: Int): String {
+    if (this.isNullOrEmpty()) {
         return ""
     }
-    when(type){
-        1->{
+    when (type) {
+        1 -> {
             return "${this} ml"
         }
-        2->{
-           return "${this} Tablets"
+        2 -> {
+            return "${this} Tablets"
         }
-        3->{
+        3 -> {
             return "${this} grm"
         }
-        else->{
-           return this
+        else -> {
+            return this
         }
     }
 }
 
 
-fun Double.addPriceTag():String{
+fun Double.addPriceTag(): String {
     return "AED ${this}"
 }
 
-fun User.maskPhone():String{
-  return  buildString {
-        if (!this@maskPhone.dialCode.contains("+")){
+fun User.maskPhone(): String {
+    return buildString {
+        if (!this@maskPhone.dialCode.contains("+")) {
             append("+")
         }
         append(this@maskPhone.dialCode)
         append(this@maskPhone.phoneNumber.addStarsPhone())
     }
 }
-fun String?.addStarsPhone():String{
-    if (this.isNullOrEmpty()){
+
+fun String?.addStarsPhone(): String {
+    if (this.isNullOrEmpty()) {
         return ""
     }
     return this.mapIndexed { index, c ->
-        if ((this.length-2 == index || this.length-3 == index) || (index>0 && index<3)) "*" else c
+        if ((this.length - 2 == index || this.length - 3 == index) || (index > 0 && index < 3)) "*" else c
     }.joinToString("")
 }
 
-fun CalendarDay.getDateTime():Date{
-    val calender= Calendar.getInstance()
-    calender.set(Calendar.MONTH,this.month-1)
-    calender.set(Calendar.DAY_OF_MONTH,this.day)
-    calender.set(Calendar.YEAR,this.year)
-   return calender.time
+fun CalendarDay.getDateTime(): Date {
+    val calender = Calendar.getInstance()
+    calender.set(Calendar.MONTH, this.month - 1)
+    calender.set(Calendar.DAY_OF_MONTH, this.day)
+    calender.set(Calendar.YEAR, this.year)
+    return calender.time
 }
 
-fun Date.getOnlyMonth():String{
+fun Date.getOnlyMonth(): String {
     return SimpleDateFormat("MMMM yyyy", Locale.ENGLISH).format(this)
 }
 
-fun Date.nextMonth():CalendarDay{
-    val calender=Calendar.getInstance()
-    calender.timeInMillis=this.time
-    calender.set(Calendar.MONTH,calender.get(Calendar.MONTH)+1)
+fun Date.nextMonth(): CalendarDay {
+    val calender = Calendar.getInstance()
+    calender.timeInMillis = this.time
+    calender.set(Calendar.MONTH, calender.get(Calendar.MONTH) + 1)
 
-    return CalendarDay.from(calender.get(Calendar.YEAR),calender.get(Calendar.MONTH)+1,calender.get(Calendar.DAY_OF_MONTH))
+    return CalendarDay.from(
+        calender.get(Calendar.YEAR),
+        calender.get(Calendar.MONTH) + 1,
+        calender.get(Calendar.DAY_OF_MONTH)
+    )
 }
 
-fun Date.previousMonth():CalendarDay{
-    val calender=Calendar.getInstance()
-    calender.timeInMillis=this.time
-    calender.set(Calendar.MONTH,calender.get(Calendar.MONTH)-1)
+fun Date.previousMonth(): CalendarDay {
+    val calender = Calendar.getInstance()
+    calender.timeInMillis = this.time
+    calender.set(Calendar.MONTH, calender.get(Calendar.MONTH) - 1)
 
-    return CalendarDay.from(calender.get(Calendar.YEAR),calender.get(Calendar.MONTH)+1,calender.get(Calendar.DAY_OF_MONTH))
-}
-fun Date.tomorrow():CalendarDay{
-    val calender=Calendar.getInstance()
-    calender.timeInMillis=this.time
-    calender.set(Calendar.DAY_OF_YEAR,calender.get(Calendar.DAY_OF_YEAR)+1)
-    return CalendarDay.from(calender.get(Calendar.YEAR),calender.get(Calendar.MONTH)+1,calender.get(Calendar.DAY_OF_MONTH))
-
-}
-fun Date.after6Month():CalendarDay{
-    val calender=Calendar.getInstance()
-    calender.timeInMillis=this.time
-    calender.set(Calendar.MONTH,calender.get(Calendar.MONTH)+6)
-    return CalendarDay.from(calender.get(Calendar.YEAR),calender.get(Calendar.MONTH)+1,calender.get(Calendar.DAY_OF_MONTH))
-
+    return CalendarDay.from(
+        calender.get(Calendar.YEAR),
+        calender.get(Calendar.MONTH) + 1,
+        calender.get(Calendar.DAY_OF_MONTH)
+    )
 }
 
-fun Date.getFormatedDate():String{
+fun Date.tomorrow(): CalendarDay {
+    val calender = Calendar.getInstance()
+    calender.timeInMillis = this.time
+    calender.set(Calendar.DAY_OF_YEAR, calender.get(Calendar.DAY_OF_YEAR) + 1)
+    return CalendarDay.from(
+        calender.get(Calendar.YEAR),
+        calender.get(Calendar.MONTH) + 1,
+        calender.get(Calendar.DAY_OF_MONTH)
+    )
+
+}
+
+fun Date.after6Month(): CalendarDay {
+    val calender = Calendar.getInstance()
+    calender.timeInMillis = this.time
+    calender.set(Calendar.MONTH, calender.get(Calendar.MONTH) + 6)
+    return CalendarDay.from(
+        calender.get(Calendar.YEAR),
+        calender.get(Calendar.MONTH) + 1,
+        calender.get(Calendar.DAY_OF_MONTH)
+    )
+
+}
+
+fun Date.getFormatedDate(): String {
     return SimpleDateFormat("yyyy-MM-dd").format(this)
 }
 
-fun String?.toIntLocal():Int{
-    if (this.isNullOrEmpty()){
+fun String?.toIntLocal(): Int {
+    if (this.isNullOrEmpty()) {
         return 0
     }
     return this.toInt()
 }
 
-fun String.getServiceTime():String{
+fun String.getServiceTime(): String {
     val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
     sdf.parse(this)?.let {
         return SimpleDateFormat("d MMM yyyy, hh:mm:ss a", Locale.ENGLISH).format(it)
     }
     return ""
 }
-fun String.getOrderTime():String{
+
+fun String.getOrderTime(): String {
     val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
     sdf.parse(this)?.let {
         return SimpleDateFormat("d MMM yyyy, hh:mm:ss a", Locale.ENGLISH).format(it)
@@ -412,11 +439,11 @@ fun String.getOrderTime():String{
 }
 
 
-fun TabLayout.handleClick(viewPager: ViewPager2){
-    this.addOnTabSelectedListener(object :TabLayout.OnTabSelectedListener{
+fun TabLayout.handleClick(viewPager: ViewPager2) {
+    this.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
         override fun onTabSelected(tab: Tab?) {
-            Log.i("TabIndex","002")
-          viewPager.currentItem=this@handleClick.selectedTabPosition
+            Log.i("TabIndex", "002")
+            viewPager.currentItem = this@handleClick.selectedTabPosition
         }
 
         override fun onTabUnselected(tab: Tab?) {
@@ -430,44 +457,45 @@ fun TabLayout.handleClick(viewPager: ViewPager2){
     viewPager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
 
         override fun onPageSelected(position: Int) {
-             this@handleClick.getTabAt(position)?.select()
+            this@handleClick.getTabAt(position)?.select()
         }
     })
-    viewPager.isUserInputEnabled=true
+    viewPager.isUserInputEnabled = true
 }
-fun Int.handleIntentClicker(tabLayout: TabLayout){
-    if (this>=0){
+
+fun Int.handleIntentClicker(tabLayout: TabLayout) {
+    if (this >= 0) {
         tabLayout.getTabAt(this)?.select()
     }
 
 }
 
 
-fun String.getPaymentMethodName():String{
+fun String.getPaymentMethodName(): String {
     return this
 }
 
-fun String.getPaymentMethodIcon():Int{
-    when(this){
-        "1"->{
+fun String.getPaymentMethodIcon(): Int {
+    when (this) {
+        "1" -> {
             return R.drawable.icon_wallet_new
         }
-        "2"->{
+        "2" -> {
             return R.drawable.vector_card
         }
-        "3"->{
+        "3" -> {
             return R.drawable.ic_apple
         }
-        "4"->{
+        "4" -> {
             return R.drawable.ic_google
         }
-        else->{
+        else -> {
             return R.drawable.vector_card
         }
     }
 }
 
-fun ViewPager2.showLeftPreview(){
+fun ViewPager2.showLeftPreview() {
     this.apply {
         clipToPadding = false   // allow full width shown with padding
         clipChildren = false    // allow left/right item is not clipped
@@ -480,11 +508,13 @@ fun ViewPager2.showLeftPreview(){
     this.setPadding(0, 0, offsetPx, 0)
 
     //increase this offset to increase distance between 2 items
-    val pageMarginPx = resources.getDimension(R.dimen._2sdp).toInt().dpToPx(resources.displayMetrics)
+    val pageMarginPx =
+        resources.getDimension(R.dimen._2sdp).toInt().dpToPx(resources.displayMetrics)
     val marginTransformer = MarginPageTransformer(pageMarginPx)
     this.setPageTransformer(marginTransformer)
 }
-fun ViewPager2.showLeftRightPreview(){
+
+fun ViewPager2.showLeftRightPreview() {
     this.apply {
         clipToPadding = false   // allow full width shown with padding
         clipChildren = false    // allow left/right item is not clipped
@@ -496,121 +526,124 @@ fun ViewPager2.showLeftRightPreview(){
     this.setPadding(offsetPx, 0, offsetPx, 0)
 
     //increase this offset to increase distance between 2 items
-    val pageMarginPx = resources.getDimension(R.dimen._2sdp).toInt().dpToPx(resources.displayMetrics)
+    val pageMarginPx =
+        resources.getDimension(R.dimen._2sdp).toInt().dpToPx(resources.displayMetrics)
     val marginTransformer = MarginPageTransformer(pageMarginPx)
     this.setPageTransformer(marginTransformer)
 }
+
 fun Int.dpToPx(displayMetrics: DisplayMetrics): Int = (this * displayMetrics.density).toInt()
 
 
-
-fun String.getNotificationTime():String{
-    val calendar=Calendar.getInstance()
+fun String.getNotificationTime(): String {
+    val calendar = Calendar.getInstance()
     this.toLongOrNull()?.let {
-        calendar.timeInMillis=it
+        calendar.timeInMillis = it
     }
     val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH)
 
     return sdf.format(calendar.time)
 }
 
-fun Any?.handLocalString():String{
-    when(this){
-        is Int->{
+fun Any?.handLocalString(): String {
+    when (this) {
+        is Int -> {
             return this.toString()
         }
-        is Long->{
+        is Long -> {
             return this.toInt().toString()
         }
-        is Float->{
+        is Float -> {
             return this.toInt().toString()
         }
-        is Double->{
+        is Double -> {
             return this.toInt().toString()
         }
-        is String->{
-            return this.replace(",","").toString()
+        is String -> {
+            return this.replace(",", "").toString()
         }
-        else->{
+        else -> {
             return ""
         }
     }
 }
 
-fun String.statusHandleRateShowProduct():Boolean{
-    when(this){
-        "4"->{
+fun String.statusHandleRateShowProduct(): Boolean {
+    when (this) {
+        "4" -> {
             return true
         }
-        else->{
+        else -> {
             return false
         }
     }
 }
-fun String.paymentRefundAble():Boolean{
-    return when(this){
-        "1","2","3","4"->{
+
+fun String.paymentRefundAble(): Boolean {
+    return when (this) {
+        "1", "2", "3", "4" -> {
             true
         }
-        else->{
+        else -> {
             false
         }
     }
 }
-fun String.statusHandleRateShowService():Boolean{
-    when(this){
-        "4"->{
+
+fun String.statusHandleRateShowService(): Boolean {
+    when (this) {
+        "4" -> {
             return true
         }
-        else->{
+        else -> {
             return false
         }
     }
 }
 
-fun String?.isOutOfStock():Boolean{
-    if(this==null){
+fun String?.isOutOfStock(): Boolean {
+    if (this == null) {
         return true
     }
     this.toIntOrNull()?.let {
-        return it<1
+        return it < 1
     }
     return false
 }
 
-fun Bundle?.handleEmpty():Bundle{
-    if (this==null){
+fun Bundle?.handleEmpty(): Bundle {
+    if (this == null) {
         return Bundle()
     }
     return this
 }
 
-fun Any.checkRatingNotZero():Boolean{
-    val rating=this.getRatingDouble()
-    return rating>0
+fun Any.checkRatingNotZero(): Boolean {
+    val rating = this.getRatingDouble()
+    return rating > 0
 }
 
-fun Any?.getRatingDouble():Double{
-    when(this){
-        is Int->{
+fun Any?.getRatingDouble(): Double {
+    when (this) {
+        is Int -> {
             return this.toDouble()
         }
-        is Long->{
+        is Long -> {
             return this.toDouble()
         }
-        is Float->{
+        is Float -> {
             return this.toDouble()
         }
-        is Double->{
+        is Double -> {
             return this
         }
-        is String->{
-            this.replace(",","").toDoubleOrNull()?.let {
+        is String -> {
+            this.replace(",", "").toDoubleOrNull()?.let {
                 return it
             }
             return 0.0
         }
-        else->{
+        else -> {
             return 0.0
         }
     }
@@ -645,9 +678,9 @@ fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
 }
 
 
-fun Address.userAddressComplete(showBuilding:Boolean=false):String{
+fun Address.userAddressComplete(showBuilding: Boolean = false): String {
     return buildString {
-        if (showBuilding){
+        if (showBuilding) {
             append(buildingName)
             append("  ")
         }
@@ -659,7 +692,7 @@ fun Address.userAddressComplete(showBuilding:Boolean=false):String{
     }
 }
 
-fun Activity.startEmailIntent(email:String, subject: String?) {
+fun Activity.startEmailIntent(email: String, subject: String?) {
 
     val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
         data = Uri.parse("mailto:$email")
@@ -667,6 +700,7 @@ fun Activity.startEmailIntent(email:String, subject: String?) {
     }
     startActivity(Intent.createChooser(emailIntent, "Send feedback"))
 }
+
 fun Context.openAppSystemSettings() {
     startActivity(Intent().apply {
         action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS

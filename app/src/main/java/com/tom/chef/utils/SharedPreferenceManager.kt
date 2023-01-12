@@ -3,6 +3,7 @@ package com.tom.chef.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import com.tom.chef.models.ProfileResponse
 import com.tom.chef.models.auth.User
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -38,7 +39,7 @@ class SharedPreferenceManager @Inject constructor(@ApplicationContext context: C
         }
 
 
-    fun saveUser(user: User?, accessToken: String?) {
+    fun saveUser(user: ProfileResponse.OData?, accessToken: String?) {
         user?.let { thisUser ->
             prefs.edit {
                 it.putString(savedUser.first, Gson().toJson(thisUser))
@@ -65,5 +66,7 @@ class SharedPreferenceManager @Inject constructor(@ApplicationContext context: C
         return null
     }
 
-
+    fun clear() {
+        prefs.edit().clear()
+    }
 }

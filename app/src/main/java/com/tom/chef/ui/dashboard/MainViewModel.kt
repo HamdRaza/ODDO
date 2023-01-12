@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.tom.chef.data.notifications.NotificationModel
 import com.tom.chef.data.notifications.NotificationRepository
+import com.tom.chef.models.ProfileResponse
 import com.tom.chef.models.auth.ResponseCountries
 import com.tom.chef.models.auth.User
 import com.tom.chef.utils.UiState
@@ -34,7 +35,7 @@ class MainViewModel @Inject constructor(val unUsed: NotificationRepository )  : 
     }
     fun onBackButtonClicked()=mainInterface.onBackButtonClicked()
 
-    var userProfile = MutableLiveData<User>()
+    var userProfile = MutableLiveData<ProfileResponse.OData>()
     var counries    = MutableLiveData<ResponseCountries>()
     var userLocationUpdate    = MutableLiveData<LatLng>(null)
 

@@ -147,8 +147,8 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
                 myToast(it.message)
                 return@signUpAPI
             } else {
-                myToast("Register Successful123")
-                sharedPreferenceManager.saveUser(it.oData, it.accessToken)
+                myToast("Register Successful")
+//                sharedPreferenceManager.saveUser(it.oData, it.accessToken)
                 vm.moveToOTP()
                 finishAffinity()
             }
@@ -190,7 +190,8 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
     override fun pickLocation() {
         getLocation.launch(LocationPickerActivity.getIntent(this))
     }
-    val getLocation=registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
+    val getLocation = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         it?.let {
             it.data?.extras?.let {
 

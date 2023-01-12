@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -15,6 +16,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.tom.chef.R
 import com.tom.chef.databinding.ActivityMainBinding
+import com.tom.chef.network.app_view_model.AppViewModel
 import com.tom.chef.newBase.BaseActivity
 import com.tom.chef.ui.auth.logIn.LoginActivity
 import com.tom.chef.ui.dashboard.fragments.account.AccountInterface
@@ -35,14 +37,14 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity(),ToolBarInterface,MainInterface,AccountInterface{
+class MainActivity : BaseActivity(), ToolBarInterface, MainInterface, AccountInterface {
     lateinit var binding: ActivityMainBinding
     val vm: MainViewModel by viewModels()
-
-
+    val appViewModel: AppViewModel by viewModels()
 
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
+
     companion object {
         fun getIntent(context: Context): Intent {
             return Intent(context, MainActivity::class.java)
@@ -52,57 +54,57 @@ class MainActivity : BaseActivity(),ToolBarInterface,MainInterface,AccountInterf
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        sharedPreferenceManager.isLogedIn=true
-        localStore=sharedPreferenceManager
+        sharedPreferenceManager.isLogedIn = true
+        localStore = sharedPreferenceManager
         init()
         handleAuthenToken()
         onHomeClicked()
     }
 
     private fun handleAuthenToken() {
-        viewModel.tokenValidation.observe(this){
+        viewModel.tokenValidation.observe(this) {
             it?.let {
-                when(it){
-                    "401"->{
+                when (it) {
+                    "401" -> {
                         stopAnim()
                         myToast("Invalid login")
-                        sharedPreferenceManager.isLogedIn=false
-                        sharedPreferenceManager.getAccessToken="getAccessToken"
+                        sharedPreferenceManager.isLogedIn = false
+                        sharedPreferenceManager.getAccessToken = "getAccessToken"
                     }
-                    "500"->{
+                    "500" -> {
                         myToast("Internal Server Error")
                         stopAnim()
                     }
-                    "1005"->{
+                    "1005" -> {
                         stopAnim()
                         myToast("Please login")
                         vm.moveToLogIn()
                     }
                 }
-                Log.i("errorCode",it)
+                Log.i("errorCode", it)
             }
         }
     }
 
     private fun init() {
         toolbarVM = ToolBarViewModel(this)
-        binding.toolbar.toolbarViewModel=toolbarVM
-        toolbarVM.toolBarInterface=this
+        binding.toolbar.toolbarViewModel = toolbarVM
+        toolbarVM.toolBarInterface = this
 
-        val accountViewModel=AccountViewModel(this)
-        accountViewModel.accountInterface=this
-        binding.toolbar.profile=accountViewModel
+        val accountViewModel = AccountViewModel(this)
+        accountViewModel.accountInterface = this
+        binding.toolbar.profile = accountViewModel
 
         window.setWhiteColor(this)
         window.makeTransparentStatusBarBlack()
         binding.viewModel = vm
-        vm.mainInterface=this
+        vm.mainInterface = this
         vm.init()
 
     }
 
     override fun onHomeClicked() {
-        supportFragmentManager.findFragmentById(binding.fragmentView.id).let { fragment->
+        supportFragmentManager.findFragmentById(binding.fragmentView.id).let { fragment ->
             if (fragment !is HomeFragment) {
                 replaceFragment(HomeFragment())
             }
@@ -110,11 +112,11 @@ class MainActivity : BaseActivity(),ToolBarInterface,MainInterface,AccountInterf
     }
 
     override fun onAccountClicked() {
-        if (!sharedPreferenceManager.isLogedIn){
+        if (!sharedPreferenceManager.isLogedIn) {
             vm.moveToLogIn()
             return
         }
-        supportFragmentManager.findFragmentById(binding.fragmentView.id).let { fragment->
+        supportFragmentManager.findFragmentById(binding.fragmentView.id).let { fragment ->
             if (fragment !is ProfileFragment) {
                 replaceFragment(ProfileFragment())
             }
@@ -122,7 +124,7 @@ class MainActivity : BaseActivity(),ToolBarInterface,MainInterface,AccountInterf
     }
 
     override fun onNotificationClicked() {
-        supportFragmentManager.findFragmentById(binding.fragmentView.id).let { fragment->
+        supportFragmentManager.findFragmentById(binding.fragmentView.id).let { fragment ->
             if (fragment !is NotificationFragment) {
                 replaceFragment(NotificationFragment())
             }
@@ -135,51 +137,54 @@ class MainActivity : BaseActivity(),ToolBarInterface,MainInterface,AccountInterf
     }
 
     override fun onBackPressed() {
-        Log.i("backClicked","006")
+        Log.i("backClicked", "006")
         vm.onBackButtonClicked()
     }
+
     override fun onBackClicked() {
-        Log.i("backClicked","005")
+        Log.i("backClicked", "005")
         vm.onBackButtonClicked()
     }
-    var doubleTab=false
+
+    var doubleTab = false
     override fun onBackButtonClicked() {
-        Log.i("backClicked","001")
-        if (dashboardVisible(binding.fragmentView.id)){
-            Log.i("backClicked","002")
-            if (doubleTab){
+        Log.i("backClicked", "001")
+        if (dashboardVisible(binding.fragmentView.id)) {
+            Log.i("backClicked", "002")
+            if (doubleTab) {
                 finishAffinity()
             }
-            Log.i("backClicked","003")
+            Log.i("backClicked", "003")
             myToast("Press back again to exit")
-            doubleTab=true
+            doubleTab = true
             Handler(mainLooper).postDelayed({
-             doubleTab=false
-            },2000)
-        }else{
-            Log.i("backClicked","004")
+                doubleTab = false
+            }, 2000)
+        } else {
+            Log.i("backClicked", "004")
             super.onBackPressed()
         }
     }
 
 
-
     override fun callMyProfileAPI() {
-        viewModel.getMyProfile()
-        viewModel.myProfile.observe(this){
+        appViewModel.getProfile()
+        appViewModel.getProfileLive.observe(this) {
             stopAnim()
-            if (it.status.intToBool()){
-                vm.userProfile.value=it.oData
-                sharedPreferenceManager.saveUser(it.oData,null)
+            if (it.status == "1") {
+                vm.userProfile.value = it.oData
+                sharedPreferenceManager.saveUser(it.oData, null)
+            } else {
+                Toast.makeText(this, "Could not fetch profile", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     override fun getCountryCodes() {
         viewModel.getAllCountries()
-        viewModel.countries.observe(this){
-            if (it.status.intToBool()){
-                vm.counries.value=it
+        viewModel.countries.observe(this) {
+            if (it.status.intToBool()) {
+                vm.counries.value = it
             }
         }
     }
@@ -189,8 +194,8 @@ class MainActivity : BaseActivity(),ToolBarInterface,MainInterface,AccountInterf
     }
 
 
-
-    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+    private val getContent =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
 
             }
@@ -198,20 +203,17 @@ class MainActivity : BaseActivity(),ToolBarInterface,MainInterface,AccountInterf
 
 
     override fun implementListners() {
-        vm.userAlNotifications.observe(this){
-            if (it is UiState.Success){
+        vm.userAlNotifications.observe(this) {
+            if (it is UiState.Success) {
 
             }
         }
     }
 
 
-
     override fun onDestroy() {
         super.onDestroy()
     }
-
-
 
 
     // Declare the launcher at the top of your Activity/Fragment:
@@ -232,7 +234,10 @@ class MainActivity : BaseActivity(),ToolBarInterface,MainInterface,AccountInterf
             delay(4000)
             // This is only necessary for API level >= 33 (TIRAMISU)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.POST_NOTIFICATIONS) ==
+                if (ContextCompat.checkSelfPermission(
+                        this@MainActivity,
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ) ==
                     PackageManager.PERMISSION_GRANTED
                 ) {
                     // FCM SDK (and your app) can post notifications.
@@ -254,16 +259,16 @@ class MainActivity : BaseActivity(),ToolBarInterface,MainInterface,AccountInterf
 
     override fun checkForIntent() {
         intent?.extras?.let {
-            if (!it.containsKey("fromNotification")){
+            if (!it.containsKey("fromNotification")) {
                 //Not a notification
                 return
             }
-            if (!it.containsKey("type")){
+            if (!it.containsKey("type")) {
                 //does not have type
                 return
             }
-            when(it.getString("type")){
-                else->{
+            when (it.getString("type")) {
+                else -> {
                 }
             }
         }
@@ -283,7 +288,7 @@ class MainActivity : BaseActivity(),ToolBarInterface,MainInterface,AccountInterf
     }
 
     override fun addNewMenuItem() {
-        supportFragmentManager.findFragmentById(binding.fragmentView.id).let { fragment->
+        supportFragmentManager.findFragmentById(binding.fragmentView.id).let { fragment ->
             if (fragment !is AddNewFragment) {
                 replaceFragment(AddNewFragment())
             }
@@ -291,10 +296,16 @@ class MainActivity : BaseActivity(),ToolBarInterface,MainInterface,AccountInterf
     }
 
     override fun showUpdateStatus() {
-           vm.showFilterSelector.set(true)
+        vm.showFilterSelector.set(true)
     }
 
     override fun updateUserStatus(boolean: Boolean) {
         toolbarVM.userOnline.set(boolean)
+        appViewModel.setAvailability(if (boolean) "1" else "0")
+        appViewModel.setAvailabilityLive.observe(this) {
+            if (it.status == "1") {
+                Toast.makeText(this, "Status Updated", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

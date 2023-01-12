@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tom.chef.R
 import com.tom.chef.databinding.FragmentHomeProfileBinding
+import com.tom.chef.network.app_view_model.AppViewModel
 import com.tom.chef.newBase.BaseFragment
 import com.tom.chef.ui.auth.logIn.LoginActivity
 import com.tom.chef.ui.comman.ViewModel
@@ -20,7 +23,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ProfileFragment : BaseFragment(), ProfileInterface,AccountInterface {
+class ProfileFragment : BaseFragment(), ProfileInterface, AccountInterface {
 
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
@@ -28,41 +31,67 @@ class ProfileFragment : BaseFragment(), ProfileInterface,AccountInterface {
     private lateinit var binding: FragmentHomeProfileBinding
     private lateinit var accountVM: AccountViewModel
     private val profileItemAdopter: ProfileItemAdapter = ProfileItemAdapter(ArrayList())
+
+    val appViewModel: AppViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
 
-        binding = FragmentHomeProfileBinding.bind(inflater.inflate(R.layout.fragment_home_profile, container, false))
+        binding = FragmentHomeProfileBinding.bind(
+            inflater.inflate(
+                R.layout.fragment_home_profile,
+                container,
+                false
+            )
+        )
 
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Toolbar Setup
         mActivity.toolbarVM.manageToolBar(showToolbar = false)
         accountVM = AccountViewModel(mActivity)
-        accountVM.accountInterface=this
+        accountVM.accountInterface = this
         binding.viewModel = accountVM
         loadMenuRecycle()
-        setUpLogOut()
-        setUpListners()
+        setupLogOut()
+        setupListeners()
     }
 
-    private fun setUpListners() {
-        mainActivity.vm.userProfile.observe(viewLifecycleOwner){
+    private fun setupListeners() {
+        mainActivity.vm.userProfile.observe(viewLifecycleOwner) {
             it?.let {
                 accountVM.updateProfile(it)
             }
         }
     }
 
-    private fun setUpLogOut() {
+    private fun setupLogOut() {
         binding.logOut.setOnClickListener {
-            sharedPreferenceManager.isLogedIn=false
-            startActivity(LoginActivity.getIntent(requireContext()))
-            requireActivity().finishAffinity()
+            appViewModel.logout()
+            appViewModel.logoutLive.observe(viewLifecycleOwner) {
+                if (it.status == "1") {
+                    sharedPreferenceManager.isLogedIn = false
+                    sharedPreferenceManager.clear()
+                    startActivity(LoginActivity.getIntent(requireContext()))
+                    requireActivity().finishAffinity()
+
+                    Toast.makeText(requireActivity(), "Logged out", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT)
+                        .show()
+
+                }
+            }
         }
     }
 
@@ -74,8 +103,8 @@ class ProfileFragment : BaseFragment(), ProfileInterface,AccountInterface {
         }
         val viewModels = ArrayList<ViewModel>()
         requireActivity().getProfileMenuList().forEach {
-            val model= ProfileItemViewModel(mActivity,it)
-            model.profileInterface=this
+            val model = ProfileItemViewModel(mActivity, it)
+            model.profileInterface = this
             viewModels.add(model)
         }
         profileItemAdopter.setList(viewModels)
@@ -85,7 +114,6 @@ class ProfileFragment : BaseFragment(), ProfileInterface,AccountInterface {
     override fun onBackClicked() {
         mainActivity.vm.onBackButtonClicked()
     }
-
 
 
 }

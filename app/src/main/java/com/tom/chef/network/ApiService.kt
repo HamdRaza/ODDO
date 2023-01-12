@@ -1,6 +1,8 @@
 package com.tom.chef.network
 
+import com.tom.chef.models.CommonResponse
 import com.tom.chef.models.OrderListResponse
+import com.tom.chef.models.ProfileResponse
 import com.tom.chef.models.ResponseSuccess
 import com.tom.chef.models.auth.*
 import com.tom.chef.models.profile.ResponseProfile
@@ -21,7 +23,7 @@ interface ApiService {
         @Field("password") password: String,
         @Field("user_device_token") fcm_token: String,
         @Field("user_device_type") device_type: String = Constants.DEVICE_TYPE,
-    ): ResponseChefLogIn
+    ): LoginResponse
 
     //first_name:Chef
 //last_name:Mb
@@ -48,7 +50,7 @@ interface ApiService {
         @Field("agree_terms") agree_terms: String,
         @Field("password") password: String,
         @Field("confirm_password") confirm_password: String,
-    ): ResponseChefLogIn
+    ): Signup1Response
 
     //    temp_id:40
 //    trade_license
@@ -69,7 +71,7 @@ interface ApiService {
         @Part bank_account_proof: MultipartBody.Part?,
         @Part("preparation_time") access_token: RequestBody,
         @Part("preparation_unit") preparation_unit: RequestBody
-    ): ResponseChefLogIn
+    ): CommonResponse
 
     //    access_token:{{access_token}}
 //order_type:2
@@ -90,6 +92,34 @@ interface ApiService {
         @Field("order_status") order_status: String,
         @Field("user_timezone") user_timezone: String,
     ): OrderListResponse
+
+    @POST("chef/profile")
+    @FormUrlEncoded
+    suspend fun getProfile(
+        @Field("access_token") access_token: String,
+    ): ProfileResponse
+
+    @POST("user/update_available")
+    @FormUrlEncoded
+    suspend fun setAvailability(
+        @Field("access_token") access_token: String,
+        @Field("available") available: String
+    ): CommonResponse
+
+    @POST("change_password")
+    @FormUrlEncoded
+    suspend fun changePassword(
+        @Field("access_token") access_token: String,
+        @Field("current_password") current_password: String,
+        @Field("new_password") new_password: String,
+        @Field("confirm_password") confirm_password: String,
+    ): CommonResponse
+
+    @POST("logout")
+    @FormUrlEncoded
+    suspend fun logout(
+        @Field("access_token") access_token: String,
+    ): CommonResponse
 
     @POST("auth/resend_phone_code")
     @FormUrlEncoded
@@ -166,14 +196,6 @@ interface ApiService {
         @PartMap partMap: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part file: MultipartBody.Part? = null
     ): ResponseProfileUpdate
-
-    @POST("change_password")
-    @FormUrlEncoded
-    suspend fun changePassword(
-        @Field(Constants.TOKEN_KEY) access_token: String,
-        @Field("old_password") old_password: String,
-        @Field("new_password") new_password: String
-    ): ResponseSuccess
 
 }
 

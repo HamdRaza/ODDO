@@ -16,8 +16,8 @@ class ProfileItemViewModel(val mActivity: BaseActivity, val item: String) : View
 
     lateinit var profileInterface: ProfileInterface
 
-   @JvmField
-   val title = ObservableField<String>()
+    @JvmField
+    val title = ObservableField<String>()
 
     init {
         title.set(item)
@@ -26,30 +26,31 @@ class ProfileItemViewModel(val mActivity: BaseActivity, val item: String) : View
     override fun close() {
     }
 
-    fun onMenuClicked(view: View){
-        when(item){
-            "Change Password"->{
+    fun onMenuClicked(view: View) {
+        when (item) {
+            "Change Password" -> {
                 mActivity.replaceFragment(ChangePasswordFragment())
             }
-            "Financial"->{
+            "Financial" -> {
                 mActivity.replaceFragment(FinanceFragment())
             }
-            "FAQ"->{
+            "FAQ" -> {
                 mActivity.replaceFragment(FAQFragment())
             }
-            "Order History"->{
+            "Order History" -> {
                 mActivity.replaceFragment(OrderHistoryFragment())
             }
-            "Support"->{
+            "Support" -> {
                 mActivity.replaceFragment(SupportFragment())
             }
-            "Edit Profile"->{
+            "Edit Profile" -> {
                 mActivity.replaceFragment(EditProfileFragment())
             }
-            "Menu Setup"->{
+            "Menu Setup" -> {
                 mActivity.replaceFragment(MenuFragment())
             }
-            else->{
+
+            else -> {
 
             }
         }

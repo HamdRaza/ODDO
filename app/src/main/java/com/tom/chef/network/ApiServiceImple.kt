@@ -1,6 +1,8 @@
 package com.tom.chef.network
 
+import com.tom.chef.models.CommonResponse
 import com.tom.chef.models.OrderListResponse
+import com.tom.chef.models.ProfileResponse
 import com.tom.chef.models.ResponseSuccess
 import com.tom.chef.models.auth.*
 import com.tom.chef.models.profile.*
@@ -19,7 +21,7 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
     lateinit var sharedPreferenceManager: SharedPreferenceManager
 
     // FOR LOGIN USER
-    suspend fun loginAPI(requestLogIn: RequestLogIn): ResponseChefLogIn {
+    suspend fun loginAPI(requestLogIn: RequestLogIn): LoginResponse {
         return apiService.loginAPI(
             email = requestLogIn.email,
             password = requestLogIn.password,
@@ -27,7 +29,7 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
         )
     }
 
-    suspend fun signUpAPI(requestSignUp: RequestSignUp): ResponseChefLogIn {
+    suspend fun signUpAPI(requestSignUp: RequestSignUp): Signup1Response {
         return apiService.signUpAPI(
             first_name = requestSignUp.first_name,
             last_name = requestSignUp.last_name,
@@ -43,7 +45,7 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
         )
     }
 
-    suspend fun signUp2API(requestSignUp2: RequestSignUp2): ResponseChefLogIn {
+    suspend fun signUp2API(requestSignUp2: RequestSignUp2): CommonResponse {
         return apiService.signUp2API(
             temp_id = requestSignUp2.temp_id,
             trade_license = requestSignUp2.trade_license,
@@ -137,11 +139,36 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
         return s.toRequestBody("text/plain".toMediaTypeOrNull())
     }
 
-    suspend fun changePassword(oldPassword: String, newPasword: String): ResponseSuccess {
+
+    suspend fun getProfile(): ProfileResponse {
+        return apiService.getProfile(
+            access_token = sharedPreferenceManager.getAccessToken.toString(),
+        )
+    }
+
+    suspend fun setAvailability(available: String): CommonResponse {
+        return apiService.setAvailability(
+            access_token = sharedPreferenceManager.getAccessToken.toString(),
+            available = available
+        )
+    }
+
+    suspend fun changePassword(
+        current_password: String,
+        new_password: String,
+        confirm_password: String
+    ): CommonResponse {
         return apiService.changePassword(
             access_token = sharedPreferenceManager.getAccessToken.toString(),
-            old_password = oldPassword,
-            new_password = newPasword
+            current_password = current_password,
+            new_password = new_password,
+            confirm_password = confirm_password,
+        )
+    }
+
+    suspend fun logout(): CommonResponse {
+        return apiService.logout(
+            access_token = sharedPreferenceManager.getAccessToken.toString(),
         )
     }
 

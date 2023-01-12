@@ -14,6 +14,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.messaging.FirebaseMessaging
 import com.tom.chef.R
 import com.tom.chef.databinding.ActivityLoginBinding
+import com.tom.chef.models.ProfileResponse
 import com.tom.chef.models.auth.RequestGoogleLogIn
 import com.tom.chef.models.auth.RequestLogIn
 import com.tom.chef.newBase.BaseActivity
@@ -30,22 +31,27 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LoginActivity : BaseActivity(), LoginInterface{
+class LoginActivity : BaseActivity(), LoginInterface {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var vm: LoginViewModel
     lateinit var googleLogInViewModel: GoogleLogInViewModel
 
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
+
     companion object {
         fun getIntent(context: Context): Intent {
             return Intent(context, LoginActivity::class.java)
         }
     }
 
-    fun implementGoogleLogIn(){
-        googleLogInViewModel= GoogleLogInViewModel(registry = activityResultRegistry, context = this, sharedPreferenceManager = sharedPreferenceManager)
-        googleLogInViewModel.googleLoginInterface=object :GoogleLoginInterface{
+    fun implementGoogleLogIn() {
+        googleLogInViewModel = GoogleLogInViewModel(
+            registry = activityResultRegistry,
+            context = this,
+            sharedPreferenceManager = sharedPreferenceManager
+        )
+        googleLogInViewModel.googleLoginInterface = object : GoogleLoginInterface {
             override fun onLogInCompleted(requestGoogleLogIn: RequestGoogleLogIn) {
                 vm.moveToOTP()
                 //vm.callGoogleLogInAPI(requestGoogleLogIn = requestGoogleLogIn)
@@ -58,6 +64,7 @@ class LoginActivity : BaseActivity(), LoginInterface{
         super.onStart()
         implementGoogleLogIn()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
@@ -69,6 +76,7 @@ class LoginActivity : BaseActivity(), LoginInterface{
         vm.init()
 
     }
+
     override fun init() {
         val items = listOf("EN", "AR")
         val adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, items)
@@ -76,16 +84,21 @@ class LoginActivity : BaseActivity(), LoginInterface{
     }
 
     override fun logInClicked() {
-        if (validate()){
-            loginPostAPI(email = binding.editTextTextEmailAddress.getLocalText(), password = binding.editTextTextPassword.getLocalText(), fcm_token = sharedPreferenceManager.getFcmToken)
+        if (validate()) {
+            loginPostAPI(
+                email = binding.editTextTextEmailAddress.getLocalText(),
+                password = binding.editTextTextPassword.getLocalText(),
+                fcm_token = sharedPreferenceManager.getFcmToken
+            )
         }
     }
+
     override fun registerClicked() {
         startActivity(SignUpActivity.getIntent(this@LoginActivity))
     }
 
     override fun onResetClicked() {
-         vm.showResetInputEmail()
+        vm.showResetInputEmail()
     }
 
     override fun showResetInputEmail() {
@@ -93,19 +106,19 @@ class LoginActivity : BaseActivity(), LoginInterface{
     }
 
 
-    fun validate():Boolean{
+    fun validate(): Boolean {
         val valid = Validation
         listOf(binding.editTextTextEmailAddress).forEach {
-            if (valid.checkIsEmpty(it)){
+            if (valid.checkIsEmpty(it)) {
                 return false
             }
         }
         listOf(binding.editTextTextEmailAddress).forEach {
-            if (!valid.checkIsAnEmail(it)){
+            if (!valid.checkIsAnEmail(it)) {
                 return false
             }
         }
-        if (!valid.isAValidPassword(binding.editTextTextPassword)){
+        if (!valid.isAValidPassword(binding.editTextTextPassword)) {
             return false
         }
         return true
@@ -114,23 +127,39 @@ class LoginActivity : BaseActivity(), LoginInterface{
     override fun loadFcmToken() {
         FirebaseMessaging.getInstance().subscribeToTopic("Android").addOnSuccessListener {}
         FirebaseMessaging.getInstance().token.addOnSuccessListener {
-            Log.i("Token",it.toString())
+            Log.i("Token", it.toString())
             it?.let {
-                sharedPreferenceManager.getFcmToken=it
+                sharedPreferenceManager.getFcmToken = it
             }
         }
     }
 
-    private fun loginPostAPI(email: String, password: String,fcm_token:String){
+    private fun loginPostAPI(email: String, password: String, fcm_token: String) {
         startAnim()
-        viewModel.loginAPI(RequestLogIn( email = email, password = password, fcm_token = fcm_token)){
+        viewModel.loginAPI(
+            RequestLogIn(
+                email = email,
+                password = password,
+                fcm_token = fcm_token
+            )
+        ) {
             stopAnim()
-            if (!it.status.checkForSuccess()){
+            if (!it.status.checkForSuccess()) {
                 myToast(it.message)
                 return@loginAPI
-            }else{
+            } else {
                 myToast("Login Successful")
-                sharedPreferenceManager.saveUser(it.oData, it.accessToken)
+                val data = ProfileResponse.OData(
+                    id = it.oData.id,
+                    email = it.oData.email,
+                    name = it.oData.name,
+                    dialCode = it.oData.dialCode,
+                    firebaseUserKey = it.oData.firebaseUserKey,
+                    firstName = it.oData.firstName,
+                    lastName = it.oData.lastName,
+                    phoneNumber = it.oData.phoneNumber
+                )
+                sharedPreferenceManager.saveUser(data, it.accessToken)
                 vm.moveToDashboard()
                 //vm.moveToOTP()
             }
@@ -150,23 +179,23 @@ class LoginActivity : BaseActivity(), LoginInterface{
     }
 
     override fun moveToDashboard() {
-        sharedPreferenceManager.isLogedIn=true
+        sharedPreferenceManager.isLogedIn = true
         startActivity(MainActivity.getIntent(this@LoginActivity))
         finishAffinity()
     }
 
     override fun callGoogleLogIn() {
-         googleLogInViewModel.callGoogleLogIn()
+        googleLogInViewModel.callGoogleLogIn()
     }
 
 
     override fun callGoogleLogInAPI(requestGoogleLogIn: RequestGoogleLogIn) {
         startAnim()
         viewModel.googleLogIn(requestGoogleLogIn)
-        viewModel.googleLogIn.observe(this){
+        viewModel.googleLogIn.observe(this) {
             stopAnim()
-            if (it.status.intToBool()){
-                sharedPreferenceManager.saveUser(it.user,it.access_token)
+            if (it.status.intToBool()) {
+//                sharedPreferenceManager.saveUser(it.user, it.access_token)
                 /* Phone verified missing
                 it.user?.let {
                     if (it.phone_verified.checkForSuccess()){

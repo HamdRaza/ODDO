@@ -31,14 +31,14 @@ class ChangePasswordSheet {
 
             override fun callAPI() {
                 baseActivity.startAnim()
-                baseActivity.viewModel.changePassword(binding.oldPass.getLocalText(),binding.newPass.getLocalText())
-                baseActivity.viewModel.changePasswordLive.observe(baseActivity){
-                    baseActivity.stopAnim()
-                    baseActivity.myToast(it.message)
-                    if (it.status.intToBool()){
-                        dialog.dismiss()
-                    }
-                }
+//                baseActivity.viewModel.changePassword(binding.oldPass.getLocalText(),binding.newPass.getLocalText())
+//                baseActivity.viewModel.changePasswordLive.observe(baseActivity){
+//                    baseActivity.stopAnim()
+//                    baseActivity.myToast(it.message)
+//                    if (it.status.intToBool()){
+//                        dialog.dismiss()
+//                    }
+//                }
             }
 
             override fun closeDialog() {

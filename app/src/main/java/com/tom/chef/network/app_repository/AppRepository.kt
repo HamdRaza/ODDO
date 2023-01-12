@@ -1,6 +1,8 @@
 package com.tom.chef.network.app_repository
 
+import com.tom.chef.models.CommonResponse
 import com.tom.chef.models.OrderListResponse
+import com.tom.chef.models.ProfileResponse
 import com.tom.chef.models.ResponseSuccess
 import com.tom.chef.models.auth.*
 import com.tom.chef.models.profile.*
@@ -14,7 +16,7 @@ import javax.inject.Inject
 class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceImple) {
 
     // FOR LOGIN API
-    fun loginAPI(requestLogIn: RequestLogIn): Flow<ResponseChefLogIn> = flow {
+    fun loginAPI(requestLogIn: RequestLogIn): Flow<LoginResponse> = flow {
         try {
             emit(apiServiceImple.loginAPI(requestLogIn))
         } catch (e: Exception) {
@@ -22,7 +24,7 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
         }
     }.flowOn(Dispatchers.IO)
 
-    fun signUpAPI(requestSignUp: RequestSignUp): Flow<ResponseChefLogIn> = flow {
+    fun signUpAPI(requestSignUp: RequestSignUp): Flow<Signup1Response> = flow {
         try {
             emit(apiServiceImple.signUpAPI(requestSignUp))
         } catch (e: Exception) {
@@ -30,7 +32,7 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
         }
     }.flowOn(Dispatchers.IO)
 
-    fun signUp2API(requestSignUp2: RequestSignUp2): Flow<ResponseChefLogIn> = flow {
+    fun signUp2API(requestSignUp2: RequestSignUp2): Flow<CommonResponse> = flow {
         try {
             emit(apiServiceImple.signUp2API(requestSignUp2))
         } catch (e: Exception) {
@@ -124,9 +126,43 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
             }
         }.flowOn(Dispatchers.IO)
 
-    fun changePassword(oldPassword: String, newPasword: String): Flow<ResponseSuccess> = flow {
+    fun getProfile(): Flow<ProfileResponse> = flow {
         try {
-            emit(apiServiceImple.changePassword(oldPassword = oldPassword, newPasword = newPasword))
+            emit(apiServiceImple.getProfile())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun setAvailability(available: String): Flow<CommonResponse> = flow {
+        try {
+            emit(apiServiceImple.setAvailability(available))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun changePassword(
+        current_password: String,
+        new_password: String,
+        confirm_password: String
+    ): Flow<CommonResponse> = flow {
+        try {
+            emit(
+                apiServiceImple.changePassword(
+                    current_password = current_password,
+                    new_password = new_password,
+                    confirm_password = confirm_password
+                )
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun logout(): Flow<CommonResponse> = flow {
+        try {
+            emit(apiServiceImple.logout())
         } catch (e: Exception) {
             e.printStackTrace()
         }
