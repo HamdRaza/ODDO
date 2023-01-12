@@ -10,7 +10,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="com.tom.chef.ui.comman.menuItems.veriants.VeriantsViewModel" />
+            type="com.tom.chef.ui.comman.menuItems.veriants.VariantsViewModel" />
 
     </data>
 

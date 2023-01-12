@@ -9,7 +9,7 @@ import com.tom.chef.ui.comman.financial.FinancialItemAdapter;
 import com.tom.chef.ui.comman.menuItems.MenuItemAdopter;
 import com.tom.chef.ui.comman.menuItems.files.FileNamesAdopter;
 import com.tom.chef.ui.comman.menuItems.packageMenu.PackageAdopter;
-import com.tom.chef.ui.comman.menuItems.veriants.VeriantItemAdopter;
+import com.tom.chef.ui.comman.menuItems.veriants.VariantItemAdopter;
 import com.tom.chef.ui.comman.orderItem.OrderItemAdopter;
 import com.tom.chef.ui.comman.orders.OrderAdopter;
 
@@ -36,8 +36,8 @@ public class DataBindingAdaptersJava {
         recyclerView.setAdapter(menuItemAdopter);
     }
     @BindingAdapter({"veriantsNamesAdopter"})
-    public static void veriantsNamesAdopter(@NonNull RecyclerView recyclerView, VeriantItemAdopter veriantItemAdopter) {
-        recyclerView.setAdapter(veriantItemAdopter);
+    public static void veriantsNamesAdopter(@NonNull RecyclerView recyclerView, VariantItemAdopter variantItemAdopter) {
+        recyclerView.setAdapter(variantItemAdopter);
     }
     @BindingAdapter({"menuPackageAdopter"})
     public static void menuPackageAdopter(@NonNull RecyclerView recyclerView, PackageAdopter packageAdopter) {

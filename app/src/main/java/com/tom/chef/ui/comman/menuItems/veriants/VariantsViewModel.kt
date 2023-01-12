@@ -4,7 +4,7 @@ import androidx.databinding.ObservableField
 import com.tom.chef.R
 import com.tom.chef.ui.comman.ViewModel
 
-class VeriantsViewModel(val title: String):ViewModel {
+class VariantsViewModel(val title: String):ViewModel {
     @JvmField
     var titleText=ObservableField<String>()
 

@@ -4,24 +4,29 @@ import androidx.databinding.ObservableField
 import com.tom.chef.R
 import com.tom.chef.ui.comman.ViewModel
 
-class OrderItemViewModel:ViewModel {
+class OrderItemViewModel : ViewModel {
     lateinit var orderItemInterface: OrderItemInterface
 
     @JvmField
-    var itemName=ObservableField<String>()
-    @JvmField
-    var itemDescription=ObservableField<String>()
-    @JvmField
-    var itemImage=ObservableField<Any?>(R.drawable.menu_dummy_image)
-    @JvmField
-    var peopleCount=ObservableField<String>()
-    @JvmField
-    var price=ObservableField<String>()
-    @JvmField
-    var total=ObservableField<String>()
+    var itemName = ObservableField<String>()
 
     @JvmField
-    var fromOrderDetails=ObservableField<Boolean>(false)
+    var itemDescription = ObservableField<String>()
+
+    @JvmField
+    var itemImage = ObservableField<Any?>(R.drawable.menu_dummy_image)
+
+    @JvmField
+    var peopleCount = ObservableField<String>()
+
+    @JvmField
+    var price = ObservableField<String>()
+
+    @JvmField
+    var total = ObservableField<String>()
+
+    @JvmField
+    var fromOrderDetails = ObservableField<Boolean>(false)
 
     init {
         itemName.set("Meat Samosa ")
