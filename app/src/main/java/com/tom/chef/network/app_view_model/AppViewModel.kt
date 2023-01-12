@@ -4,10 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tom.chef.app.SingleLiveEvent
-import com.tom.chef.models.CommonResponse
-import com.tom.chef.models.OrderListResponse
-import com.tom.chef.models.ProfileResponse
-import com.tom.chef.models.ResponseSuccess
+import com.tom.chef.models.*
 import com.tom.chef.models.auth.*
 import com.tom.chef.models.profile.RequestUpdateProfile
 import com.tom.chef.models.profile.ResponseProfile
@@ -284,14 +281,18 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
     val changePasswordLive: SingleLiveEvent<CommonResponse>
         get() = _changePasswordLive
 
-    fun changePassword(current_password: String,
-                       new_password: String,
-                       confirm_password: String) {
+    fun changePassword(
+        current_password: String,
+        new_password: String,
+        confirm_password: String
+    ) {
         viewModelScope.launch {
             try {
-                appRepository.changePassword(current_password = current_password,
+                appRepository.changePassword(
+                    current_password = current_password,
                     new_password = new_password,
-                    confirm_password = confirm_password)
+                    confirm_password = confirm_password
+                )
                     .collect {
                         _changePasswordLive.value = it
                     }
@@ -377,6 +378,49 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
                     user_timezone = user_timezone
                 ).collect {
                     _orderListLive.value = it
+                }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
+
+    private var _getMenuListLive = SingleLiveEvent<DishListResponse>()
+    val getMenuListLive: SingleLiveEvent<DishListResponse>
+        get() = _getMenuListLive
+
+    fun getMenuList(
+        contain_package: String
+    ) {
+        viewModelScope.launch {
+            try {
+                appRepository.getMenuList(
+                    contain_package = contain_package
+                ).collect {
+                    _getMenuListLive.value = it
+                }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
+    private var _getOrderListLive = SingleLiveEvent<OrderHistoryResponse>()
+    val getOrderListLive: SingleLiveEvent<OrderHistoryResponse>
+        get() = _getOrderListLive
+
+    fun getOrderList(
+        id: String
+    ) {
+        viewModelScope.launch {
+            try {
+                appRepository.getOrderList(
+                    id = id
+                ).collect {
+                    _getOrderListLive.value = it
                 }
             } catch (e: HttpException) {
                 e.printStackTrace()

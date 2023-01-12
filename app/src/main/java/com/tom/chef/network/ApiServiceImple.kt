@@ -1,9 +1,6 @@
 package com.tom.chef.network
 
-import com.tom.chef.models.CommonResponse
-import com.tom.chef.models.OrderListResponse
-import com.tom.chef.models.ProfileResponse
-import com.tom.chef.models.ResponseSuccess
+import com.tom.chef.models.*
 import com.tom.chef.models.auth.*
 import com.tom.chef.models.profile.*
 import com.tom.chef.utils.SharedPreferenceManager
@@ -186,6 +183,24 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
             limit = limit,
             order_status = order_status,
             user_timezone = user_timezone
+        )
+    }
+
+    suspend fun getMenuList(
+        contain_package: String
+    ): DishListResponse {
+        return apiService.getMenuList(
+            access_token = sharedPreferenceManager.getAccessToken.toString(),
+            contain_package = contain_package
+        )
+    }
+
+    suspend fun getOrderList(
+        id: String
+    ): OrderHistoryResponse {
+        return apiService.getOrderList(
+            access_token = sharedPreferenceManager.getAccessToken.toString(),
+            id = id
         )
     }
 

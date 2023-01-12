@@ -1,9 +1,6 @@
 package com.tom.chef.network
 
-import com.tom.chef.models.CommonResponse
-import com.tom.chef.models.OrderListResponse
-import com.tom.chef.models.ProfileResponse
-import com.tom.chef.models.ResponseSuccess
+import com.tom.chef.models.*
 import com.tom.chef.models.auth.*
 import com.tom.chef.models.profile.ResponseProfile
 import com.tom.chef.models.profile.ResponseProfileUpdate
@@ -120,6 +117,20 @@ interface ApiService {
     suspend fun logout(
         @Field("access_token") access_token: String,
     ): CommonResponse
+
+    @POST("chef/food_list")
+    @FormUrlEncoded
+    suspend fun getMenuList(
+        @Field("access_token") access_token: String,
+        @Field("contain_package") contain_package: String,
+    ): DishListResponse
+
+    @POST("chef/order_history")
+    @FormUrlEncoded
+    suspend fun getOrderList(
+        @Field("access_token") access_token: String,
+        @Field("id") id: String
+    ): OrderHistoryResponse
 
     @POST("auth/resend_phone_code")
     @FormUrlEncoded

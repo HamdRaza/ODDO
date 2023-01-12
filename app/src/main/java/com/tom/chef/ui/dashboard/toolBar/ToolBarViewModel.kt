@@ -8,65 +8,88 @@ import com.tom.chef.newBase.BaseActivity
 class ToolBarViewModel(val mActivity: BaseActivity) : ViewModel() {
 
     lateinit var toolBarInterface: ToolBarInterface
-    var variantToggle:VariantToggle?=null
+    var variantToggle: VariantToggle? = null
 
     @JvmField
-    var backCorner=ObservableField<Boolean>(false)
-    @JvmField
-    var userOnline=ObservableField<Boolean>(true)
-    @JvmField
-    var showUserProfile=ObservableField<Boolean>(false)
+    var backCorner = ObservableField<Boolean>(false)
 
     @JvmField
-    var showNotificationIcon=ObservableField<Boolean>(false)
+    var userOnline = ObservableField<Boolean>(true)
+
     @JvmField
-    var showBackButton=ObservableField<Boolean>(false)
+    var showUserProfile = ObservableField<Boolean>(false)
+
     @JvmField
-    var showToolBar=ObservableField<Boolean>(false)
+    var showNotificationIcon = ObservableField<Boolean>(false)
+
     @JvmField
-    var showCenterText=ObservableField<Boolean>(false)
+    var showBackButton = ObservableField<Boolean>(false)
+
     @JvmField
-    var showAddButton=ObservableField<Boolean>(false)
+    var showToolBar = ObservableField<Boolean>(false)
+
     @JvmField
-    var showDishVariety=ObservableField<Boolean>(false)
+    var showCenterText = ObservableField<Boolean>(false)
+
     @JvmField
-    var showClearButton=ObservableField<Boolean>(false)
+    var showAddButton = ObservableField<Boolean>(false)
+
     @JvmField
-    var backButtonText=ObservableField<String>()
+    var showDishVariety = ObservableField<Boolean>(false)
+
     @JvmField
-    var centerButtonText=ObservableField<String>()
+    var showClearButton = ObservableField<Boolean>(false)
+
+    @JvmField
+    var backButtonText = ObservableField<String>()
+
+    @JvmField
+    var centerButtonText = ObservableField<String>()
 
 
-    fun manageToolBar(showToolbar:Boolean=false,showBackButton:Boolean=false,backButtonText:String="",showCenterText:Boolean=false,centerText:String="",showAdButton:Boolean=false,showDishVariety:Boolean=false,showUserProfile:Boolean=false,showNotificationIcon:Boolean=false,showClearButton:Boolean=false){
-      this.showToolBar.set(showToolbar)
-      this.showBackButton.set(showBackButton)
-      this.backButtonText.set(backButtonText)
-      this.showCenterText.set(showCenterText)
-      this.centerButtonText.set(centerText)
-      this.showAddButton.set(showAdButton)
-      this.showDishVariety.set(showDishVariety)
-      this.showUserProfile.set(showUserProfile)
-      this.showNotificationIcon.set(showNotificationIcon)
-      this.showClearButton.set(showClearButton)
+    fun manageToolBar(
+        showToolbar: Boolean = false,
+        showBackButton: Boolean = false,
+        backButtonText: String = "",
+        showCenterText: Boolean = false,
+        centerText: String = "",
+        showAdButton: Boolean = false,
+        showDishVariety: Boolean = false,
+        showUserProfile: Boolean = false,
+        showNotificationIcon: Boolean = false,
+        showClearButton: Boolean = false
+    ) {
+        this.showToolBar.set(showToolbar)
+        this.showBackButton.set(showBackButton)
+        this.backButtonText.set(backButtonText)
+        this.showCenterText.set(showCenterText)
+        this.centerButtonText.set(centerText)
+        this.showAddButton.set(showAdButton)
+        this.showDishVariety.set(showDishVariety)
+        this.showUserProfile.set(showUserProfile)
+        this.showNotificationIcon.set(showNotificationIcon)
+        this.showClearButton.set(showClearButton)
     }
-    fun makeBackRound(isRound:Boolean){
+
+    fun makeBackRound(isRound: Boolean) {
         backCorner.set(isRound)
     }
 
-    fun onBackClicked(){
+    fun onBackClicked() {
         toolBarInterface.onBackClicked()
     }
 
-    fun showUpdateStatus()=toolBarInterface.showUpdateStatus()
-    fun moveToProfile()=toolBarInterface.moveToProfile()
-    fun moveToNotifications()=toolBarInterface.moveToNotifications()
+    fun showUpdateStatus() = toolBarInterface.showUpdateStatus()
+    fun moveToProfile() = toolBarInterface.moveToProfile()
+    fun moveToNotifications() = toolBarInterface.moveToNotifications()
 
-    fun deleteAllNotification()=toolBarInterface.deleteAllNotification()
+    fun deleteAllNotification() = toolBarInterface.deleteAllNotification()
 
-    fun addNewMenuItem(){
+    fun addNewMenuItem() {
         toolBarInterface.addNewMenuItem()
     }
-    fun onSwitched(view: View,boolean: Boolean){
+
+    fun onSwitched(view: View, boolean: Boolean) {
         variantToggle?.updated(boolean = boolean)
     }
 }

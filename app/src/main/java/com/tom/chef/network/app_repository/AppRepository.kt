@@ -1,9 +1,6 @@
 package com.tom.chef.network.app_repository
 
-import com.tom.chef.models.CommonResponse
-import com.tom.chef.models.OrderListResponse
-import com.tom.chef.models.ProfileResponse
-import com.tom.chef.models.ResponseSuccess
+import com.tom.chef.models.*
 import com.tom.chef.models.auth.*
 import com.tom.chef.models.profile.*
 import com.tom.chef.network.ApiServiceImple
@@ -183,6 +180,34 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
                     limit = limit,
                     order_status = order_status,
                     user_timezone = user_timezone
+                )
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun getMenuList(
+        contain_package: String
+    ): Flow<DishListResponse> = flow {
+        try {
+            emit(
+                apiServiceImple.getMenuList(
+                    contain_package = contain_package
+                )
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun getOrderList(
+        id: String
+    ): Flow<OrderHistoryResponse> = flow {
+        try {
+            emit(
+                apiServiceImple.getOrderList(
+                    id = id
                 )
             )
         } catch (e: Exception) {

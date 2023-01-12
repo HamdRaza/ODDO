@@ -171,6 +171,11 @@ class MainActivity : BaseActivity(), ToolBarInterface, MainInterface, AccountInt
     override fun callMyProfileAPI() {
         vm.userProfile.observe(this) {
             it?.let {
+                if (it.available == 1) {
+                    vm.makeUserOnline()
+                } else {
+                    vm.makeUserOffline()
+                }
                 accountVM.updateProfile(it)
             }
         }
@@ -310,7 +315,7 @@ class MainActivity : BaseActivity(), ToolBarInterface, MainInterface, AccountInt
         appViewModel.setAvailability(if (boolean) "1" else "0")
         appViewModel.setAvailabilityLive.observe(this) {
             if (it.status == "1") {
-                Toast.makeText(this, "Status Updated", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Status Updated", Toast.LENGTH_SHORT).show()
             }
         }
     }

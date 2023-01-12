@@ -4,6 +4,9 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
+
+final BUILD_DATE = new Date().format('dd_MMM_yyyy')
+
 android {
     compileSdkVersion 33
 
@@ -13,6 +16,7 @@ android {
         targetSdkVersion 33
         versionCode 1
         versionName "0.1"
+        setProperty("archivesBaseName", "TomChef-VC-$versionCode-VN-$versionName-$BUILD_DATE")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -48,7 +52,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.fragment:fragment-ktx:1.5.3'
-
 
 
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
