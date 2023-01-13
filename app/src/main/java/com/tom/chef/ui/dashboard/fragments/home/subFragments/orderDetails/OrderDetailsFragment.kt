@@ -27,6 +27,8 @@ class OrderDetailsFragment : BaseFragment(), OrderDetailsInterface {
     lateinit var orderDetailsViewModel: OrderDetailsViewModel
 
     lateinit var status: String
+    lateinit var id: String
+    lateinit var orderNumber: String
     var fromOrderHistory: Boolean = false
     val appViewModel: AppViewModel by viewModels()
 
@@ -47,15 +49,16 @@ class OrderDetailsFragment : BaseFragment(), OrderDetailsInterface {
             )
         )
         status = arguments?.getString("tabName", "").handleHull()
+        id = arguments?.getString("id", "").handleHull()
+        orderNumber = arguments?.getString("orderNumber", "").handleHull()
         arguments?.getBoolean("fromOrderHistory", false)?.let {
             fromOrderHistory = it
         }
         mActivity.toolbarVM.manageToolBar(
             showToolbar = true,
             showBackButton = true,
-            backButtonText = "#TM-011550455587"
+            backButtonText = orderNumber
         )
-        //todo get heading, get id
         mainActivity.toolbarVM.makeBackRound(isRound = true)
         return binding.root
     }
@@ -70,7 +73,7 @@ class OrderDetailsFragment : BaseFragment(), OrderDetailsInterface {
     }
 
     private fun getOrderDetails() {
-        appViewModel.getOrderDetails("12")
+        appViewModel.getOrderDetails(id)
         appViewModel.getOrderDetailsLive.observe(viewLifecycleOwner) {
             if (it.status == "1") {
                 orderDetailsViewModel.fillOrderItems(fromOrderHistory, it.oData)

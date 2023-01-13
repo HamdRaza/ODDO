@@ -3,7 +3,6 @@ package com.tom.chef.ui.comman.orderItem
 import androidx.databinding.ObservableField
 import com.tom.chef.R
 import com.tom.chef.models.OrderDetailsResponse
-import com.tom.chef.models.OrderListResponse
 import com.tom.chef.ui.comman.ViewModel
 
 class OrderItemViewModel(val data: OrderDetailsResponse.OData.OrderItem) : ViewModel {

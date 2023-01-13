@@ -71,7 +71,11 @@ class AllOrdersFragment : BaseFragment(), OrderInterface {
             .let { fragment ->
                 if (fragment !is OrderDetailsFragment) {
                     val orderDetailsFragment = OrderDetailsFragment()
-                    orderDetailsFragment.arguments = bundleOf(Pair("tabName", status))
+                    orderDetailsFragment.arguments = bundleOf(
+                        Pair("tabName", status),
+                        Pair("id", "${data.id}"),
+                        Pair("orderNumber", data.orderNumber)
+                    )
                     mainActivity.replaceFragment(orderDetailsFragment)
                 }
             }

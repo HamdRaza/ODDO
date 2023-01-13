@@ -8,9 +8,6 @@ import com.tom.chef.ui.allBottomSheets.rejectOffer.RejectOfferBottomSheet
 import com.tom.chef.ui.comman.orderItem.OrderItemAdopter
 import com.tom.chef.ui.comman.orderItem.OrderItemInterface
 import com.tom.chef.ui.comman.orderItem.OrderItemViewModel
-import com.tom.chef.ui.comman.orders.OrderAdopter
-import com.tom.chef.ui.comman.orders.OrderInterface
-import com.tom.chef.ui.comman.orders.OrderViewModel
 
 class OrderDetailsViewModel(var baseActivity: BaseActivity) : ViewModel(), OrderItemInterface {
     lateinit var orderDetailsInterface: OrderDetailsInterface
@@ -113,12 +110,16 @@ class OrderDetailsViewModel(var baseActivity: BaseActivity) : ViewModel(), Order
         chefShareValue.set(data.chefCommission)
         showChefNote.set(true)
         noteToChef.set(data.chefInstructions)
-        riderName.set(data.driver.name)
+        if (data.driver != null) {
+            riderName.set(data.driver.name)
+        }
         val viewModels = ArrayList<com.tom.chef.ui.comman.ViewModel>()
-        data.orderItems.forEach {
-            val viewModel = OrderItemViewModel(it)
-            viewModel.orderItemInterface = this
-            viewModels.add(viewModel)
+        if (data.orderItems != null) {
+            data.orderItems.forEach {
+                val viewModel = OrderItemViewModel(it)
+                viewModel.orderItemInterface = this
+                viewModels.add(viewModel)
+            }
         }
         orderItemAdopter.setList(viewModels)
     }

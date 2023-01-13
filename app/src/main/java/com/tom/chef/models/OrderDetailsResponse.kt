@@ -29,13 +29,13 @@ data class OrderDetailsResponse(
         @SerializedName("discount")
         val discount: String,
         @SerializedName("driver")
-        val driver: Driver,
+        val driver: Driver?,
         @SerializedName("grand_total")
         val grandTotal: String,
         @SerializedName("id")
         val id: Int,
         @SerializedName("order_items")
-        val orderItems: List<OrderItem>,
+        val orderItems: List<OrderItem>?,
         @SerializedName("order_number")
         val orderNumber: String,
         @SerializedName("order_status")
