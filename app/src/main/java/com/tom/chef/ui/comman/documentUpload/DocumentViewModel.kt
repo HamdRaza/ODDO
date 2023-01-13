@@ -10,8 +10,8 @@ class DocumentViewModel(val mActivity: BaseActivity, val documentItem: DocumentI
 
     lateinit var documentInterface: DocumentInterface
 
-   @JvmField
-   val hintText = ObservableField<String>()
+    @JvmField
+    val hintText = ObservableField<String>()
 
     @JvmField
     val showClearButton = ObservableField<Boolean>()
@@ -19,25 +19,25 @@ class DocumentViewModel(val mActivity: BaseActivity, val documentItem: DocumentI
     @JvmField
     val documentPath = ObservableField<String>()
 
+    private val position = documentItem.type - 1
+
     init {
         hintText.set(documentItem.hint)
     }
 
-    override fun close() {
+    fun onMenuClicked(view: View) {
+        documentInterface.onDocumentClicked(position)
     }
 
-    fun onMenuClicked(view: View){
-        when(documentItem.type){
-
-        }
+    fun selectedPath(path: String) {
+        documentPath.set(path)
+        showClearButton.set(true)
     }
 
-    override fun onItemClicked(view: View) {
-
-    }
-    fun clearText(){
+    fun clearText(view: View) {
         documentPath.set("")
         showClearButton.set(false)
+        documentInterface.onCleared(position)
     }
 
 }

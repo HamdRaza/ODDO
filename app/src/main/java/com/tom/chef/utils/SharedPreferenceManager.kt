@@ -17,6 +17,7 @@ class SharedPreferenceManager @Inject constructor(@ApplicationContext context: C
     private val logedIn = Pair("logedIn", false)
     private val savedUser = Pair("user", null)
     private val access_token = Pair("access_token", null)
+    private val tempId = Pair("temp_id", 0)
 
     val prefs = context.getSharedPreferences(NAME, MODE)
 
@@ -36,6 +37,12 @@ class SharedPreferenceManager @Inject constructor(@ApplicationContext context: C
         get() = prefs.getBoolean(logedIn.first, logedIn.second)
         set(value) = prefs.edit() {
             it.putBoolean(logedIn.first, value)
+        }
+
+    var getTempId: Int
+        get() = prefs.getInt(tempId.first, tempId.second)
+        set(value) = prefs.edit() {
+            it.putInt(tempId.first, value)
         }
 
 

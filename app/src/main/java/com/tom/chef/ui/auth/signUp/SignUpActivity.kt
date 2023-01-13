@@ -149,6 +149,7 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
             } else {
                 myToast("Register Successful")
 //                sharedPreferenceManager.saveUser(it.oData, it.accessToken)
+                sharedPreferenceManager.getTempId = it.oData.tempId
                 vm.moveToOTP()
                 finishAffinity()
             }

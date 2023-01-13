@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewModel"
             type="com.tom.chef.ui.auth.inPutDocuments.InputDocumentsViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -31,22 +32,24 @@
                 android:orientation="vertical"
                 android:paddingVertical="@dimen/_10sdp"
                 app:layout_constraintTop_toTopOf="parent">
+
                 <LinearLayout
-                    android:layout_gravity="end"
                     android:id="@+id/langaugeBox"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <include
                         android:id="@+id/layout_change_language"
-                        layout="@layout/layout_change_language"/>
+                        layout="@layout/layout_change_language" />
                 </LinearLayout>
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_70sdp"
@@ -83,7 +86,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <EditText
-                        android:id="@+id/Address"
+                        android:id="@+id/txt_prep_time"
                         style="@style/input_back"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -97,36 +100,36 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <com.google.android.material.textfield.TextInputLayout
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="96dp"
+                        android:layout_height="0dp"
                         android:background="@drawable/background_location_theme"
                         android:padding="0dp"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
                         app:counterEnabled="false"
+                        app:endIconTint="@color/white"
                         app:errorEnabled="false"
                         app:hintEnabled="false"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        app:endIconTint="@color/white"
-                        app:boxStrokeWidth="0dp"
-                        app:boxStrokeWidthFocused="0dp">
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                            android:focusable="false"
-                            android:id="@+id/languageInput"
-                            android:drawablePadding="-12dp"
-                            android:paddingBottom="0dp"
-                            android:paddingTop="0dp"
-                            android:drawableTint="@color/white"
-                            android:padding="0dp"
-                            android:gravity="center"
-                            android:textColor="@color/white"
+                            android:id="@+id/txt_prep_unit"
                             style="@style/input_back.language"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/background_location_theme"
-                            android:text="mins"/>
+                            android:drawablePadding="-12dp"
+                            android:drawableTint="@color/white"
+                            android:focusable="false"
+                            android:gravity="center"
+                            android:padding="0dp"
+                            android:paddingTop="0dp"
+                            android:paddingBottom="0dp"
+                            android:text="mins"
+                            android:textColor="@color/white" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

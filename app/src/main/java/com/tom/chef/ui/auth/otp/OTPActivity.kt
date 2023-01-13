@@ -79,7 +79,7 @@ class OTPActivity : BaseActivity(), OTPInterface {
     }
 
     override fun moveToDocument() {
-        sharedPreferenceManager.isLogedIn=true
+        sharedPreferenceManager.isLogedIn=false
         startActivity(InputDocumentsActivity.getIntent(this))
         finishAffinity()
     }
