@@ -125,11 +125,24 @@ interface ApiService {
         @Field("contain_package") contain_package: String,
     ): DishListResponse
 
+    @POST("chef/food_list")
+    @FormUrlEncoded
+    suspend fun getMenuListAll(
+        @Field("access_token") access_token: String
+    ): DishListResponse
+
     @POST("chef/order_history")
     @FormUrlEncoded
     suspend fun getOrderHistory(
         @Field("access_token") access_token: String
     ): OrderHistoryResponse
+
+    @POST("chef/order_details")
+    @FormUrlEncoded
+    suspend fun getOrderDetails(
+        @Field("access_token") access_token: String,
+        @Field("id") id: String
+    ): OrderDetailsResponse
 
     @POST("auth/resend_phone_code")
     @FormUrlEncoded

@@ -211,4 +211,18 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
         }
     }.flowOn(Dispatchers.IO)
 
+    fun getOrderDetails(
+        id: String
+    ): Flow<OrderDetailsResponse> = flow {
+        try {
+            emit(
+                apiServiceImple.getOrderDetails(
+                    id = id
+                )
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
 }

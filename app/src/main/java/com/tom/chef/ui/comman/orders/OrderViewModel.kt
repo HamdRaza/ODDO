@@ -36,7 +36,7 @@ class OrderViewModel(val data: OrderListResponse.ODataItem) : ViewModel {
         orderInterface.onOrderClicked(data = data)
     }
 
-    fun update(data: OrderListResponse.ODataItem) {
+    private fun update(data: OrderListResponse.ODataItem) {
         orderNumber.set(data.orderNumber)
         pickUpTime.set("Pick Up Time : ${data.pickupTime ?: ""}")
         deliveryTime.set("Delivery Time : ${data.deliveryTime ?: ""}")

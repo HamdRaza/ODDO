@@ -2,9 +2,11 @@ package com.tom.chef.ui.comman.orderItem
 
 import androidx.databinding.ObservableField
 import com.tom.chef.R
+import com.tom.chef.models.OrderDetailsResponse
+import com.tom.chef.models.OrderListResponse
 import com.tom.chef.ui.comman.ViewModel
 
-class OrderItemViewModel : ViewModel {
+class OrderItemViewModel(val data: OrderDetailsResponse.OData.OrderItem) : ViewModel {
     lateinit var orderItemInterface: OrderItemInterface
 
     @JvmField
@@ -29,11 +31,14 @@ class OrderItemViewModel : ViewModel {
     var fromOrderDetails = ObservableField<Boolean>(false)
 
     init {
-        itemName.set("Meat Samosa ")
-        peopleCount.set("4 People")
-        price.set("AED 20.3")
-        total.set("X 2")
-        itemDescription.set("Lorem ipsum dolor sit amet, consectetur adipiscing ")
+        update(data)
     }
 
+    fun update(data: OrderDetailsResponse.OData.OrderItem) {
+        itemName.set(data.itemName)
+        peopleCount.set("${data.packageSufficientFor} People")
+        price.set(data.itemPerPrice)
+        total.set("X ${data.itemQuantity}")
+        itemDescription.set(data.packageTitle)
+    }
 }

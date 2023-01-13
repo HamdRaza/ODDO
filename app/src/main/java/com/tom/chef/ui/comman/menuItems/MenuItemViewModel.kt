@@ -75,6 +75,7 @@ class MenuItemViewModel : ViewModel {
         isInStock.set(data.outOfStock == null)
         itemOldPrice.set("AED ${data.regularPrice}")
         itemPrice.set("AED ${data.salePrice}")
+        itemImage.set(data.image)
     }
 
 }

@@ -59,7 +59,7 @@ class AllMenuFragment : BaseFragment(), MenuItemInterface {
     }
 
     private fun getMenuList() {
-        appViewModel.getMenuList(if (isThisVariant) "1" else "0")
+        appViewModel.getMenuList(if (isThisVariant) "1" else "All")
         appViewModel.getMenuListLive.observe(viewLifecycleOwner) {
             if (it.status == "1") {
                 allMenuViewModel.fillMenuItems(

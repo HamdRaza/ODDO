@@ -425,6 +425,27 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
         }
     }
 
+    private var _getOrderDetailsLive = SingleLiveEvent<OrderDetailsResponse>()
+    val getOrderDetailsLive: SingleLiveEvent<OrderDetailsResponse>
+        get() = _getOrderDetailsLive
+
+    fun getOrderDetails(
+        id: String
+    ) {
+        viewModelScope.launch {
+            try {
+                appRepository.getOrderDetails(
+                    id = id
+                ).collect {
+                    _getOrderDetailsLive.value = it
+                }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
 
     // Manage API Response Exception
     fun manageApiError(errorCode: String, errorMessage: String) {
