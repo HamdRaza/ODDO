@@ -29,7 +29,7 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
         }
     }.flowOn(Dispatchers.IO)
 
-    fun signUp2API(requestSignUp2: RequestSignUp2): Flow<CommonResponse> = flow {
+    fun signUp2API(requestSignUp2: RequestSignUp2): Flow<Signup2Response> = flow {
         try {
             emit(apiServiceImple.signUp2API(requestSignUp2))
         } catch (e: Exception) {

@@ -22,6 +22,6 @@ data class RequestSignUp2(
     val visa_copy: MultipartBody.Part?,
     val emirates_id: MultipartBody.Part?,
     val bank_account_proof: MultipartBody.Part?,
-    val access_token: RequestBody,
-    val preparation_unit: RequestBody
+    val preparation_time: RequestBody,
+    val preparation_unit: RequestBody,
 )

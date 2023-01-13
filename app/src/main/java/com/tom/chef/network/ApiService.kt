@@ -7,7 +7,6 @@ import com.tom.chef.models.profile.ResponseProfileUpdate
 import com.tom.chef.utils.Constants
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
@@ -66,9 +65,9 @@ interface ApiService {
         @Part visa_copy: MultipartBody.Part?,
         @Part emirates_id: MultipartBody.Part?,
         @Part bank_account_proof: MultipartBody.Part?,
-        @Part("preparation_time") access_token: RequestBody,
+        @Part("preparation_time") preparation_time: RequestBody,
         @Part("preparation_unit") preparation_unit: RequestBody
-    ): CommonResponse
+    ): Signup2Response
 
     //    access_token:{{access_token}}
 //order_type:2

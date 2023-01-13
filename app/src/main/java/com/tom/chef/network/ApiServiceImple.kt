@@ -42,7 +42,7 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
         )
     }
 
-    suspend fun signUp2API(requestSignUp2: RequestSignUp2): CommonResponse {
+    suspend fun signUp2API(requestSignUp2: RequestSignUp2): Signup2Response {
         return apiService.signUp2API(
             temp_id = requestSignUp2.temp_id,
             trade_license = requestSignUp2.trade_license,
@@ -50,7 +50,7 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
             visa_copy = requestSignUp2.visa_copy,
             emirates_id = requestSignUp2.emirates_id,
             bank_account_proof = requestSignUp2.bank_account_proof,
-            access_token = requestSignUp2.access_token,
+            preparation_time = requestSignUp2.preparation_time,
             preparation_unit = requestSignUp2.preparation_unit,
         )
     }

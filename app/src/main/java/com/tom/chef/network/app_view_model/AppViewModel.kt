@@ -70,7 +70,7 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
         }
     }
 
-    fun signUp2API(requestSignUp2: RequestSignUp2, callBack: (CommonResponse) -> Unit) {
+    fun signUp2API(requestSignUp2: RequestSignUp2, callBack: (Signup2Response) -> Unit) {
         viewModelScope.launch {
             try {
                 appRepository.signUp2API(requestSignUp2).collect {

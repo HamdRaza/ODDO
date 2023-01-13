@@ -8,22 +8,29 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hbisoft.pickit.PickiT
 import com.hbisoft.pickit.PickiTCallbacks
 import com.permissionx.guolindev.PermissionX
 import com.tom.chef.databinding.ActivityInputDocumentBinding
+import com.tom.chef.models.auth.RequestSignUp2
+import com.tom.chef.network.app_view_model.AppViewModel
 import com.tom.chef.newBase.BaseActivity
 import com.tom.chef.ui.comman.ViewModel
 import com.tom.chef.ui.comman.documentUpload.DocumentInterface
 import com.tom.chef.ui.comman.documentUpload.DocumentItemAdapter
 import com.tom.chef.ui.comman.documentUpload.DocumentViewModel
-import com.tom.chef.utils.SharedPreferenceManager
-import com.tom.chef.utils.getDocumentMenu
-import com.tom.chef.utils.makeTransparentStatusBarBlack
-import com.tom.chef.utils.setWhiteColor
+import com.tom.chef.ui.dashboard.MainActivity
+import com.tom.chef.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 import javax.inject.Inject
 
 
@@ -34,6 +41,7 @@ class InputDocumentsActivity : BaseActivity(), InputDocumentInterface, DocumentI
     private lateinit var binding: ActivityInputDocumentBinding
     private lateinit var vm: InputDocumentsViewModel
 
+    val appViewModel: AppViewModel by viewModels()
     private var documentItemAdapter = DocumentItemAdapter(ArrayList())
 
     @Inject
@@ -47,9 +55,11 @@ class InputDocumentsActivity : BaseActivity(), InputDocumentInterface, DocumentI
 
     var currentPosition: Int = -1
 
-    lateinit var viewModels: ArrayList<DocumentViewModel>
+    lateinit var documentViewModel: ArrayList<DocumentViewModel>
 
     var listPaths = ArrayList<String>()
+
+    var selectedUnit = "mins"
 
     companion object {
         fun getIntent(context: Context): Intent {
@@ -114,7 +124,15 @@ class InputDocumentsActivity : BaseActivity(), InputDocumentInterface, DocumentI
             type
         )
         binding.txtPrepUnit.setAdapter(adapter2)
-
+        binding.txtPrepUnit.setOnItemClickListener { adapterView, view, position, l ->
+            if (position == 0) {
+                selectedUnit = "mins"
+            } else if (position == 1) {
+                selectedUnit = "hour"
+            } else if (position == 2) {
+                selectedUnit = "day"
+            }
+        }
     }
 
     private fun loadMenuRecycle() {
@@ -123,13 +141,13 @@ class InputDocumentsActivity : BaseActivity(), InputDocumentInterface, DocumentI
             recycleView.isNestedScrollingEnabled = false
             recycleView.adapter = documentItemAdapter
         }
-        viewModels = ArrayList<DocumentViewModel>()
+        documentViewModel = ArrayList<DocumentViewModel>()
         getDocumentMenu().forEach {
             val model = DocumentViewModel(mActivity = this, it)
             model.documentInterface = this
-            viewModels.add(model)
+            documentViewModel.add(model)
         }
-        documentItemAdapter.setList(viewModels as ArrayList<ViewModel>)
+        documentItemAdapter.setList(documentViewModel as ArrayList<ViewModel>)
     }
 
     override fun onDocumentClicked(pos: Int) {
@@ -145,10 +163,72 @@ class InputDocumentsActivity : BaseActivity(), InputDocumentInterface, DocumentI
 
     override fun submitDocuments() {
         if (validate()) {
+            val tradeLicenseFile = File(listPaths[0])
+            val tradeLicenseBody: RequestBody =
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), tradeLicenseFile)
 
-//            sharedPreferenceManager.isLogedIn=true
-//            startActivity(MainActivity.getIntent(this))
-//            finishAffinity()
+            val emiratesIdFile = File(listPaths[1])
+            val emiratesIdBody: RequestBody =
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), emiratesIdFile)
+
+            val passportFile = File(listPaths[2])
+            val passportBody: RequestBody =
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), passportFile)
+
+            val visaFile = File(listPaths[3])
+            val visaBody: RequestBody =
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), visaFile)
+
+            val bankAccountFile = File(listPaths[4])
+            val bankAccountBody: RequestBody =
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), bankAccountFile)
+
+            val requestSignUp = RequestSignUp2(
+                temp_id = sharedPreferenceManager.getTempId.toString()
+                    .toRequestBody("text/plain".toMediaType()),
+                trade_license = MultipartBody.Part.createFormData(
+                    "trade_license",
+                    tradeLicenseFile.name,
+                    tradeLicenseBody
+                ),
+                passport = MultipartBody.Part.createFormData(
+                    "passport",
+                    passportFile.name,
+                    passportBody
+                ),
+                visa_copy = MultipartBody.Part.createFormData(
+                    "visa_copy",
+                    visaFile.name,
+                    visaBody
+                ),
+                emirates_id = MultipartBody.Part.createFormData(
+                    "emirates_id",
+                    emiratesIdFile.name,
+                    emiratesIdBody
+                ),
+                bank_account_proof = MultipartBody.Part.createFormData(
+                    "bank_account_proof",
+                    bankAccountFile.name,
+                    bankAccountBody
+                ),
+                preparation_time = binding.txtPrepTime.text.toString()
+                    .toRequestBody("text/plain".toMediaType()),
+                preparation_unit = selectedUnit.toRequestBody("text/plain".toMediaType())
+            )
+            startAnim()
+            appViewModel.signUp2API(requestSignUp) {
+                stopAnim()
+                if (!it.status.checkForSuccess()) {
+                    myToast(it.message)
+                    return@signUp2API
+                } else {
+                    myToast("Register Successful")
+                    sharedPreferenceManager.isLogedIn = true
+                    startActivity(MainActivity.getIntent(this))
+                    finishAffinity()
+                }
+            }
+
         }
     }
 
@@ -193,7 +273,7 @@ class InputDocumentsActivity : BaseActivity(), InputDocumentInterface, DocumentI
     ) {
         if (currentPosition < 5) {
             listPaths[currentPosition] = path!!
-            viewModels[currentPosition].selectedPath(path!!)
+            documentViewModel[currentPosition].selectedPath(path!!)
         }
     }
 
