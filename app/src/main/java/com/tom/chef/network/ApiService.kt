@@ -89,6 +89,28 @@ interface ApiService {
         @Field("user_timezone") user_timezone: String,
     ): OrderListResponse
 
+    @POST("chef/update_profile")
+    @FormUrlEncoded
+    suspend fun updateProfile(
+        @Field("access_token") access_token: RequestBody,
+        @Field("first_name") first_name: RequestBody,
+        @Field("last_name") last_name: RequestBody,
+        @Field("latitude") latitude: RequestBody,
+        @Field("longitude") longitude: RequestBody,
+        @Field("about_me") about_me: RequestBody,
+        @Field("brand_name") brand_name: RequestBody,
+        @Field("image") image: MultipartBody.Part?,
+        @Field("cover_image") cover_image: MultipartBody.Part?,
+        @Field("preparation_unit") preparation_unit: RequestBody,
+        @Field("preparation_time") preparation_time: RequestBody,
+        @Field("cuisines") cuisines: RequestBody,
+        @Field("order_limit_per_hour") order_limit_per_hour: RequestBody,
+        @Field("weekly_mode") weekly_mode: RequestBody,
+        @Field("allow_ordertype") allow_ordertype: RequestBody,
+        @Field("start_time") start_time: RequestBody,
+        @Field("end_time") end_time: RequestBody
+    ): CommonResponse
+
     @POST("chef/profile")
     @FormUrlEncoded
     suspend fun getProfile(
@@ -135,6 +157,12 @@ interface ApiService {
     suspend fun getOrderHistory(
         @Field("access_token") access_token: String
     ): OrderHistoryResponse
+
+    @POST("cuisine_list")
+    @FormUrlEncoded
+    suspend fun getCuisineList(
+        @Field("access_token") access_token: String
+    ): CuisineResponse
 
     @POST("chef/order_details")
     @FormUrlEncoded

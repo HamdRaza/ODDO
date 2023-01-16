@@ -28,30 +28,29 @@ class LocationPickerActivity : BaseActivity(), LocationPickerInterface, ToolBarI
 
     lateinit var vm: LocationPickerViewModel
 
-    private var map:GoogleMap?=null
-
+    private var map: GoogleMap? = null
 
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
 
-     lateinit var locationViewModel:LocationViewModel
+    lateinit var locationViewModel: LocationViewModel
 
-    fun implementLocation(){
-        locationViewModel= LocationViewModel(registry = activityResultRegistry, context = this)
-        locationViewModel.locationInterface=object: LocationInterface {
+    private fun implementLocation() {
+        locationViewModel = LocationViewModel(registry = activityResultRegistry, context = this)
+        locationViewModel.locationInterface = object : LocationInterface {
             override fun locationProvided() {
                 vm.startMap()
             }
 
             override fun showTurnOnLocation() {
-                if (locationViewModel.dialogShowing){
+                if (locationViewModel.dialogShowing) {
                     return
                 }
-                locationViewModel.dialogShowing=true
+                locationViewModel.dialogShowing = true
 
-                val confirmDialogViewModel=ConfirmDialogViewModel()
+                val confirmDialogViewModel = ConfirmDialogViewModel()
                 confirmDialogViewModel.locationPermissionRequired()
-                ConfirmationDialog(viewModel = confirmDialogViewModel,object :
+                ConfirmationDialog(viewModel = confirmDialogViewModel, object :
                     ConfirmDialogInterface {
                     override fun onNoClicked() {
                         finishAffinity()
@@ -60,15 +59,15 @@ class LocationPickerActivity : BaseActivity(), LocationPickerInterface, ToolBarI
                     override fun onYesClicked() {
                         this@LocationPickerActivity.openAppSystemSettings()
                     }
-                }, isDissmissAble = false).show(supportFragmentManager,"Location")
+                }, isDissmissAble = false).show(supportFragmentManager, "Location")
             }
         }
         lifecycle.addObserver(locationViewModel)
     }
 
-    fun LatLng.UpdateAddress(){
-        vm.userLocation=this
-        locationViewModel.getAddressOnBack(latLng = this){address->
+    fun LatLng.UpdateAddress() {
+        vm.userLocation = this
+        locationViewModel.getAddressOnBack(latLng = this) { address ->
             runOnUiThread {
                 binding.location.setText(address)
             }
@@ -92,17 +91,15 @@ class LocationPickerActivity : BaseActivity(), LocationPickerInterface, ToolBarI
         binding.viewModel = vm
         vm.locationPickerInterface = this
         vm.init()
-
-
     }
-
 
 
     override fun initWindow() {
         window.setWhiteColor(this)
         window.makeTransparentStatusBarBlack()
-        binding.location.paint?.isUnderlineText=true
+        binding.location.paint?.isUnderlineText = true
     }
+
     override fun onBackClicked() {
         finish()
     }
@@ -111,13 +108,13 @@ class LocationPickerActivity : BaseActivity(), LocationPickerInterface, ToolBarI
     override fun startMap() {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         startAnim()
-        mapFragment.getMapAsync {map->
-            this.map=map
+        mapFragment.getMapAsync { map ->
+            this.map = map
             stopAnim()
             map.setOnCameraIdleListener {
                 map.cameraPosition.target.UpdateAddress()
             }
-            locationViewModel.userLocationUpdate.observe(this){
+            locationViewModel.userLocationUpdate.observe(this) {
                 it?.let {
                     locationViewModel.userLocationUpdate.removeObservers(this)
                     vm.moveCameraAt(location = it, map = map)
@@ -128,18 +125,12 @@ class LocationPickerActivity : BaseActivity(), LocationPickerInterface, ToolBarI
     }
 
     override fun moveCameraAt(location: LatLng, map: GoogleMap) {
-        vm.userLocation= location
-        if (vm.moveCamera){
-            vm.moveCamera=false
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(location,14f))
+        vm.userLocation = location
+        if (vm.moveCamera) {
+            vm.moveCamera = false
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 14f))
         }
     }
-
-
-
-
-
-
 
 
     override fun onDestroy() {
@@ -147,13 +138,11 @@ class LocationPickerActivity : BaseActivity(), LocationPickerInterface, ToolBarI
     }
 
 
-
-
     override fun onAddAddressClicked() {
-        val bundle=Bundle()
-        bundle.putString("lat",vm.userLocation!!.latitude.toString())
-        bundle.putString("lng",vm.userLocation!!.longitude.toString())
-        bundle.putString("address",binding.location.getLocalText())
+        val bundle = Bundle()
+        bundle.putString("lat", vm.userLocation!!.latitude.toString())
+        bundle.putString("lng", vm.userLocation!!.longitude.toString())
+        bundle.putString("address", binding.location.getLocalText())
         val resultIntent = Intent()
         resultIntent.putExtras(bundle)
         setResult(RESULT_OK, resultIntent)
@@ -163,7 +152,6 @@ class LocationPickerActivity : BaseActivity(), LocationPickerInterface, ToolBarI
     override fun cancelClicked() {
         finish()
     }
-
 
 
 }

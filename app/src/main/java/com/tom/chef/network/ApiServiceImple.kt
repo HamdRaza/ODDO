@@ -206,6 +206,12 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
         )
     }
 
+    suspend fun getCuisineList(): CuisineResponse {
+        return apiService.getCuisineList(
+            access_token = sharedPreferenceManager.getAccessToken.toString()
+        )
+    }
+
     suspend fun getOrderDetails(
         id: String
     ): OrderDetailsResponse {
@@ -215,5 +221,26 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
         )
     }
 
+    suspend fun updateProfile(profileRequest: ProfileRequest): CommonResponse {
+        return apiService.updateProfile(
+            access_token = profileRequest.access_token,
+            first_name = profileRequest.first_name,
+            last_name = profileRequest.last_name,
+            latitude = profileRequest.latitude,
+            longitude = profileRequest.longitude,
+            about_me = profileRequest.about_me,
+            brand_name = profileRequest.brand_name,
+            image = profileRequest.image,
+            cover_image = profileRequest.cover_image,
+            preparation_unit = profileRequest.preparation_unit,
+            preparation_time = profileRequest.preparation_time,
+            cuisines = profileRequest.cuisines,
+            order_limit_per_hour = profileRequest.order_limit_per_hour,
+            weekly_mode = profileRequest.weekly_mode,
+            allow_ordertype = profileRequest.allow_ordertype,
+            start_time = profileRequest.start_time,
+            end_time = profileRequest.end_time
+        )
+    }
 
 }

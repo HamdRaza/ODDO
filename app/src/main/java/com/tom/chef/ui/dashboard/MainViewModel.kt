@@ -15,35 +15,38 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(val unUsed: NotificationRepository )  : ViewModel() {
+class MainViewModel @Inject constructor(val unUsed: NotificationRepository) : ViewModel() {
 
     lateinit var mainInterface: MainInterface
 
     @JvmField
-    var showFilterSelector=ObservableField<Boolean>()
+    var showFilterSelector = ObservableField<Boolean>()
 
-    fun hideFilterView(){
+    fun hideFilterView() {
         showFilterSelector.set(false)
     }
-    fun makeUserOnline(){
+
+    fun makeUserOnline() {
         mainInterface.updateUserStatus(boolean = true)
         hideFilterView()
     }
-    fun makeUserOffline(){
+
+    fun makeUserOffline() {
         mainInterface.updateUserStatus(boolean = false)
         hideFilterView()
     }
-    fun onBackButtonClicked()=mainInterface.onBackButtonClicked()
+
+    fun onBackButtonClicked() = mainInterface.onBackButtonClicked()
 
     var userProfile = MutableLiveData<ProfileResponse.OData>()
-    var counries    = MutableLiveData<ResponseCountries>()
-    var userLocationUpdate    = MutableLiveData<LatLng>(null)
+    var counries = MutableLiveData<ResponseCountries>()
+    var userLocationUpdate = MutableLiveData<LatLng>(null)
 
 
-    fun callMyProfileAPI()=mainInterface.callMyProfileAPI()
-    fun getCountryCodes()=mainInterface.getCountryCodes()
+    fun callMyProfileAPI() = mainInterface.callMyProfileAPI()
+    fun getCountryCodes() = mainInterface.getCountryCodes()
 
-    fun init(){
+    fun init() {
         callMyProfileAPI()
         getCountryCodes()
         mainInterface.implementListners()
@@ -52,29 +55,29 @@ class MainViewModel @Inject constructor(val unUsed: NotificationRepository )  : 
     }
 
 
-    fun askNotificationPermission()=mainInterface.askNotificationPermission()
-
+    fun askNotificationPermission() = mainInterface.askNotificationPermission()
 
 
     private val _userAlNotifications = MutableLiveData<UiState<List<NotificationModel>>>()
-    val  userAlNotifications: LiveData<UiState<List<NotificationModel>>>
+    val userAlNotifications: LiveData<UiState<List<NotificationModel>>>
         get() = _userAlNotifications
 
     fun getAllNotifications() {
         unUsed.getAllNotifications(true) {
-            _userAlNotifications.value=it
+            _userAlNotifications.value = it
         }
     }
-    fun clearAllNotifications(){
+
+    fun clearAllNotifications() {
         unUsed.deleteAll()
     }
 
 
-   fun checkForIntent()=mainInterface.checkForIntent()
+    fun checkForIntent() = mainInterface.checkForIntent()
 
-    fun moveToLogIn()=mainInterface.moveToLogInScreen()
+    fun moveToLogIn() = mainInterface.moveToLogInScreen()
 
-    fun onNotificationClicked()=mainInterface.onNotificationClicked()
-    fun onAccountClicked()=mainInterface.onAccountClicked()
+    fun onNotificationClicked() = mainInterface.onNotificationClicked()
+    fun onAccountClicked() = mainInterface.onAccountClicked()
 
 }

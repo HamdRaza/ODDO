@@ -201,10 +201,34 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
         }
     }.flowOn(Dispatchers.IO)
 
+    fun updateProfile(
+        profileRequest: ProfileRequest
+    ): Flow<CommonResponse> = flow {
+        try {
+            emit(
+                apiServiceImple.updateProfile(
+                    profileRequest = profileRequest
+                )
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
     fun getOrderHistory(): Flow<OrderHistoryResponse> = flow {
         try {
             emit(
                 apiServiceImple.getOrderHistory()
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun getCuisineList(): Flow<CuisineResponse> = flow {
+        try {
+            emit(
+                apiServiceImple.getCuisineList()
             )
         } catch (e: Exception) {
             e.printStackTrace()

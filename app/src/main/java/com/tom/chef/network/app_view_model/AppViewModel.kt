@@ -258,22 +258,22 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
 
 
     // Use for profile Update
-    private var _updateProfileLive = SingleLiveEvent<ResponseProfileUpdate>()
-    val updateProfileLive: SingleLiveEvent<ResponseProfileUpdate>
-        get() = _updateProfileLive
-
-    fun updateProfile(requestUpdateProfile: RequestUpdateProfile) {
-        viewModelScope.launch {
-            try {
-                appRepository.updateProfile(requestUpdateProfile).collect {
-                    _updateProfileLive.value = it
-                }
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                manageApiError(e.code().toString(), e.message.toString())
-            }
-        }
-    }
+//    private var _updateProfileLive = SingleLiveEvent<ResponseProfileUpdate>()
+//    val updateProfileLive: SingleLiveEvent<ResponseProfileUpdate>
+//        get() = _updateProfileLive
+//
+//    fun updateProfile(requestUpdateProfile: RequestUpdateProfile) {
+//        viewModelScope.launch {
+//            try {
+//                appRepository.updateProfile(requestUpdateProfile).collect {
+//                    _updateProfileLive.value = it
+//                }
+//            } catch (e: HttpException) {
+//                e.printStackTrace()
+//                manageApiError(e.code().toString(), e.message.toString())
+//            }
+//        }
+//    }
 
 
     // Use for change user password
@@ -408,6 +408,27 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
         }
     }
 
+    private var _updateProfileAPILive = SingleLiveEvent<CommonResponse>()
+    val updateProfileAPILive: SingleLiveEvent<CommonResponse>
+        get() = _updateProfileAPILive
+
+    fun updateProfileAPI(
+        profileRequest: ProfileRequest
+    ) {
+        viewModelScope.launch {
+            try {
+                appRepository.updateProfile(
+                    profileRequest = profileRequest
+                ).collect {
+                    _updateProfileAPILive.value = it
+                }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
     private var _getOrderHistoryLive = SingleLiveEvent<OrderHistoryResponse>()
     val getOrderHistoryLive: SingleLiveEvent<OrderHistoryResponse>
         get() = _getOrderHistoryLive
@@ -417,6 +438,23 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
             try {
                 appRepository.getOrderHistory().collect {
                     _getOrderHistoryLive.value = it
+                }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
+    private var _getCuisineListLive = SingleLiveEvent<CuisineResponse>()
+    val getCuisineListLive: SingleLiveEvent<CuisineResponse>
+        get() = _getCuisineListLive
+
+    fun getCuisineList() {
+        viewModelScope.launch {
+            try {
+                appRepository.getCuisineList().collect {
+                    _getCuisineListLive.value = it
                 }
             } catch (e: HttpException) {
                 e.printStackTrace()

@@ -182,6 +182,10 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
         if (!valid.isAValidPassword(binding.password)) {
             return false
         }
+        if (valid.checkIsEmpty(binding.Address)) {
+            myToast("Address is required")
+            return false
+        }
         if (!valid.isAgree(this, binding.agree)) {
             return false
         }

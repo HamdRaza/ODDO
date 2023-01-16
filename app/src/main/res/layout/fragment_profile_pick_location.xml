@@ -168,7 +168,7 @@
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_20sdp"
                             android:ems="10"
-                            android:hint="street Name"
+                            android:hint="Street Name"
                             android:inputType="textPostalAddress" />
                         <EditText
                             style="@style/input_back_montserrat"
