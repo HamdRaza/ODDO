@@ -21,10 +21,12 @@ import com.tom.chef.databinding.FragmentHomeEditProfileBinding
 import com.tom.chef.models.ProfileRequest
 import com.tom.chef.network.app_view_model.AppViewModel
 import com.tom.chef.newBase.BaseFragment
+import com.tom.chef.ui.comman.location.LocationViewModel
 import com.tom.chef.ui.comman.profile.ProfileInterface
 import com.tom.chef.ui.dashboard.fragments.account.AccountInterface
 import com.tom.chef.ui.dashboard.fragments.account.AccountViewModel
 import com.tom.chef.ui.location.LocationPickerActivity
+import com.tom.chef.ui.location.LocationPickerViewModel
 import com.tom.chef.utils.ReduceImageSize
 import com.tom.chef.utils.SharedPreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,6 +50,8 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
 
     private lateinit var binding: FragmentHomeEditProfileBinding
     private lateinit var accountVM: AccountViewModel
+    lateinit var locationPickerVM: LocationPickerViewModel
+
     private lateinit var editProfileViewModel: EditProfileViewModel
 
     val appViewModel: AppViewModel by viewModels()
@@ -98,6 +102,8 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
         accountVM.accountInterface = this
         binding.viewModel = accountVM
 
+        locationPickerVM = LocationPickerViewModel(mActivity)
+
         editProfileViewModel = EditProfileViewModel()
         editProfileViewModel.editProfileInterface = this
         binding.editProfile = editProfileViewModel
@@ -134,7 +140,7 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
             val timePickerDialog = TimePickerDialog(
                 requireActivity(),
                 { view, hourOfDay, minute ->
-                    binding?.startTime?.setText("$hourOfDay:$minute")
+                    binding?.startTime?.setText("%02d".format("$hourOfDay") + ":" + "%02d".format("$minute"))
                 },
                 hour,
                 minute,
@@ -151,7 +157,7 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
             val timePickerDialog = TimePickerDialog(
                 requireActivity(),
                 { view, hourOfDay, minute ->
-                    binding?.endTime?.setText("$hourOfDay:$minute")
+                    binding?.endTime?.setText("%02d".format("$hourOfDay") + ":" + "%02d".format("$minute"))
                 },
                 hour,
                 minute,
@@ -220,6 +226,7 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
         mainActivity.vm.userProfile.observe(viewLifecycleOwner) {
             it?.let {
                 accountVM.updateProfile(it)
+                locationPickerVM.updateProfile(it)
             }
         }
     }
@@ -271,6 +278,15 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
     }
 
     override fun onSaveClicked() {
+        if (address.isEmpty()) {
+            address = accountVM.userAddress.get() as String
+        }
+        if (address.isEmpty()) {
+            latitude = accountVM.latitude.get() as String
+        }
+        if (address.isEmpty()) {
+            longitude = accountVM.longitude.get() as String
+        }
         val imageFile = File(imagePath)
         val imageBody: RequestBody =
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), imageFile)

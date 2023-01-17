@@ -91,6 +91,7 @@ class LocationPickerActivity : BaseActivity(), LocationPickerInterface, ToolBarI
         binding.viewModel = vm
         vm.locationPickerInterface = this
         vm.init()
+        setupListeners()
     }
 
 
@@ -104,6 +105,13 @@ class LocationPickerActivity : BaseActivity(), LocationPickerInterface, ToolBarI
         finish()
     }
 
+    private fun setupListeners() {
+        vm.userProfile.observe(this) {
+            it?.let {
+                vm.updateProfile(it)
+            }
+        }
+    }
 
     override fun startMap() {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment

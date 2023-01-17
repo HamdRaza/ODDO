@@ -13,6 +13,7 @@ import com.tom.chef.network.app_view_model.AppViewModel
 import com.tom.chef.newBase.BaseFragment
 import com.tom.chef.ui.auth.logIn.LoginActivity
 import com.tom.chef.ui.comman.ViewModel
+import com.tom.chef.ui.comman.location.LocationViewModel
 import com.tom.chef.ui.comman.profile.ProfileInterface
 import com.tom.chef.ui.comman.profile.ProfileItemAdapter
 import com.tom.chef.ui.comman.profile.ProfileItemViewModel
@@ -30,6 +31,7 @@ class ProfileFragment : BaseFragment(), ProfileInterface, AccountInterface {
 
     private lateinit var binding: FragmentHomeProfileBinding
     private lateinit var accountVM: AccountViewModel
+
     private val profileItemAdopter: ProfileItemAdapter = ProfileItemAdapter(ArrayList())
 
     val appViewModel: AppViewModel by viewModels()

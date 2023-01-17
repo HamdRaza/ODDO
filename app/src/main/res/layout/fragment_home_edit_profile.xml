@@ -221,7 +221,7 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:paddingHorizontal="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
-                            android:text="Al Quoz - Al Quoz 2 - Dubai - United Arab Emirates" />
+                            android:text="@{viewModel.userAddress}" />
                     </LinearLayout>
 
 

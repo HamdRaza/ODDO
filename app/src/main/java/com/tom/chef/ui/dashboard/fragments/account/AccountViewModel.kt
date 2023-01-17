@@ -50,6 +50,12 @@ class AccountViewModel(val mActivity: Activity) : ViewModel() {
     val userAddress = ObservableField<String>()
 
     @JvmField
+    val latitude = ObservableField<String>()
+
+    @JvmField
+    val longitude = ObservableField<String>()
+
+    @JvmField
     val userPhone = ObservableField<String>()
 
     @JvmField
@@ -70,6 +76,8 @@ class AccountViewModel(val mActivity: Activity) : ViewModel() {
         endTime.set(user.endTime)
         description.set(user.aboutMe)
         userAddress.set("${user.building}, ${user.street}, ${user.landmark}")
+        latitude.set(user.latitude)
+        longitude.set(user.longitude)
         profilePath.set(user.image)
         coverImage.set(user.coverImage)
         when (user.allowOrdertype) {
@@ -84,6 +92,7 @@ class AccountViewModel(val mActivity: Activity) : ViewModel() {
             "hour" -> preparationUnits.set("hrs")
             "day" -> preparationUnits.set("days")
         }
+
     }
 
 
