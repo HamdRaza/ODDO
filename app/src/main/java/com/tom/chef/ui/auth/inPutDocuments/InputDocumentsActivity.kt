@@ -18,6 +18,7 @@ import com.tom.chef.databinding.ActivityInputDocumentBinding
 import com.tom.chef.models.auth.RequestSignUp2
 import com.tom.chef.network.app_view_model.AppViewModel
 import com.tom.chef.newBase.BaseActivity
+import com.tom.chef.ui.auth.logIn.LoginActivity
 import com.tom.chef.ui.comman.ViewModel
 import com.tom.chef.ui.comman.documentUpload.DocumentInterface
 import com.tom.chef.ui.comman.documentUpload.DocumentItemAdapter
@@ -224,7 +225,7 @@ class InputDocumentsActivity : BaseActivity(), InputDocumentInterface, DocumentI
                 } else {
                     myToast("Register Successful")
                     sharedPreferenceManager.isLogedIn = true
-                    startActivity(MainActivity.getIntent(this))
+                    startActivity(LoginActivity.getIntent(this))
                     finishAffinity()
                 }
             }

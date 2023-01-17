@@ -7,10 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.tom.chef.data.notifications.NotificationModel
 import com.tom.chef.data.notifications.NotificationRepository
-import com.tom.chef.models.ProfileResponse
 import com.tom.chef.models.ProfileResponse2
 import com.tom.chef.models.auth.ResponseCountries
-import com.tom.chef.models.auth.User
 import com.tom.chef.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

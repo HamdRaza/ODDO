@@ -186,7 +186,8 @@ class MainActivity : BaseActivity(), ToolBarInterface, MainInterface, AccountInt
                 vm.userProfile.value = it.oData
                 sharedPreferenceManager.saveUser(it.oData, null)
             } else {
-                Toast.makeText(this, "Could not fetch profile", Toast.LENGTH_SHORT).show()
+                Utils.userLogout(this)
+//                Toast.makeText(this, "Session Expired", Toast.LENGTH_SHORT).show()
             }
         }
     }

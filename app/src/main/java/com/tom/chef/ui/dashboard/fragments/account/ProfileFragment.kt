@@ -63,7 +63,7 @@ class ProfileFragment : BaseFragment(), ProfileInterface, AccountInterface {
         accountVM.accountInterface = this
         binding.viewModel = accountVM
         loadMenuRecycle()
-        setupLogOut()
+        setupLogout()
         setupListeners()
     }
 
@@ -75,7 +75,7 @@ class ProfileFragment : BaseFragment(), ProfileInterface, AccountInterface {
         }
     }
 
-    private fun setupLogOut() {
+    private fun setupLogout() {
         binding.logOut.setOnClickListener {
             appViewModel.logout()
             appViewModel.logoutLive.observe(viewLifecycleOwner) {

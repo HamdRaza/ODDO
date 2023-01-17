@@ -140,6 +140,7 @@
                         android:ems="10"
                         android:hint="Enter Full Name"
                         android:inputType="textPersonName"
+                        android:text="@{viewModel.userName}"
                         tools:visibility="visible" />
 
                     <EditText
@@ -152,6 +153,7 @@
                         android:ems="10"
                         android:hint="Enter Brand Name"
                         android:inputType="textPersonName"
+                        android:text="@{viewModel.brandName}"
                         tools:visibility="visible" />
 
                     <EditText
@@ -167,6 +169,7 @@
                         android:hint="What's your story ?"
                         android:inputType="textPersonName"
                         android:paddingVertical="@dimen/_10sdp"
+                        android:text="@{viewModel.description}"
                         tools:visibility="visible" />
 
                     <LinearLayout
@@ -259,7 +262,8 @@
                             android:ems="10"
                             android:focusable="false"
                             android:hint="Starting Time"
-                            android:inputType="none" />
+                            android:inputType="none"
+                            android:text="@{viewModel.startTime}" />
 
                         <View
                             android:layout_width="@dimen/_10sdp"
@@ -274,7 +278,8 @@
                             android:ems="10"
                             android:focusable="false"
                             android:hint="Ending Time"
-                            android:inputType="none" />
+                            android:inputType="none"
+                            android:text="@{viewModel.endTime}" />
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -300,7 +305,8 @@
                             android:hint="Select Cuisine"
                             android:inputType="none"
                             android:paddingVertical="0dp"
-                            android:paddingEnd="@dimen/_30sdp" />
+                            android:paddingEnd="@dimen/_30sdp"
+                            android:text="@{viewModel.cuisine}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -326,7 +332,8 @@
                             android:hint="Order Type"
                             android:inputType="none"
                             android:paddingVertical="0dp"
-                            android:paddingEnd="@dimen/_30sdp" />
+                            android:paddingEnd="@dimen/_30sdp"
+                            android:text="@{viewModel.orderType}" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -345,7 +352,8 @@
                             android:layout_weight="0.6"
                             android:ems="10"
                             android:hint="Food Preparation Time"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="@{viewModel.preparationTime}" />
 
                         <View
                             android:layout_width="@dimen/_10sdp"
@@ -373,7 +381,7 @@
                                 android:inputType="none"
                                 android:paddingVertical="0dp"
                                 android:paddingEnd="@dimen/_30sdp"
-                                android:text="mins" />
+                                android:text="@{viewModel.preparationUnits}" />
                         </com.google.android.material.textfield.TextInputLayout>
 
 

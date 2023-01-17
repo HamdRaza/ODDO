@@ -18,6 +18,8 @@ data class ProfileResponse2(
     data class OData(
         @SerializedName("about_me")
         val aboutMe: String? = null,
+        @SerializedName("brand_name")
+        val brandName: String? = null,
         @SerializedName("account_no")
         val accountNo: Any? = null,
         @SerializedName("admin_commission")

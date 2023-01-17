@@ -3,7 +3,6 @@ package com.tom.chef.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
-import com.tom.chef.models.ProfileResponse
 import com.tom.chef.models.ProfileResponse2
 import com.tom.chef.models.auth.User
 import dagger.hilt.android.qualifiers.ApplicationContext

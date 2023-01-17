@@ -1,5 +1,6 @@
 package com.tom.chef.network.app_view_model
 
+import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,6 +11,8 @@ import com.tom.chef.models.profile.RequestUpdateProfile
 import com.tom.chef.models.profile.ResponseProfile
 import com.tom.chef.models.profile.ResponseProfileUpdate
 import com.tom.chef.network.app_repository.AppRepository
+import com.tom.chef.ui.auth.logIn.LoginActivity
+import com.tom.chef.ui.dashboard.MainActivity
 import com.tom.chef.utils.SharedPreferenceManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

@@ -43,9 +43,6 @@ import kotlin.collections.ArrayList
 class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
     EditProfileInterface, PickiTCallbacks {
 
-//    private val SELECT_IMAGE_REQUEST = 102
-//    private val SELECT_COVER_IMAGE_REQUEST = 103
-
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
 
@@ -162,34 +159,6 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
             )
             timePickerDialog.show()
         }
-        val type = arrayOf("mins", "hrs", "days")
-
-        val adapter2 = ArrayAdapter(
-            requireActivity(),
-            android.R.layout.simple_list_item_1,
-            type
-        )
-        binding.selectUnit.setAdapter(adapter2)
-        binding.selectUnit.setOnItemClickListener { adapterView, view, position, l ->
-            if (position == 0) {
-                selectedUnit = "mins"
-            } else if (position == 1) {
-                selectedUnit = "hour"
-            } else if (position == 2) {
-                selectedUnit = "day"
-            }
-        }
-        val order = arrayOf("Both", "Current", "Scheduled")
-
-        val adapter3 = ArrayAdapter(
-            requireActivity(),
-            android.R.layout.simple_list_item_1,
-            order
-        )
-        binding.selectType.setAdapter(adapter3)
-        binding.selectType.setOnItemClickListener { adapterView, view, position, l ->
-            orderType = position
-        }
         getCuisines()
 
     }
@@ -200,15 +169,45 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
             if (it.status == "1") {
                 val cuisines = it.oData.map { it.cuisineName }
 
-                val adapter2 = ArrayAdapter(
+                val adapter = ArrayAdapter(
                     requireActivity(),
                     android.R.layout.simple_list_item_1,
                     cuisines
                 )
-                binding.selectCousine.setAdapter(adapter2)
+                binding.selectCousine.setAdapter(adapter)
                 binding.selectCousine.setOnItemClickListener { adapterView, view, position, l ->
                     cuisinePosition = position
                 }
+
+                val type = arrayOf("mins", "hrs", "days")
+
+                val adapter2 = ArrayAdapter(
+                    requireActivity(),
+                    android.R.layout.simple_list_item_1,
+                    type
+                )
+                binding.selectUnit.setAdapter(adapter2)
+                binding.selectUnit.setOnItemClickListener { adapterView, view, position, l ->
+                    if (position == 0) {
+                        selectedUnit = "mins"
+                    } else if (position == 1) {
+                        selectedUnit = "hour"
+                    } else if (position == 2) {
+                        selectedUnit = "day"
+                    }
+                }
+                val order = arrayOf("Both", "Current", "Scheduled")
+
+                val adapter3 = ArrayAdapter(
+                    requireActivity(),
+                    android.R.layout.simple_list_item_1,
+                    order
+                )
+                binding.selectType.setAdapter(adapter3)
+                binding.selectType.setOnItemClickListener { adapterView, view, position, l ->
+                    orderType = position
+                }
+
             } else {
                 Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT)
                     .show()
@@ -217,18 +216,6 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
 
     }
 
-//    private fun openGalleryImage() {
-//        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-//        galleryIntent.type = "image/*"
-//        startActivityForResult(galleryIntent, SELECT_IMAGE_REQUEST)
-//    }
-//
-//    private fun openGalleryCoverImage() {
-//        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-//        galleryIntent.type = "image/*"
-//        startActivityForResult(galleryIntent, SELECT_COVER_IMAGE_REQUEST)
-//    }
-
     private fun setupListeners() {
         mainActivity.vm.userProfile.observe(viewLifecycleOwner) {
             it?.let {
@@ -236,7 +223,6 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
             }
         }
     }
-
 
     override fun onBackClicked() {
         mainActivity.vm.onBackButtonClicked()
