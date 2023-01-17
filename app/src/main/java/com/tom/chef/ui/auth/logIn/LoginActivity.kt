@@ -15,6 +15,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.tom.chef.R
 import com.tom.chef.databinding.ActivityLoginBinding
 import com.tom.chef.models.ProfileResponse
+import com.tom.chef.models.ProfileResponse2
 import com.tom.chef.models.auth.RequestGoogleLogIn
 import com.tom.chef.models.auth.RequestLogIn
 import com.tom.chef.newBase.BaseActivity
@@ -149,7 +150,7 @@ class LoginActivity : BaseActivity(), LoginInterface {
                 return@loginAPI
             } else {
                 myToast("Login Successful")
-                val data = ProfileResponse.OData(
+                val data = ProfileResponse2.OData(
                     id = it.oData.id,
                     email = it.oData.email,
                     name = it.oData.name,

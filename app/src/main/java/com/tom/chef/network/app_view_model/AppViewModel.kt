@@ -303,8 +303,8 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
         }
     }
 
-    private var _getProfileLive = SingleLiveEvent<ProfileResponse>()
-    val getProfileLive: SingleLiveEvent<ProfileResponse>
+    private var _getProfileLive = SingleLiveEvent<ProfileResponse2>()
+    val getProfileLive: SingleLiveEvent<ProfileResponse2>
         get() = _getProfileLive
 
     fun getProfile() {

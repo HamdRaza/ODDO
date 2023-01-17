@@ -89,33 +89,34 @@ interface ApiService {
         @Field("user_timezone") user_timezone: String,
     ): OrderListResponse
 
+    @Multipart
     @POST("chef/update_profile")
-    @FormUrlEncoded
     suspend fun updateProfile(
-        @Field("access_token") access_token: RequestBody,
-        @Field("first_name") first_name: RequestBody,
-        @Field("last_name") last_name: RequestBody,
-        @Field("latitude") latitude: RequestBody,
-        @Field("longitude") longitude: RequestBody,
-        @Field("about_me") about_me: RequestBody,
-        @Field("brand_name") brand_name: RequestBody,
-        @Field("image") image: MultipartBody.Part?,
-        @Field("cover_image") cover_image: MultipartBody.Part?,
-        @Field("preparation_unit") preparation_unit: RequestBody,
-        @Field("preparation_time") preparation_time: RequestBody,
-        @Field("cuisines") cuisines: RequestBody,
-        @Field("order_limit_per_hour") order_limit_per_hour: RequestBody,
-        @Field("weekly_mode") weekly_mode: RequestBody,
-        @Field("allow_ordertype") allow_ordertype: RequestBody,
-        @Field("start_time") start_time: RequestBody,
-        @Field("end_time") end_time: RequestBody
+        @Part("access_token") access_token: RequestBody,
+        @Part("first_name") first_name: RequestBody,
+        @Part("last_name") last_name: RequestBody,
+        @Part("address") address: RequestBody,
+        @Part("latitude") latitude: RequestBody,
+        @Part("longitude") longitude: RequestBody,
+        @Part("about_me") about_me: RequestBody,
+        @Part("brand_name") brand_name: RequestBody,
+        @Part image: MultipartBody.Part? = null,
+        @Part cover_image: MultipartBody.Part? = null,
+        @Part("preparation_unit") preparation_unit: RequestBody,
+        @Part("preparation_time") preparation_time: RequestBody,
+        @Query("cuisines[]") cuisines: ArrayList<String>,
+        @Part("order_limit_per_hour") order_limit_per_hour: RequestBody,
+        @Part("weekly_mode") weekly_mode: RequestBody,
+        @Part("allow_ordertype") allow_ordertype: RequestBody,
+        @Part("start_time") start_time: RequestBody,
+        @Part("end_time") end_time: RequestBody
     ): CommonResponse
 
     @POST("chef/profile")
     @FormUrlEncoded
     suspend fun getProfile(
         @Field("access_token") access_token: String,
-    ): ProfileResponse
+    ): ProfileResponse2
 
     @POST("user/update_available")
     @FormUrlEncoded

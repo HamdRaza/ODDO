@@ -39,6 +39,7 @@ object AppModule {
             return@addInterceptor response
         }
         okhttpClient.addInterceptor(loggingInterceptor) //debug
+        okhttpClient.addInterceptor(LogJsonInterceptor())
         okhttpClient.callTimeout(120, TimeUnit.SECONDS)
         okhttpClient.connectTimeout(120, TimeUnit.SECONDS)
         okhttpClient.writeTimeout(120, TimeUnit.SECONDS)

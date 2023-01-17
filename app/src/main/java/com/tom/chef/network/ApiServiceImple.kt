@@ -137,7 +137,7 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
     }
 
 
-    suspend fun getProfile(): ProfileResponse {
+    suspend fun getProfile(): ProfileResponse2 {
         return apiService.getProfile(
             access_token = sharedPreferenceManager.getAccessToken.toString(),
         )
@@ -226,6 +226,7 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
             access_token = profileRequest.access_token,
             first_name = profileRequest.first_name,
             last_name = profileRequest.last_name,
+            address = profileRequest.address,
             latitude = profileRequest.latitude,
             longitude = profileRequest.longitude,
             about_me = profileRequest.about_me,

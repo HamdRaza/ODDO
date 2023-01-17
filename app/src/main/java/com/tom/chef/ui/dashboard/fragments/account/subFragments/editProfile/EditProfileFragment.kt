@@ -5,14 +5,13 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.hbisoft.pickit.PickiT
 import com.hbisoft.pickit.PickiTCallbacks
@@ -44,8 +43,8 @@ import kotlin.collections.ArrayList
 class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
     EditProfileInterface, PickiTCallbacks {
 
-    private val SELECT_IMAGE_REQUEST = 102
-    private val SELECT_COVER_IMAGE_REQUEST = 103
+//    private val SELECT_IMAGE_REQUEST = 102
+//    private val SELECT_COVER_IMAGE_REQUEST = 103
 
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
@@ -68,6 +67,11 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
     var cuisinePosition = -1
 
     var orderType = -1
+
+    var address = ""
+    var latitude = ""
+    var longitude = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -119,10 +123,10 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
                 }
             }
         binding?.topBackgroundImage?.setOnClickListener {
-            openGalleryImage()
+            changeProfile()
         }
         binding?.shapeableImageView?.setOnClickListener {
-            openGalleryCoverImage()
+            changeBackground()
         }
         binding?.startTime?.setOnClickListener {
             val c = Calendar.getInstance()
@@ -213,17 +217,17 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
 
     }
 
-    private fun openGalleryImage() {
-        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        galleryIntent.type = "image/*"
-        startActivityForResult(galleryIntent, SELECT_IMAGE_REQUEST)
-    }
-
-    private fun openGalleryCoverImage() {
-        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        galleryIntent.type = "image/*"
-        startActivityForResult(galleryIntent, SELECT_COVER_IMAGE_REQUEST)
-    }
+//    private fun openGalleryImage() {
+//        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//        galleryIntent.type = "image/*"
+//        startActivityForResult(galleryIntent, SELECT_IMAGE_REQUEST)
+//    }
+//
+//    private fun openGalleryCoverImage() {
+//        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//        galleryIntent.type = "image/*"
+//        startActivityForResult(galleryIntent, SELECT_COVER_IMAGE_REQUEST)
+//    }
 
     private fun setupListeners() {
         mainActivity.vm.userProfile.observe(viewLifecycleOwner) {
@@ -254,22 +258,28 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
     private val profileImage =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
+                isCover = false
                 val imageUri = ReduceImageSize.compressImage(it, requireContext())
                 accountVM.profilePath.set(imageUri)
+                pickiT!!.getPath(imageUri, Build.VERSION.SDK_INT)
             }
         }
     private val backgroundImage =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             uri?.let {
+                isCover = true
                 val imageUri = ReduceImageSize.compressImage(it, requireContext())
                 accountVM.coverImage.set(imageUri)
+                pickiT!!.getPath(imageUri, Build.VERSION.SDK_INT)
             }
         }
 
     val getLocation = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        it?.let {
-            it.data?.extras?.let {
-
+        it?.let { it ->
+            it.data?.extras?.let { bundle ->
+                address = bundle.getString("address")!!
+                latitude = bundle.getString("lat")!!
+                longitude = bundle.getString("lng")!!
             }
         }
     }
@@ -294,29 +304,35 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
         }
 
         var isWeekly = if (binding?.txtWeekly?.isChecked!!) "1" else "0"
+        var listCuisines = ArrayList<String>()
+        listCuisines.clear()
+        listCuisines.add(cuisinePosition.toString())
+
         val requestSignUp = ProfileRequest(
             access_token = sharedPreferenceManager.getAccessToken.toString()
                 .toRequestBody("text/plain".toMediaType()),
             first_name = firstName.toRequestBody("text/plain".toMediaType()),
             last_name = lastName.toRequestBody("text/plain".toMediaType()),
-            latitude = "".toRequestBody("text/plain".toMediaType()),
-            longitude = "".toRequestBody("text/plain".toMediaType()),
+            address = address.toRequestBody("text/plain".toMediaType()),
+            latitude = latitude.toRequestBody("text/plain".toMediaType()),
+            longitude = longitude.toRequestBody("text/plain".toMediaType()),
             about_me = binding.yourStory.text.toString().toRequestBody("text/plain".toMediaType()),
             brand_name = binding.brandName.text.toString()
                 .toRequestBody("text/plain".toMediaType()),
-            image = MultipartBody.Part.createFormData(
+            image = if (imagePath.isEmpty()) null else MultipartBody.Part.createFormData(
                 "image",
                 imageFile.name,
                 imageBody
             ),
-            cover_image = MultipartBody.Part.createFormData(
+            cover_image = if (coverPath.isEmpty()) null else MultipartBody.Part.createFormData(
                 "cover_image",
                 coverFile.name,
                 coverBody
             ),
-            preparation_unit = "".toRequestBody("text/plain".toMediaType()),
-            preparation_time = "".toRequestBody("text/plain".toMediaType()),
-            cuisines = cuisinePosition.toString().toRequestBody("text/plain".toMediaType()),
+            preparation_unit = selectedUnit.toRequestBody("text/plain".toMediaType()),
+            preparation_time = binding.prepTime.text.toString()
+                .toRequestBody("text/plain".toMediaType()),
+            cuisines = listCuisines,
             order_limit_per_hour = "".toRequestBody("text/plain".toMediaType()),
             weekly_mode = isWeekly.toRequestBody("text/plain".toMediaType()),
             allow_ordertype = orderType.toString().toRequestBody("text/plain".toMediaType()),
@@ -324,22 +340,26 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
                 .toRequestBody("text/plain".toMediaType()),
             end_time = binding?.endTime?.text.toString().toRequestBody("text/plain".toMediaType())
         )
+
         appViewModel.updateProfileAPI(requestSignUp)
         appViewModel.updateProfileAPILive.observe(viewLifecycleOwner) {
             if (it.status == "1") {
+                Toast.makeText(requireActivity(), "Profile Saved", Toast.LENGTH_SHORT).show()
                 mainActivity.vm.onBackButtonClicked()
+            } else {
+                Log.i("tag", it.message)
             }
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == SELECT_IMAGE_REQUEST || requestCode == SELECT_COVER_IMAGE_REQUEST) {
-            if (resultCode == AppCompatActivity.RESULT_OK) {
-                isCover = requestCode == SELECT_COVER_IMAGE_REQUEST
-                pickiT!!.getPath(data?.data, Build.VERSION.SDK_INT)
-            }
-        }
+//        if (requestCode == SELECT_IMAGE_REQUEST || requestCode == SELECT_COVER_IMAGE_REQUEST) {
+//            if (resultCode == AppCompatActivity.RESULT_OK) {
+//                isCover = requestCode == SELECT_COVER_IMAGE_REQUEST
+//                pickiT!!.getPath(data?.data, Build.VERSION.SDK_INT)
+//            }
+//        }
     }
 
     override fun PickiTonUriReturned() {

@@ -5,6 +5,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import com.tom.chef.R
 import com.tom.chef.models.ProfileResponse
+import com.tom.chef.models.ProfileResponse2
 import com.tom.chef.models.auth.User
 import com.tom.chef.utils.makeNull
 import com.tom.chef.utils.maskPhone
@@ -38,7 +39,7 @@ class AccountViewModel(val mActivity: Activity) : ViewModel() {
         backTitle.set("My Profile")
     }
 
-    fun updateProfile(user: ProfileResponse.OData) {
+    fun updateProfile(user: ProfileResponse2.OData) {
         this.userGmail.set(user.email)
         this.userPhone.set(user.phoneNumber)
         user.name.makeNull().let {

@@ -8,6 +8,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.tom.chef.data.notifications.NotificationModel
 import com.tom.chef.data.notifications.NotificationRepository
 import com.tom.chef.models.ProfileResponse
+import com.tom.chef.models.ProfileResponse2
 import com.tom.chef.models.auth.ResponseCountries
 import com.tom.chef.models.auth.User
 import com.tom.chef.utils.UiState
@@ -38,7 +39,7 @@ class MainViewModel @Inject constructor(val unUsed: NotificationRepository) : Vi
 
     fun onBackButtonClicked() = mainInterface.onBackButtonClicked()
 
-    var userProfile = MutableLiveData<ProfileResponse.OData>()
+    var userProfile = MutableLiveData<ProfileResponse2.OData>()
     var counries = MutableLiveData<ResponseCountries>()
     var userLocationUpdate = MutableLiveData<LatLng>(null)
 
