@@ -1,65 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.tom.chef.ui.dashboard.fragments.menu.addNew.AddNewViewModel" />
-     </data>
+    </data>
+
     <androidx.core.widget.NestedScrollView
-        android:background="@color/appBackgroundColor"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/appBackgroundColor">
+
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:paddingBottom="@dimen/_30sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/_30sdp">
+
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <LinearLayout
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/_5sdp">
+
                     <EditText
-                        tools:visibility="visible"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_20sdp"
-                        android:hint="Dish Name In English"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
                         style="@style/input_back"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName" />
-                    <EditText
-                        android:paddingTop="@dimen/_10sdp"
-                        android:gravity="start"
-                        android:layout_marginVertical="@dimen/_5sdp"
-                        tools:visibility="visible"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:hint="Discription Of The Dish"
                         android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:ems="10"
+                        android:hint="Dish Name In English"
+                        android:inputType="textPersonName"
+                        tools:visibility="visible" />
+
+                    <EditText
                         style="@style/input_back"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_100sdp"
-                        android:ems="10"
-                        android:inputType="textMultiLine" />
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:onClick="@{()->viewModel.onPickedFileClicked()}"
                         android:layout_marginHorizontal="@dimen/_10sdp"
-                        android:background="@drawable/background_otp_w"
                         android:layout_marginVertical="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:ems="10"
+                        android:gravity="start"
+                        android:hint="Discription Of The Dish"
+                        android:inputType="textMultiLine"
+                        android:paddingTop="@dimen/_10sdp"
+                        tools:visibility="visible" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_40sdp">
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginVertical="@dimen/_5sdp"
+                        android:background="@drawable/background_otp_w"
+                        android:onClick="@{()->viewModel.onPickedFileClicked()}">
+
                         <ImageView
                             android:id="@+id/startIcon"
                             android:layout_width="@dimen/_24sdp"
@@ -73,88 +82,90 @@
 
 
                         <TextView
-                            android:text="Dish Photo (jpg only)"
                             android:id="@+id/name"
                             style="@style/montserrat_medium_14"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/_10sdp"
+                            android:text="Dish Photo (jpg only)"
                             android:textColor="@color/hint_text_color"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/startIcon"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             tools:text="Dish Photo (jpg only)" />
-
-
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        app:fileNamesAdopter="@{viewModel.fileNamesAdopter}"
-                        tools:listitem="@layout/recycle_image_name"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        android:orientation="horizontal"
-                        android:layout_marginVertical="@dimen/_5sdp"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginVertical="@dimen/_5sdp"
+                        android:orientation="horizontal"
+                        app:fileNamesAdopter="@{viewModel.fileNamesAdopter}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/recycle_image_name" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
-                        tools:visibility="visible"
-                        android:visibility="@{viewModel.haveVariant?View.GONE:View.VISIBLE,default=visible}"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{viewModel.haveVariant?View.GONE:View.VISIBLE,default=visible}"
+                        tools:visibility="visible">
+
                         <EditText
-                            tools:visibility="visible"
-                            android:layout_marginBottom="@dimen/_5sdp"
+                            style="@style/input_back"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_10sdp"
                             android:layout_marginVertical="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:ems="10"
                             android:hint="Dish Price"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
+                            android:inputType="number"
+                            tools:visibility="visible" />
+
+                        <EditText
                             style="@style/input_back"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="number" />
-                        <EditText
-                            tools:visibility="visible"
-                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:layout_marginHorizontal="@dimen/_10sdp"
                             android:layout_marginVertical="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:ems="10"
                             android:hint="Discount Price"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
+                            android:inputType="number"
+                            tools:visibility="visible" />
+
+                        <EditText
                             style="@style/input_back"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="number" />
-                        <EditText
-                            tools:visibility="visible"
-                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:layout_marginHorizontal="@dimen/_10sdp"
                             android:layout_marginVertical="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:ems="10"
                             android:hint="Sufficient For"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
-                            style="@style/input_back"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            tools:visibility="visible" />
+
                         <EditText
-                            tools:visibility="visible"
-                            android:layout_marginBottom="@dimen/_5sdp"
-                            android:layout_marginVertical="@dimen/_5sdp"
-                            android:hint="Quantity e.g 1 plate"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
                             style="@style/input_back"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_10sdp"
+                            android:layout_marginVertical="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
                             android:ems="10"
-                            android:inputType="number" />
+                            android:hint="Quantity e.g 1 plate"
+                            android:inputType="number"
+                            tools:visibility="visible" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
+
                     <com.google.android.material.textfield.TextInputLayout
-                        app:endIconTint="@color/colorPrimary"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_40sdp"
@@ -162,64 +173,67 @@
                         android:layout_marginVertical="@dimen/_5sdp"
                         android:padding="0dp"
                         app:counterEnabled="false"
+                        app:endIconTint="@color/colorPrimary"
                         app:errorEnabled="false"
                         app:expandedHintEnabled="false"
                         app:helperTextEnabled="false"
                         app:hintEnabled="false">
 
                         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                            android:paddingEnd="@dimen/_30sdp"
-                            android:paddingVertical="0dp"
                             style="@style/input_back"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:focusable="false"
                             android:hint="Dish Categories"
                             android:inputType="none"
-                            android:focusable="false"/>
+                            android:paddingVertical="0dp"
+                            android:paddingEnd="@dimen/_30sdp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
                     <LinearLayout
-                        tools:visibility="visible"
-                        android:visibility="@{viewModel.haveVariant?View.GONE:View.VISIBLE,default=visible}"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{viewModel.haveVariant?View.GONE:View.VISIBLE,default=visible}"
+                        tools:visibility="visible">
 
                         <TextView
-                            android:textColor="@color/black20"
-                            android:fontFamily="@font/poppins_medium_500"
                             style="@style/poppin_semiBol_16"
-                            android:layout_marginVertical="@dimen/_5sdp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/_10sdp"
+                            android:layout_marginVertical="@dimen/_5sdp"
+                            android:fontFamily="@font/poppins_medium_500"
                             android:layoutDirection="rtl"
                             android:text="عربي"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:textColor="@color/black20" />
+
                         <EditText
-                            android:layoutDirection="rtl"
-                            tools:visibility="visible"
-                            android:layout_marginBottom="@dimen/_5sdp"
+                            style="@style/input_back"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_10sdp"
                             android:layout_marginVertical="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:ems="10"
                             android:hint="اسم الطبق"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
-                            style="@style/input_back"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="textPersonName" />
-                        <EditText
+                            android:inputType="textPersonName"
                             android:layoutDirection="rtl"
-                            tools:visibility="visible"
-                            android:layout_marginBottom="@dimen/_5sdp"
-                            android:layout_marginVertical="@dimen/_5sdp"
-                            android:hint="وصف الطبق"
-                            android:layout_marginHorizontal="@dimen/_10sdp"
+                            tools:visibility="visible" />
+
+                        <EditText
                             style="@style/input_back"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_10sdp"
+                            android:layout_marginVertical="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
                             android:ems="10"
-                            android:inputType="textPersonName" />
+                            android:hint="وصف الطبق"
+                            android:inputType="textPersonName"
+                            android:layoutDirection="rtl"
+                            tools:visibility="visible" />
                     </LinearLayout>
 
 
@@ -228,72 +242,76 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
                 android:visibility="@{viewModel.haveVariant?View.VISIBLE:View.GONE,default=visible}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:menuPackageAdopter="@{viewModel.packageAdopter}"
-                android:nestedScrollingEnabled="false"
                 tools:itemCount="2"
-                tools:listitem="@layout/recycle_create_menu_variant"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                tools:listitem="@layout/recycle_create_menu_variant" />
 
             <com.google.android.material.card.MaterialCardView
-                tools:visibility="visible"
-                android:visibility="@{viewModel.haveVariant?View.VISIBLE:View.GONE,default=visible}"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:visibility="@{viewModel.haveVariant?View.VISIBLE:View.GONE,default=visible}"
+                tools:visibility="visible">
+
                 <LinearLayout
-                    android:paddingBottom="@dimen/_5sdp"
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/_5sdp">
+
                     <TextView
-                        android:textColor="@color/black20"
-                        android:fontFamily="@font/poppins_medium_500"
                         style="@style/poppin_semiBol_16"
-                        android:layout_marginVertical="@dimen/_5sdp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginVertical="@dimen/_5sdp"
+                        android:fontFamily="@font/poppins_medium_500"
                         android:layoutDirection="rtl"
                         android:text="عربي"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:textColor="@color/black20" />
+
                     <EditText
-                        android:layoutDirection="rtl"
-                        tools:visibility="visible"
-                        android:layout_marginBottom="@dimen/_5sdp"
+                        style="@style/input_back"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_marginVertical="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:ems="10"
                         android:hint="اسم الطبق"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
-                        style="@style/input_back"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="number" />
-                    <EditText
+                        android:inputType="number"
                         android:layoutDirection="rtl"
-                        tools:visibility="visible"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:layout_marginVertical="@dimen/_5sdp"
-                        android:hint="وصف الطبق"
-                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        tools:visibility="visible" />
+
+                    <EditText
                         style="@style/input_back"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_10sdp"
+                        android:layout_marginVertical="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
                         android:ems="10"
-                        android:inputType="number" />
+                        android:hint="وصف الطبق"
+                        android:inputType="number"
+                        android:layoutDirection="rtl"
+                        tools:visibility="visible" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
 
             <com.google.android.material.button.MaterialButton
-                android:onClick="@{()->viewModel.onSubmitClicked()}"
-                android:layout_marginBottom="@dimen/_30sdp"
                 style="@style/button_big"
-                android:layout_marginHorizontal="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_30sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginBottom="@dimen/_30sdp"
+                android:onClick="@{()->viewModel.onSubmitClicked()}"
                 android:text="Submit" />
 
 

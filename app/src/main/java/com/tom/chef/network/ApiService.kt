@@ -112,6 +112,18 @@ interface ApiService {
         @Part("end_time") end_time: RequestBody
     ): CommonResponse
 
+    @Multipart
+    @POST("chef/add_dish")
+    suspend fun addDish(
+        @Part("access_token") access_token: RequestBody,
+        @Part("name") name: RequestBody,
+        @Part("description") description: RequestBody,
+        @Part("name_ar") name_ar: RequestBody,
+        @Part("description_ar") description_ar: RequestBody,
+        @Part("sufficient_for") sufficient_for: RequestBody,
+        @Part("quantity") quantity: RequestBody,
+    ): CommonResponse2
+
     @POST("chef/profile")
     @FormUrlEncoded
     suspend fun getProfile(

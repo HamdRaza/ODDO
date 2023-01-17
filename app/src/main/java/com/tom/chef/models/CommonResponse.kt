@@ -1,9 +1,7 @@
 package com.tom.chef.models
 
 import com.google.gson.annotations.SerializedName
-
 data class CommonResponse(
-
     @field:SerializedName("oData")
     val oData: List<Any>,
 

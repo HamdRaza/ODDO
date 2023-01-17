@@ -31,7 +31,7 @@ import java.io.File
 
 
 @AndroidEntryPoint
-class AddNewFragment :  BaseFragment(),VariantToggle,AllMenuInterface{
+class AddNewFragment : BaseFragment(), VariantToggle, AllMenuInterface {
     private lateinit var binding: FragmentAddNewBinding
 
     lateinit var addNewViewModel: AddNewViewModel
@@ -42,18 +42,34 @@ class AddNewFragment :  BaseFragment(),VariantToggle,AllMenuInterface{
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentAddNewBinding.bind(inflater.inflate(R.layout.fragment_add_new, container, false))
-        mActivity.toolbarVM.manageToolBar(showToolbar = true, showBackButton = true, backButtonText = "Add  Item", showDishVariety = true)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentAddNewBinding.bind(
+            inflater.inflate(
+                R.layout.fragment_add_new,
+                container,
+                false
+            )
+        )
+        mActivity.toolbarVM.manageToolBar(
+            showToolbar = true,
+            showBackButton = true,
+            backButtonText = "Add  Item",
+            showDishVariety = true
+        )
         mainActivity.toolbarVM.makeBackRound(isRound = true)
-        mainActivity.toolbarVM.variantToggle=this
+        mainActivity.toolbarVM.variantToggle = this
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addNewViewModel= AddNewViewModel()
-        addNewViewModel.allMenuInterface=this
-        binding.viewModel=addNewViewModel
+        addNewViewModel = AddNewViewModel()
+        addNewViewModel.allMenuInterface = this
+        binding.viewModel = addNewViewModel
     }
 
     override fun updated(boolean: Boolean) {
@@ -68,6 +84,7 @@ class AddNewFragment :  BaseFragment(),VariantToggle,AllMenuInterface{
     override fun pickFileClicked() {
         pickFile.launch("image/*")
     }
+
     private val pickFile = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
             addNewViewModel.addFile(it, activity = requireActivity())

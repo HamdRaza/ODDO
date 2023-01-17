@@ -24,56 +24,57 @@ import com.tom.chef.utils.FileManager
 import com.tom.chef.utils.ReduceImageSize
 import java.io.File
 
-class AddNewViewModel: ViewModel,PackageInterface,FilesInterface {
+class AddNewViewModel : ViewModel, PackageInterface, FilesInterface {
 
     lateinit var allMenuInterface: AllMenuInterface
 
-    var fileNamesAdopter=FileNamesAdopter(ArrayList())
+    var fileNamesAdopter = FileNamesAdopter(ArrayList())
 
-    fun addFile(uri: Uri,activity: Activity){
+    fun addFile(uri: Uri, activity: Activity) {
         try {
-            val imageUri = ReduceImageSize.compressImage(uri,activity)
+            val imageUri = ReduceImageSize.compressImage(uri, activity)
             imageUri?.let { FileManager.getPath(activity, it) }?.let {
-                val viewModel= FileViewModel(File(it))
-                viewModel.filesInterface=this
+                val viewModel = FileViewModel(File(it))
+                viewModel.filesInterface = this
                 fileNamesAdopter.addNewItem(viewModel)
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
 
-    fun onPickedFileClicked(){
+    fun onPickedFileClicked() {
         allMenuInterface.pickFileClicked()
     }
 
     @JvmField
-    var haveVariant=ObservableField<Boolean>(false)
+    var haveVariant = ObservableField<Boolean>(false)
 
-    fun onSubmitClicked(){
+    fun onSubmitClicked() {
         allMenuInterface.onSubmitClicked()
     }
 
-    var packageAdopter=PackageAdopter(ArrayList())
+    var packageAdopter = PackageAdopter(ArrayList())
 
-    fun showPackage(activity: Activity){
-        if (packageAdopter.itemCount==0){
+    fun showPackage(activity: Activity) {
+        if (packageAdopter.itemCount == 0) {
             addNewBlock(activity = activity)
         }
     }
 
-    fun addNewBlock(activity: Activity){
-        val viewModels=ArrayList<ViewModel>()
-        val viewModel=PackageViewModel(activity = activity)
+    fun addNewBlock(activity: Activity) {
+        val viewModels = ArrayList<ViewModel>()
+        val viewModel = PackageViewModel(activity = activity)
         viewModel.isAdded.set(false)
-        viewModel.packageInterface=this
+        viewModel.packageInterface = this
         viewModels.add(viewModel)
         packageAdopter.setList(viewModels)
     }
+
     override fun onDeleteClicked() {
         packageAdopter.getList().forEach {
-            if (it.isThis()){
+            if (it.isThis()) {
                 packageAdopter.removeItem(item = it)
                 return
             }
@@ -81,17 +82,16 @@ class AddNewViewModel: ViewModel,PackageInterface,FilesInterface {
     }
 
     override fun onAddNewClicked(activity: Activity) {
-        val viewModel=PackageViewModel(activity = activity)
+        val viewModel = PackageViewModel(activity = activity)
         viewModel.isAdded.set(false)
-        viewModel.packageInterface=this
+        viewModel.packageInterface = this
         packageAdopter.addNewItem(viewModel)
     }
 
 
-
     override fun onDeleteFillClicked() {
         fileNamesAdopter.getList().forEach {
-            if (it.isThis()){
+            if (it.isThis()) {
                 fileNamesAdopter.removeItem(item = it)
                 return
             }
