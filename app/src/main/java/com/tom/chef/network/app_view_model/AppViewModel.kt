@@ -427,6 +427,27 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
         }
     }
 
+    private var _addDishLive = SingleLiveEvent<CommonResponse2>()
+    val addDishLive: SingleLiveEvent<CommonResponse2>
+        get() = _addDishLive
+
+    fun addDish(
+        addDishRequest: AddDishRequest
+    ) {
+        viewModelScope.launch {
+            try {
+                appRepository.addDish(
+                    addDishRequest = addDishRequest
+                ).collect {
+                    _addDishLive.value = it
+                }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
     private var _getOrderHistoryLive = SingleLiveEvent<OrderHistoryResponse>()
     val getOrderHistoryLive: SingleLiveEvent<OrderHistoryResponse>
         get() = _getOrderHistoryLive

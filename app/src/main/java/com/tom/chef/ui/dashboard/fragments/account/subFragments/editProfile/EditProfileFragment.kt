@@ -29,7 +29,6 @@ import com.tom.chef.ui.location.LocationPickerActivity
 import com.tom.chef.ui.location.LocationPickerViewModel
 import com.tom.chef.utils.ReduceImageSize
 import com.tom.chef.utils.SharedPreferenceManager
-import com.tom.chef.utils.multiselection.MultiSelectionSpinner
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -319,7 +318,7 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
             e.printStackTrace()
         }
 
-        val requestSignUp = ProfileRequest(
+        val requestProfile = ProfileRequest(
             access_token = sharedPreferenceManager.getAccessToken.toString()
                 .toRequestBody("text/plain".toMediaType()),
             first_name = firstName.toRequestBody("text/plain".toMediaType()),
@@ -352,7 +351,7 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
             end_time = binding?.endTime?.text.toString().toRequestBody("text/plain".toMediaType())
         )
 
-        appViewModel.updateProfileAPI(requestSignUp)
+        appViewModel.updateProfileAPI(requestProfile)
         appViewModel.updateProfileAPILive.observe(viewLifecycleOwner) {
             if (it.status == "1") {
                 Toast.makeText(requireActivity(), "Profile Saved", Toast.LENGTH_SHORT).show()

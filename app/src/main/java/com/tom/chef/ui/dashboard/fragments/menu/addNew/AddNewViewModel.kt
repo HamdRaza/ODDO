@@ -30,6 +30,17 @@ class AddNewViewModel : ViewModel, PackageInterface, FilesInterface {
 
     var fileNamesAdopter = FileNamesAdopter(ArrayList())
 
+    @JvmField
+    var haveVariant = ObservableField<Boolean>(false)
+
+    var packageAdopter = PackageAdopter(ArrayList())
+
+    /**When clicked on Dish photo*/
+    fun onPickedFileClicked() {
+        allMenuInterface.pickFileClicked()
+    }
+
+    /**When image added from gallery, on returned*/
     fun addFile(uri: Uri, activity: Activity) {
         try {
             val imageUri = ReduceImageSize.compressImage(uri, activity)
@@ -43,26 +54,25 @@ class AddNewViewModel : ViewModel, PackageInterface, FilesInterface {
         }
     }
 
-
-    fun onPickedFileClicked() {
-        allMenuInterface.pickFileClicked()
+    /**When image removed from list*/
+    override fun onDeleteFillClicked() {
+        fileNamesAdopter.getList().forEachIndexed {index, element ->
+            if (element.isThis()) {
+                allMenuInterface.fileDeleted(index)
+                fileNamesAdopter.removeItem(item = element)
+                return
+            }
+        }
     }
 
-    @JvmField
-    var haveVariant = ObservableField<Boolean>(false)
-
-    fun onSubmitClicked() {
-        allMenuInterface.onSubmitClicked()
-    }
-
-    var packageAdopter = PackageAdopter(ArrayList())
-
+    /**When switch turned on/off for variety*/
     fun showPackage(activity: Activity) {
         if (packageAdopter.itemCount == 0) {
             addNewBlock(activity = activity)
         }
     }
 
+    /**After showPackage, add new block*/
     fun addNewBlock(activity: Activity) {
         val viewModels = ArrayList<ViewModel>()
         val viewModel = PackageViewModel(activity = activity)
@@ -72,6 +82,7 @@ class AddNewViewModel : ViewModel, PackageInterface, FilesInterface {
         packageAdopter.setList(viewModels)
     }
 
+    /**When close pressed on Package Details*/
     override fun onDeleteClicked() {
         packageAdopter.getList().forEach {
             if (it.isThis()) {
@@ -81,6 +92,7 @@ class AddNewViewModel : ViewModel, PackageInterface, FilesInterface {
         }
     }
 
+    /**When clicked on Add New Package/Update*/
     override fun onAddNewClicked(activity: Activity) {
         val viewModel = PackageViewModel(activity = activity)
         viewModel.isAdded.set(false)
@@ -88,13 +100,9 @@ class AddNewViewModel : ViewModel, PackageInterface, FilesInterface {
         packageAdopter.addNewItem(viewModel)
     }
 
-
-    override fun onDeleteFillClicked() {
-        fileNamesAdopter.getList().forEach {
-            if (it.isThis()) {
-                fileNamesAdopter.removeItem(item = it)
-                return
-            }
-        }
+    /**When clicked on Submit*/
+    fun onSubmitClicked() {
+        allMenuInterface.onSubmitClicked()
     }
+
 }

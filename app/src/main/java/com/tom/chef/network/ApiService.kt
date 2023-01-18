@@ -143,11 +143,12 @@ interface ApiService {
         @Part("quantity") quantity: RequestBody,
         @Part("out_of_stock") out_of_stock: RequestBody,//0
         @Part("menu_id[]") menu_id: ArrayList<String>,
+        @Part("cuisine_id[]") cuisine_id: ArrayList<String>,
         @Part("active") active: RequestBody,//0
         @Part image: MultipartBody.Part? = null,
         @Part gallery: List<MultipartBody.Part>? = null,
         @Part("contain_package") contain_package: RequestBody,//0 or 1
-        @Part("package[]") packageList: ArrayList<PackageItem>
+        @Part("package[]") packageList: ArrayList<PackageItem>?= null
     ): CommonResponse2
 
     @POST("chef/profile")

@@ -36,6 +36,7 @@
                     android:paddingBottom="@dimen/_5sdp">
 
                     <EditText
+                        android:id="@+id/dish_name"
                         style="@style/input_back"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -48,6 +49,7 @@
                         tools:visibility="visible" />
 
                     <EditText
+                        android:id="@+id/dish_description"
                         style="@style/input_back"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_100sdp"
@@ -56,7 +58,7 @@
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:ems="10"
                         android:gravity="start"
-                        android:hint="Discription Of The Dish"
+                        android:hint="Description Of The Dish"
                         android:inputType="textMultiLine"
                         android:paddingTop="@dimen/_10sdp"
                         tools:visibility="visible" />
@@ -82,7 +84,6 @@
 
 
                         <TextView
-                            android:id="@+id/name"
                             style="@style/montserrat_medium_14"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
@@ -116,6 +117,7 @@
                         tools:visibility="visible">
 
                         <EditText
+                            android:id="@+id/dish_price"
                             style="@style/input_back"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -128,6 +130,7 @@
                             tools:visibility="visible" />
 
                         <EditText
+                            android:id="@+id/dish_discount_price"
                             style="@style/input_back"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -140,6 +143,7 @@
                             tools:visibility="visible" />
 
                         <EditText
+                            android:id="@+id/dish_sufficient_for"
                             style="@style/input_back"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -152,6 +156,7 @@
                             tools:visibility="visible" />
 
                         <EditText
+                            android:id="@+id/dish_quantity"
                             style="@style/input_back"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -316,6 +321,7 @@
                         android:textColor="@color/black20" />
 
                     <EditText
+                        android:id="@+id/dish_name_ar"
                         style="@style/input_back"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -329,6 +335,7 @@
                         tools:visibility="visible" />
 
                     <EditText
+                        android:id="@+id/dish_description_ar"
                         style="@style/input_back"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

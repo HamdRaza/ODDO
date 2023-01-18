@@ -215,6 +215,20 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
         }
     }.flowOn(Dispatchers.IO)
 
+    fun addDish(
+        addDishRequest: AddDishRequest
+    ): Flow<CommonResponse2> = flow {
+        try {
+            emit(
+                apiServiceImple.addDish(
+                    addDishRequest = addDishRequest
+                )
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
     fun getOrderHistory(): Flow<OrderHistoryResponse> = flow {
         try {
             emit(

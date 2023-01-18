@@ -250,4 +250,25 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
         )
     }
 
+    suspend fun addDish(addDishRequest: AddDishRequest): CommonResponse2 {
+        return apiService.addDish(
+            access_token = addDishRequest.access_token,
+            name = addDishRequest.name,
+            name_ar = addDishRequest.name_ar,
+            description = addDishRequest.description,
+            description_ar = addDishRequest.description_ar,
+            regular_price = addDishRequest.regular_price,
+            sale_price = addDishRequest.sale_price,
+            sufficient_for = addDishRequest.sufficient_for,
+            quantity = addDishRequest.quantity,
+            out_of_stock = addDishRequest.out_of_stock,
+            menu_id = addDishRequest.menu_id,
+            cuisine_id = addDishRequest.cuisine_id,
+            active = addDishRequest.active,
+            image = addDishRequest.image,
+            gallery = addDishRequest.gallery,
+            contain_package = addDishRequest.contain_package,
+            packageList = addDishRequest.packageList
+        )
+    }
 }
