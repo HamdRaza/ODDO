@@ -112,17 +112,43 @@ interface ApiService {
         @Part("end_time") end_time: RequestBody
     ): CommonResponse
 
+    //access_token:{{access_token}}
+//name:Dosa
+//name_ar:Dosa
+//description:
+//description_ar:
+//regular_price:30
+//sale_price:20
+//sufficient_for:2
+//quantity:3
+//out_of_stock:0
+//menu_id[]:1
+//cuisine_id[]:1
+//active:1
+//image
+//gallery[]
+//contain_package:0
+//package[]:{}
     @Multipart
     @POST("chef/add_dish")
     suspend fun addDish(
         @Part("access_token") access_token: RequestBody,
         @Part("name") name: RequestBody,
-        @Part("description") description: RequestBody,
         @Part("name_ar") name_ar: RequestBody,
+        @Part("description") description: RequestBody,
         @Part("description_ar") description_ar: RequestBody,
+        @Part("regular_price") regular_price: RequestBody,
+        @Part("sale_price") sale_price: RequestBody,
         @Part("sufficient_for") sufficient_for: RequestBody,
         @Part("quantity") quantity: RequestBody,
-    ): CommonResponse2
+        @Part("out_of_stock") out_of_stock: RequestBody,//0
+        @Part("menu_id[]") menu_id: ArrayList<String>,
+        @Part("active") active: RequestBody,//0
+        @Part image: MultipartBody.Part? = null,
+        @Part gallery: List<MultipartBody.Part>? = null,
+        @Part("contain_package") contain_package: RequestBody,//0 or 1
+        @Part("package[]") packageList: ArrayList<PackageItem>
+        ): CommonResponse2
 
     @POST("chef/profile")
     @FormUrlEncoded

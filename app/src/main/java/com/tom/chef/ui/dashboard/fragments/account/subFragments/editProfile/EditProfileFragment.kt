@@ -21,7 +21,6 @@ import com.tom.chef.databinding.FragmentHomeEditProfileBinding
 import com.tom.chef.models.ProfileRequest
 import com.tom.chef.network.app_view_model.AppViewModel
 import com.tom.chef.newBase.BaseFragment
-import com.tom.chef.ui.comman.location.LocationViewModel
 import com.tom.chef.ui.comman.profile.ProfileInterface
 import com.tom.chef.ui.dashboard.fragments.account.AccountInterface
 import com.tom.chef.ui.dashboard.fragments.account.AccountViewModel
@@ -29,6 +28,7 @@ import com.tom.chef.ui.location.LocationPickerActivity
 import com.tom.chef.ui.location.LocationPickerViewModel
 import com.tom.chef.utils.ReduceImageSize
 import com.tom.chef.utils.SharedPreferenceManager
+import com.tom.chef.utils.multiselection.MultiSelectionSpinner
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -65,7 +65,7 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
     var imagePath = ""
     var coverPath = ""
     var selectedUnit = "mins"
-    var cuisinePosition = -1
+    var cuisineList = ArrayList<String>()
 
     var orderType = -1
 
@@ -140,7 +140,12 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
             val timePickerDialog = TimePickerDialog(
                 requireActivity(),
                 { view, hourOfDay, minute ->
-                    binding?.startTime?.setText("%02d".format("$hourOfDay") + ":" + "%02d".format("$minute"))
+                    binding?.startTime?.setText(
+                        String.format(
+                            "%02d",
+                            "$hourOfDay"
+                        ) + ":" + String.format("%02d", "$minute")
+                    )
                 },
                 hour,
                 minute,
@@ -157,7 +162,12 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
             val timePickerDialog = TimePickerDialog(
                 requireActivity(),
                 { view, hourOfDay, minute ->
-                    binding?.endTime?.setText("%02d".format("$hourOfDay") + ":" + "%02d".format("$minute"))
+                    binding?.endTime?.setText(
+                        String.format(
+                            "%02d",
+                            "$hourOfDay"
+                        ) + ":" + String.format("%02d", "$minute")
+                    )
                 },
                 hour,
                 minute,
@@ -175,15 +185,7 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
             if (it.status == "1") {
                 val cuisines = it.oData.map { it.cuisineName }
 
-                val adapter = ArrayAdapter(
-                    requireActivity(),
-                    android.R.layout.simple_list_item_1,
-                    cuisines
-                )
-                binding.selectCousine.setAdapter(adapter)
-                binding.selectCousine.setOnItemClickListener { adapterView, view, position, l ->
-                    cuisinePosition = position
-                }
+                binding.selectCousine.items = cuisines
 
                 val type = arrayOf("mins", "hrs", "days")
 
@@ -281,10 +283,10 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
         if (address.isEmpty()) {
             address = accountVM.userAddress.get() as String
         }
-        if (address.isEmpty()) {
+        if (latitude.isEmpty()) {
             latitude = accountVM.latitude.get() as String
         }
-        if (address.isEmpty()) {
+        if (longitude.isEmpty()) {
             longitude = accountVM.longitude.get() as String
         }
         val imageFile = File(imagePath)
@@ -307,8 +309,11 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
 
         var isWeekly = if (binding?.txtWeekly?.isChecked!!) "1" else "0"
         var listCuisines = ArrayList<String>()
-        listCuisines.clear()
-        listCuisines.add(cuisinePosition.toString())
+        try {
+            listCuisines = binding.selectCousine.selectedItemsPosition as ArrayList<String>
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         val requestSignUp = ProfileRequest(
             access_token = sharedPreferenceManager.getAccessToken.toString()

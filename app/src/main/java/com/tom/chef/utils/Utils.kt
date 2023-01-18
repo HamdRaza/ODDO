@@ -1,6 +1,6 @@
 package com.tom.chef.utils
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import com.tom.chef.ui.auth.logIn.LoginActivity
@@ -20,6 +20,12 @@ class Utils {
             activity.startActivity(Intent(activity, LoginActivity::class.java))
             activity.finish()
 
+        }
+
+        @JvmStatic
+        fun dpToPx(context: Context, dp: Int): Int {
+            val density = context.resources.displayMetrics.density
+            return Math.round(dp * density)
         }
     }
 

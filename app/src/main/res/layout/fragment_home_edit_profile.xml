@@ -283,30 +283,37 @@
                     </LinearLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_40sdp"
                         android:layout_marginHorizontal="@dimen/_10sdp"
                         android:layout_marginVertical="@dimen/_5sdp"
                         android:padding="0dp"
                         app:counterEnabled="false"
+                        app:endIconDrawable="@drawable/ic_dropdown2"
+                        app:endIconMode="custom"
                         app:endIconTint="@color/colorPrimary"
                         app:errorEnabled="false"
                         app:expandedHintEnabled="false"
                         app:helperTextEnabled="false"
                         app:hintEnabled="false">
 
-                        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                        <com.tom.chef.utils.multiselection.MultiSelectionSpinner
                             android:id="@+id/selectCousine"
                             style="@style/input_back"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:clickable="true"
                             android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:hint="Select Cuisine"
+                            android:importantForAutofill="no"
                             android:inputType="none"
+                            android:maxLines="1"
                             android:paddingVertical="0dp"
                             android:paddingEnd="@dimen/_30sdp"
-                            android:text="@{viewModel.cuisine}" />
+                            android:text="@{viewModel.cuisine}"
+                            app:showSearch="true"
+                            app:sort="true" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -317,6 +324,8 @@
                         android:layout_marginVertical="@dimen/_5sdp"
                         android:padding="0dp"
                         app:counterEnabled="false"
+                        app:endIconDrawable="@drawable/ic_dropdown2"
+                        app:endIconMode="custom"
                         app:endIconTint="@color/colorPrimary"
                         app:errorEnabled="false"
                         app:expandedHintEnabled="false"
@@ -366,6 +375,8 @@
                             android:layout_weight="0.4"
                             android:padding="0dp"
                             app:counterEnabled="false"
+                            app:endIconDrawable="@drawable/ic_dropdown2"
+                            app:endIconMode="custom"
                             app:endIconTint="@color/colorPrimary"
                             app:errorEnabled="false"
                             app:expandedHintEnabled="false"
