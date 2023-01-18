@@ -186,15 +186,15 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
         )
     }
 
-    suspend fun getMenuList(
+    suspend fun getDishList(
         contain_package: String
     ): DishListResponse {
         if (contain_package == "All") {
-            return apiService.getMenuListAll(
+            return apiService.getDishListAll(
                 access_token = sharedPreferenceManager.getAccessToken.toString()
             )
         }
-        return apiService.getMenuList(
+        return apiService.getDishList(
             access_token = sharedPreferenceManager.getAccessToken.toString(),
             contain_package = contain_package
         )
@@ -208,6 +208,12 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
 
     suspend fun getCuisineList(): CuisineResponse {
         return apiService.getCuisineList(
+            access_token = sharedPreferenceManager.getAccessToken.toString()
+        )
+    }
+
+    suspend fun getMenuList(): MenuResponse {
+        return apiService.getMenuList(
             access_token = sharedPreferenceManager.getAccessToken.toString()
         )
     }

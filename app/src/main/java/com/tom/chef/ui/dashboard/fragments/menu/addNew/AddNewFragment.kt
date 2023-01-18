@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toFile
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import com.tom.chef.R
 import com.tom.chef.databinding.FragmentAddNewBinding
 import com.tom.chef.databinding.FragmentAllOrdersBinding
@@ -14,6 +17,9 @@ import com.tom.chef.databinding.FragmentDashboardHomeBinding
 import com.tom.chef.databinding.FragmentDashboardHomeCurrentorderBinding
 import com.tom.chef.databinding.FragmentFaqBinding
 import com.tom.chef.databinding.FragmentFinanceBinding
+import com.tom.chef.models.CuisineResponse
+import com.tom.chef.models.MenuResponse
+import com.tom.chef.network.app_view_model.AppViewModel
 import com.tom.chef.newBase.BaseFragment
 import com.tom.chef.ui.comman.menu.HomeMenuInterface
 import com.tom.chef.ui.comman.menu.HomeMenuViewModel
@@ -36,11 +42,15 @@ class AddNewFragment : BaseFragment(), VariantToggle, AllMenuInterface {
 
     lateinit var addNewViewModel: AddNewViewModel
 
+    val appViewModel: AppViewModel by viewModels()
+
+    var cuisineList = ArrayList<CuisineResponse.OData>()
+    var menuList = ArrayList<MenuResponse.OData>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,6 +80,8 @@ class AddNewFragment : BaseFragment(), VariantToggle, AllMenuInterface {
         addNewViewModel = AddNewViewModel()
         addNewViewModel.allMenuInterface = this
         binding.viewModel = addNewViewModel
+
+        getCuisinesAndMenu()
     }
 
     override fun updated(boolean: Boolean) {
@@ -88,6 +100,32 @@ class AddNewFragment : BaseFragment(), VariantToggle, AllMenuInterface {
     private val pickFile = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
             addNewViewModel.addFile(it, activity = requireActivity())
+        }
+    }
+
+    private fun getCuisinesAndMenu() {
+        appViewModel.getCuisineList()
+        appViewModel.getMenuList()
+        appViewModel.getCuisineListLive.observe(viewLifecycleOwner) {
+            if (it.status == "1") {
+                val cuisineList = it.oData
+                val cuisines = cuisineList.map { it.cuisineName }
+                binding.selectCousine.items = cuisines
+            } else {
+                Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+        appViewModel.getMenuLive.observe(viewLifecycleOwner) {
+            if (it.status == "1") {
+                val menuList = it.oData
+                val menu = menuList.map { it.name }
+
+                binding.selectMenu.items = menu
+            } else {
+                Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
     }
 }

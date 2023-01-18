@@ -18,6 +18,7 @@ import com.hbisoft.pickit.PickiTCallbacks
 import com.permissionx.guolindev.PermissionX
 import com.tom.chef.R
 import com.tom.chef.databinding.FragmentHomeEditProfileBinding
+import com.tom.chef.models.CuisineResponse
 import com.tom.chef.models.ProfileRequest
 import com.tom.chef.network.app_view_model.AppViewModel
 import com.tom.chef.newBase.BaseFragment
@@ -65,7 +66,7 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
     var imagePath = ""
     var coverPath = ""
     var selectedUnit = "mins"
-    var cuisineList = ArrayList<String>()
+    var cuisineList = ArrayList<CuisineResponse.OData>()
 
     var orderType = -1
 
@@ -183,7 +184,8 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
         appViewModel.getCuisineList()
         appViewModel.getCuisineListLive.observe(viewLifecycleOwner) {
             if (it.status == "1") {
-                val cuisines = it.oData.map { it.cuisineName }
+                cuisineList = it.oData
+                val cuisines = cuisineList.map { it.cuisineName }
 
                 binding.selectCousine.items = cuisines
 
@@ -310,7 +312,9 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
         var isWeekly = if (binding?.txtWeekly?.isChecked!!) "1" else "0"
         var listCuisines = ArrayList<String>()
         try {
-            listCuisines = binding.selectCousine.selectedItemsPosition as ArrayList<String>
+            binding.selectCousine.selectedItemsPosition.forEach {
+                listCuisines.add(cuisineList[it].id.toString())
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }

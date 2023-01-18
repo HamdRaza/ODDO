@@ -1,13 +1,9 @@
 package com.tom.chef.network.app_repository
 
-import android.app.Activity
 import com.tom.chef.models.*
 import com.tom.chef.models.auth.*
 import com.tom.chef.models.profile.*
 import com.tom.chef.network.ApiServiceImple
-import com.tom.chef.ui.auth.logIn.LoginActivity
-import com.tom.chef.ui.dashboard.MainActivity
-import com.tom.chef.utils.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -191,12 +187,12 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
         }
     }.flowOn(Dispatchers.IO)
 
-    fun getMenuList(
+    fun getDishList(
         contain_package: String
     ): Flow<DishListResponse> = flow {
         try {
             emit(
-                apiServiceImple.getMenuList(
+                apiServiceImple.getDishList(
                     contain_package = contain_package
                 )
             )
@@ -233,6 +229,16 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
         try {
             emit(
                 apiServiceImple.getCuisineList()
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun getMenuList(): Flow<MenuResponse> = flow {
+        try {
+            emit(
+                apiServiceImple.getMenuList()
             )
         } catch (e: Exception) {
             e.printStackTrace()

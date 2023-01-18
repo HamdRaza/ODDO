@@ -1,18 +1,13 @@
 package com.tom.chef.network.app_view_model
 
-import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tom.chef.app.SingleLiveEvent
 import com.tom.chef.models.*
 import com.tom.chef.models.auth.*
-import com.tom.chef.models.profile.RequestUpdateProfile
 import com.tom.chef.models.profile.ResponseProfile
-import com.tom.chef.models.profile.ResponseProfileUpdate
 import com.tom.chef.network.app_repository.AppRepository
-import com.tom.chef.ui.auth.logIn.LoginActivity
-import com.tom.chef.ui.dashboard.MainActivity
 import com.tom.chef.utils.SharedPreferenceManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -390,19 +385,19 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
     }
 
 
-    private var _getMenuListLive = SingleLiveEvent<DishListResponse>()
-    val getMenuListLive: SingleLiveEvent<DishListResponse>
-        get() = _getMenuListLive
+    private var _getDishListLive = SingleLiveEvent<DishListResponse>()
+    val getDishListLive: SingleLiveEvent<DishListResponse>
+        get() = _getDishListLive
 
-    fun getMenuList(
+    fun getDishList(
         contain_package: String
     ) {
         viewModelScope.launch {
             try {
-                appRepository.getMenuList(
+                appRepository.getDishList(
                     contain_package = contain_package
                 ).collect {
-                    _getMenuListLive.value = it
+                    _getDishListLive.value = it
                 }
             } catch (e: HttpException) {
                 e.printStackTrace()
@@ -458,6 +453,23 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
             try {
                 appRepository.getCuisineList().collect {
                     _getCuisineListLive.value = it
+                }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
+    private var _getMenuLive = SingleLiveEvent<MenuResponse>()
+    val getMenuLive: SingleLiveEvent<MenuResponse>
+        get() = _getMenuLive
+
+    fun getMenuList() {
+        viewModelScope.launch {
+            try {
+                appRepository.getMenuList().collect {
+                    _getMenuLive.value = it
                 }
             } catch (e: HttpException) {
                 e.printStackTrace()

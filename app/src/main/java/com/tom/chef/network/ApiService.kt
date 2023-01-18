@@ -148,7 +148,7 @@ interface ApiService {
         @Part gallery: List<MultipartBody.Part>? = null,
         @Part("contain_package") contain_package: RequestBody,//0 or 1
         @Part("package[]") packageList: ArrayList<PackageItem>
-        ): CommonResponse2
+    ): CommonResponse2
 
     @POST("chef/profile")
     @FormUrlEncoded
@@ -180,14 +180,14 @@ interface ApiService {
 
     @POST("chef/food_list")
     @FormUrlEncoded
-    suspend fun getMenuList(
+    suspend fun getDishList(
         @Field("access_token") access_token: String,
         @Field("contain_package") contain_package: String,
     ): DishListResponse
 
     @POST("chef/food_list")
     @FormUrlEncoded
-    suspend fun getMenuListAll(
+    suspend fun getDishListAll(
         @Field("access_token") access_token: String
     ): DishListResponse
 
@@ -202,6 +202,12 @@ interface ApiService {
     suspend fun getCuisineList(
         @Field("access_token") access_token: String
     ): CuisineResponse
+
+    @POST("menu_list")
+    @FormUrlEncoded
+    suspend fun getMenuList(
+        @Field("access_token") access_token: String
+    ): MenuResponse
 
     @POST("chef/order_details")
     @FormUrlEncoded
