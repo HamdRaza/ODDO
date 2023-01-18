@@ -269,6 +269,7 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
             gallery = addDishRequest.gallery,
             contain_package = addDishRequest.contain_package,
             packageList = addDishRequest.packageList
+
         )
     }
 }

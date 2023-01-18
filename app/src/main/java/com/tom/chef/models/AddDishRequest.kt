@@ -1,5 +1,6 @@
 package com.tom.chef.models
 
+import com.google.gson.JsonObject
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -39,5 +40,5 @@ data class AddDishRequest(
     val image: MultipartBody.Part? = null,
     val gallery: List<MultipartBody.Part>? = null,
     val contain_package: RequestBody,
-    val packageList: ArrayList<PackageItem>? = null
+    val packageList: ArrayList<JsonObject>? = null
 )

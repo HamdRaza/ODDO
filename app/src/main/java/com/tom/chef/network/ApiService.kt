@@ -1,5 +1,6 @@
 package com.tom.chef.network
 
+import com.google.gson.JsonObject
 import com.tom.chef.models.*
 import com.tom.chef.models.auth.*
 import com.tom.chef.models.profile.ResponseProfile
@@ -142,13 +143,13 @@ interface ApiService {
         @Part("sufficient_for") sufficient_for: RequestBody,
         @Part("quantity") quantity: RequestBody,
         @Part("out_of_stock") out_of_stock: RequestBody,//0
-        @Part("menu_id[]") menu_id: ArrayList<String>,
-        @Part("cuisine_id[]") cuisine_id: ArrayList<String>,
+        @Query("menu_id[]") menu_id: ArrayList<String>,
+        @Query("cuisine_id[]") cuisine_id: ArrayList<String>,
         @Part("active") active: RequestBody,//0
         @Part image: MultipartBody.Part? = null,
         @Part gallery: List<MultipartBody.Part>? = null,
         @Part("contain_package") contain_package: RequestBody,//0 or 1
-        @Part("package[]") packageList: ArrayList<PackageItem>?= null
+        @Query("package[]") packageList: ArrayList<JsonObject>? = null
     ): CommonResponse2
 
     @POST("chef/profile")

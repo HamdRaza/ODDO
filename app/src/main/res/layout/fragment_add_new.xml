@@ -255,6 +255,7 @@
                             android:textColor="@color/black20" />
 
                         <EditText
+                            android:id="@+id/dish_name_ar"
                             style="@style/input_back"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -268,6 +269,7 @@
                             tools:visibility="visible" />
 
                         <EditText
+                            android:id="@+id/dish_description_ar"
                             style="@style/input_back"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -321,7 +323,6 @@
                         android:textColor="@color/black20" />
 
                     <EditText
-                        android:id="@+id/dish_name_ar"
                         style="@style/input_back"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -335,7 +336,6 @@
                         tools:visibility="visible" />
 
                     <EditText
-                        android:id="@+id/dish_description_ar"
                         style="@style/input_back"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

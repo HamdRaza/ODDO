@@ -7,46 +7,33 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toFile
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.hbisoft.pickit.PickiT
 import com.hbisoft.pickit.PickiTCallbacks
 import com.permissionx.guolindev.PermissionX
 import com.tom.chef.R
 import com.tom.chef.databinding.FragmentAddNewBinding
-import com.tom.chef.databinding.FragmentAllOrdersBinding
-import com.tom.chef.databinding.FragmentDashboardHomeBinding
-import com.tom.chef.databinding.FragmentDashboardHomeCurrentorderBinding
-import com.tom.chef.databinding.FragmentFaqBinding
-import com.tom.chef.databinding.FragmentFinanceBinding
 import com.tom.chef.models.AddDishRequest
 import com.tom.chef.models.CuisineResponse
 import com.tom.chef.models.MenuResponse
-import com.tom.chef.models.ProfileRequest
+import com.tom.chef.models.PackageItem
 import com.tom.chef.network.app_view_model.AppViewModel
 import com.tom.chef.newBase.BaseFragment
-import com.tom.chef.ui.comman.menu.HomeMenuInterface
-import com.tom.chef.ui.comman.menu.HomeMenuViewModel
-import com.tom.chef.ui.comman.menuItems.files.FileViewModel
-import com.tom.chef.ui.comman.orders.OrderInterface
-import com.tom.chef.ui.dashboard.fragments.home.subFragments.orderDetails.OrderDetailsFragment
 import com.tom.chef.ui.dashboard.fragments.menu.subFragments.AllMenuInterface
-import com.tom.chef.ui.dashboard.fragments.notification.NotificationFragment
 import com.tom.chef.ui.dashboard.toolBar.VariantToggle
-import com.tom.chef.utils.FileManager
-import com.tom.chef.utils.ReduceImageSize
 import com.tom.chef.utils.SharedPreferenceManager
-import com.tom.chef.utils.handleHull
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import java.io.File
 import javax.inject.Inject
 
@@ -172,6 +159,24 @@ class AddNewFragment : BaseFragment(), VariantToggle, AllMenuInterface, PickiTCa
         } catch (e: Exception) {
             e.printStackTrace()
         }
+        val packageItem = PackageItem(
+            title = binding.dishName.text.toString(),
+            packageTitleAr = binding.dishNameAr.text.toString(),
+            isDefault = 1,
+            outOfStock = 0,
+            sufficientFor = binding.dishSufficientFor.text.toString(),
+            quantity = binding.dishQuantity.text.toString(),
+            regularPrice = binding.dishPrice.text.toString(),
+            salePrice = binding.dishDiscountPrice.text.toString()
+        )
+        val packageList = ArrayList<JsonObject>()
+//        val packageList = ArrayList<PackageItem>()
+        val gson = Gson()
+        val jsonInString = gson.toJson(packageItem)
+        val mJSONObject = JSONObject(jsonInString)
+        val jsonParser = JsonParser()
+        val jsonObject = jsonParser.parse(mJSONObject.toString()) as JsonObject
+        packageList.add(jsonObject)
         val requestAddDish = AddDishRequest(
             access_token = sharedPreferenceManager.getAccessToken.toString()
                 .toRequestBody("text/plain".toMediaType()),
@@ -180,14 +185,6 @@ class AddNewFragment : BaseFragment(), VariantToggle, AllMenuInterface, PickiTCa
             description = binding.dishDescription.text.toString()
                 .toRequestBody("text/plain".toMediaType()),
             description_ar = binding.dishDescriptionAr.text.toString()
-                .toRequestBody("text/plain".toMediaType()),
-            regular_price = binding.dishPrice.text.toString()
-                .toRequestBody("text/plain".toMediaType()),
-            sale_price = binding.dishDiscountPrice.text.toString()
-                .toRequestBody("text/plain".toMediaType()),
-            sufficient_for = binding.dishSufficientFor.text.toString()
-                .toRequestBody("text/plain".toMediaType()),
-            quantity = binding.dishQuantity.text.toString()
                 .toRequestBody("text/plain".toMediaType()),
             contain_package = "0".toRequestBody("text/plain".toMediaType()),
             menu_id = listMenus,
@@ -198,7 +195,15 @@ class AddNewFragment : BaseFragment(), VariantToggle, AllMenuInterface, PickiTCa
                 imageBody!!
             ),
             gallery = if (listImages.size <= 1) null else listMultipartGallery,
-            packageList = null
+            packageList = packageList,
+            sufficient_for = binding.dishSufficientFor.text.toString()
+                .toRequestBody("text/plain".toMediaType()),
+            quantity = binding.dishQuantity.text.toString()
+                .toRequestBody("text/plain".toMediaType()),
+            regular_price = binding.dishPrice.text.toString()
+                .toRequestBody("text/plain".toMediaType()),
+            sale_price = binding.dishDiscountPrice.text.toString()
+                .toRequestBody("text/plain".toMediaType())
         )
         appViewModel.addDish(requestAddDish)
         appViewModel.addDishLive.observe(viewLifecycleOwner) {
