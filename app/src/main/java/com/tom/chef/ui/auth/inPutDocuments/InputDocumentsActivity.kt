@@ -274,7 +274,7 @@ class InputDocumentsActivity : BaseActivity(), InputDocumentInterface, DocumentI
     ) {
         if (currentPosition < 5) {
             listPaths[currentPosition] = path!!
-            documentViewModel[currentPosition].selectedPath(path!!)
+            documentViewModel[currentPosition].selectedPath(File(path).name!!)
         }
     }
 

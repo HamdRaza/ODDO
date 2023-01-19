@@ -33,6 +33,10 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
 
+    var address = ""
+    var latitude = ""
+    var longitude = ""
+
     companion object {
         fun getIntent(context: Context): Intent {
             return Intent(context, SignUpActivity::class.java)
@@ -120,11 +124,11 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
                 dial_code = binding.countryCode.getLocalText().removePlus(),
                 mobile = binding.phone.getLocalText(),
                 address = binding.Address.getLocalText(),
-                latitude = "22.54545",
-                longitude = "55.34454",
+                latitude = latitude,
+                longitude = longitude,
                 agree_terms = "1",
                 password = binding.password.getLocalText(),
-                confirm_password = binding.password.getLocalText(),
+                confirm_password = binding.confirmPassword.getLocalText(),
             )
             signUpPostAPI(requestSignUp)
         }
@@ -143,7 +147,7 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
         startAnim()
         viewModel.signUpAPI(requestSignUp) {
             stopAnim()
-            if (!it.status.checkForSuccess()) {
+            if (it.status != "1") {
                 myToast(it.message)
                 return@signUpAPI
             } else {
@@ -182,8 +186,14 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
         if (!valid.isAValidPassword(binding.password)) {
             return false
         }
+        if (!valid.isAValidPassword(binding.confirmPassword)) {
+            return false
+        }
+        if (binding.confirmPassword.text.toString() != binding.password.text.toString()) {
+            myToast("Password and Confirm Password should match")
+            return false
+        }
         if (valid.checkIsEmpty(binding.Address)) {
-//            myToast("Address is required")
             return false
         }
         if (!valid.isAgree(this, binding.agree)) {
@@ -199,7 +209,10 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
     val getLocation = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         it?.let {
             it.data?.extras?.let {
-
+                address = it.getString("address")!!
+                latitude = it.getString("lat")!!
+                longitude = it.getString("lng")!!
+                binding.Address.setText(address)
             }
         }
     }
