@@ -90,6 +90,31 @@ interface ApiService {
         @Field("user_timezone") user_timezone: String,
     ): OrderListResponse
 
+    //    Update location
+//    access_token:{{access_token}}
+//building:Saeed tower ,30 th floor
+//street:dubai investment park
+//landmark:Near Ramla Hypermarket
+//latitude:27.54535
+//longitude:57.235345
+//location:dubai investment park
+//nick_name:Chef Pillai
+//apartment_no:#310 ,3rd floor
+    @POST("chef/update_location")
+    @FormUrlEncoded
+    suspend fun updateLocation(
+        @Field("access_token") access_token: String,
+        @Field("building") building: String,
+        @Field("street") street: String,
+        @Field("landmark") landmark: String,
+        @Field("latitude") latitude: String,
+        @Field("longitude") longitude: String,
+        @Field("location") location: String,
+        @Field("nick_name") nick_name: String,
+        @Field("apartment_no") apartment_no: String
+    ): CommonResponse2
+
+
     @Multipart
     @POST("chef/update_profile")
     suspend fun updateProfile(

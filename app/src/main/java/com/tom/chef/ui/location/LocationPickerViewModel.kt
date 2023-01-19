@@ -26,9 +26,26 @@ class LocationPickerViewModel(val mActivity: BaseActivity) : ViewModel() {
     @JvmField
     val locationAddress = ObservableField<String>()
 
+    @JvmField
+    val apartment = ObservableField<String>()
+
+    @JvmField
+    val building = ObservableField<String>()
+
+    @JvmField
+    val streetAddress = ObservableField<String>()
+
+    @JvmField
+    val landmark = ObservableField<String>()
+
+    @JvmField
+    val nickname = ObservableField<String>()
 
     fun updateProfile(user: ProfileResponse2.OData) {
         locationAddress.set("${user.building}, ${user.street}, ${user.landmark}")
+        building.set(user.building)
+        streetAddress.set(user.street)
+        landmark.set(user.landmark)
     }
 
     fun moveCameraAt(location: LatLng, map: GoogleMap) =

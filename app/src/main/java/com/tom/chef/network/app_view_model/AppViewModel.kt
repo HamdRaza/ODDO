@@ -406,6 +406,27 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
         }
     }
 
+    private var _updateLocationLive = SingleLiveEvent<CommonResponse2>()
+    val updateLocationLive: SingleLiveEvent<CommonResponse2>
+        get() = _updateLocationLive
+
+    fun updateLocation(
+        locationRequest: LocationRequest
+    ) {
+        viewModelScope.launch {
+            try {
+                appRepository.updateLocation(
+                    locationRequest = locationRequest
+                ).collect {
+                    _updateLocationLive.value = it
+                }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
     private var _updateProfileAPILive = SingleLiveEvent<CommonResponse>()
     val updateProfileAPILive: SingleLiveEvent<CommonResponse>
         get() = _updateProfileAPILive

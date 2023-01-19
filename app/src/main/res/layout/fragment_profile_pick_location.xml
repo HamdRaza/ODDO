@@ -148,6 +148,7 @@
                             android:layout_marginTop="@dimen/_20sdp"
                             android:ems="10"
                             android:hint="Apartment No."
+                            android:text="@{viewModel.apartment}"
                             android:inputType="textPostalAddress" />
 
 
@@ -159,6 +160,7 @@
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_20sdp"
                             android:ems="10"
+                            android:text="@{viewModel.building}"
                             android:hint="Building No. / Villa No."
                             android:inputType="textPostalAddress" />
 
@@ -169,6 +171,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_20sdp"
+                            android:text="@{viewModel.streetAddress}"
                             android:ems="10"
                             android:hint="Street Name"
                             android:inputType="textPostalAddress" />
@@ -181,6 +184,7 @@
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_20sdp"
                             android:ems="10"
+                            android:text="@{viewModel.landmark}"
                             android:hint="Land Mark ( Optional )"
                             android:inputType="textPostalAddress" />
 
@@ -192,6 +196,7 @@
                             android:layout_marginHorizontal="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_20sdp"
                             android:ems="10"
+                            android:text="@{viewModel.nickname}"
                             android:hint="Nickname (Home, Work, Farah's Home)"
                             android:inputType="textEmailAddress" />
 

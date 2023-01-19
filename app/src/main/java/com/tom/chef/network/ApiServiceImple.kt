@@ -257,6 +257,20 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
         )
     }
 
+    suspend fun updateLocation(locationRequest: LocationRequest): CommonResponse2 {
+        return apiService.updateLocation(
+            access_token = locationRequest.access_token,
+            building = locationRequest.building,
+            street = locationRequest.street,
+            landmark = locationRequest.landmark,
+            latitude = locationRequest.latitude,
+            longitude = locationRequest.longitude,
+            location = locationRequest.location,
+            nick_name = locationRequest.nick_name,
+            apartment_no = locationRequest.apartment_no
+        )
+    }
+
     suspend fun updateProfile(profileRequest: ProfileRequest): CommonResponse {
         return apiService.updateProfile(
             access_token = profileRequest.access_token,

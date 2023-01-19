@@ -19,6 +19,7 @@ import com.tom.chef.databinding.ActivityMainBinding
 import com.tom.chef.network.app_view_model.AppViewModel
 import com.tom.chef.newBase.BaseActivity
 import com.tom.chef.ui.auth.logIn.LoginActivity
+import com.tom.chef.ui.comman.location.LocationViewModel
 import com.tom.chef.ui.dashboard.fragments.account.AccountInterface
 import com.tom.chef.ui.dashboard.fragments.account.AccountViewModel
 import com.tom.chef.ui.dashboard.fragments.account.ProfileFragment
@@ -27,6 +28,7 @@ import com.tom.chef.ui.dashboard.fragments.menu.addNew.AddNewFragment
 import com.tom.chef.ui.dashboard.fragments.notification.NotificationFragment
 import com.tom.chef.ui.dashboard.toolBar.ToolBarInterface
 import com.tom.chef.ui.dashboard.toolBar.ToolBarViewModel
+import com.tom.chef.ui.location.LocationPickerViewModel
 import com.tom.chef.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineStart

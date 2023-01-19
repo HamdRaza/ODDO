@@ -201,6 +201,20 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
         }
     }.flowOn(Dispatchers.IO)
 
+    fun updateLocation(
+        locationRequest: LocationRequest
+    ): Flow<CommonResponse2> = flow {
+        try {
+            emit(
+                apiServiceImple.updateLocation(
+                    locationRequest = locationRequest
+                )
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
     fun updateProfile(
         profileRequest: ProfileRequest
     ): Flow<CommonResponse> = flow {

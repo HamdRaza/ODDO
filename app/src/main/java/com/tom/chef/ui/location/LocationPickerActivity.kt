@@ -3,13 +3,20 @@ package com.tom.chef.ui.location
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.gson.Gson
 import com.tom.chef.R
 import com.tom.chef.databinding.FragmentProfilePickLocationBinding
+import com.tom.chef.models.LocationRequest
+import com.tom.chef.models.ProfileResponse2
+import com.tom.chef.network.app_view_model.AppViewModel
 import com.tom.chef.newBase.BaseActivity
 import com.tom.chef.ui.comman.location.LocationInterface
 import com.tom.chef.ui.comman.location.LocationViewModel
@@ -34,6 +41,10 @@ class LocationPickerActivity : BaseActivity(), LocationPickerInterface, ToolBarI
     lateinit var sharedPreferenceManager: SharedPreferenceManager
 
     lateinit var locationViewModel: LocationViewModel
+
+    var isSignup = false
+
+    val appViewModel: AppViewModel by viewModels()
 
     private fun implementLocation() {
         locationViewModel = LocationViewModel(registry = activityResultRegistry, context = this)
@@ -76,14 +87,27 @@ class LocationPickerActivity : BaseActivity(), LocationPickerInterface, ToolBarI
 
 
     companion object {
-        fun getIntent(context: Context): Intent {
-            return Intent(context, LocationPickerActivity::class.java)
+//        fun getIntent(context: Context): Intent {
+//            return Intent(context, LocationPickerActivity::class.java)
+//        }
+
+        fun getIntent(
+            context: Context,
+            isSignup: Boolean,
+            profileData: String?
+        ): Intent {
+            val intent = Intent(context, LocationPickerActivity::class.java)
+            intent.putExtra("isSignup", isSignup)
+            intent.putExtra("profileData", profileData)
+            return intent
         }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.fragment_profile_pick_location)
+        isSignup = intent.getBooleanExtra("isSignup", false)
         window.setWhiteColor(this)
         window.makeTransparentStatusBarBlack()
         implementLocation()
@@ -91,7 +115,11 @@ class LocationPickerActivity : BaseActivity(), LocationPickerInterface, ToolBarI
         binding.viewModel = vm
         vm.locationPickerInterface = this
         vm.init()
-        setupListeners()
+
+        var gson = Gson()
+        val json = intent.getStringExtra("profileData")
+        val profileData = gson.fromJson(json, ProfileResponse2.OData::class.java)
+        setupListeners(profileData)
     }
 
 
@@ -105,12 +133,8 @@ class LocationPickerActivity : BaseActivity(), LocationPickerInterface, ToolBarI
         finish()
     }
 
-    private fun setupListeners() {
-        vm.userProfile.observe(this) {
-            it?.let {
-                vm.updateProfile(it)
-            }
-        }
+    private fun setupListeners(profileData: ProfileResponse2.OData) {
+        vm.updateProfile(profileData)
     }
 
     override fun startMap() {
@@ -147,6 +171,33 @@ class LocationPickerActivity : BaseActivity(), LocationPickerInterface, ToolBarI
 
 
     override fun onAddAddressClicked() {
+        if (isSignup) {
+            returnResult()
+        } else {
+            var locationRequest = LocationRequest(
+                access_token = sharedPreferenceManager.getAccessToken.toString(),
+                building = binding.building.text.toString(),
+                street = binding.streetAddress.text.toString(),
+                landmark = binding.landmark.text.toString(),
+                latitude = vm.userLocation!!.latitude.toString(),
+                longitude = vm.userLocation!!.longitude.toString(),
+                location = binding.location.text.toString(),
+                nick_name = binding.nickname.text.toString(),
+                apartment_no = binding.apartment.text.toString()
+            )
+            appViewModel.updateLocation(locationRequest)
+            appViewModel.updateLocationLive.observe(this) {
+                if (it.status == "1") {
+                    Toast.makeText(this, "Location updated", Toast.LENGTH_SHORT).show()
+                    returnResult()
+                } else {
+                    Toast.makeText(this, "Error while updating", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    fun returnResult() {
         val bundle = Bundle()
         bundle.putString("lat", vm.userLocation!!.latitude.toString())
         bundle.putString("lng", vm.userLocation!!.longitude.toString())

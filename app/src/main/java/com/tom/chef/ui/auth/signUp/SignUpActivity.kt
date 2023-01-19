@@ -203,7 +203,7 @@ class SignUpActivity : BaseActivity(), SignUpInterface {
     }
 
     override fun pickLocation() {
-        getLocation.launch(LocationPickerActivity.getIntent(this))
+        getLocation.launch(LocationPickerActivity.getIntent(this, true, null))
     }
 
     val getLocation = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

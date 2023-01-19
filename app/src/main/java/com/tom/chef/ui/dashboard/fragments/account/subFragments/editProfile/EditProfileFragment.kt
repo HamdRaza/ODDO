@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import com.google.gson.Gson
 import com.hbisoft.pickit.PickiT
 import com.hbisoft.pickit.PickiTCallbacks
 import com.permissionx.guolindev.PermissionX
@@ -20,6 +21,7 @@ import com.tom.chef.R
 import com.tom.chef.databinding.FragmentHomeEditProfileBinding
 import com.tom.chef.models.CuisineResponse
 import com.tom.chef.models.ProfileRequest
+import com.tom.chef.models.ProfileResponse2
 import com.tom.chef.network.app_view_model.AppViewModel
 import com.tom.chef.newBase.BaseFragment
 import com.tom.chef.ui.comman.profile.ProfileInterface
@@ -38,7 +40,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -72,6 +73,8 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
     var address = ""
     var latitude = ""
     var longitude = ""
+
+    var profileData: ProfileResponse2.OData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -228,6 +231,8 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
     private fun setupListeners() {
         mainActivity.vm.userProfile.observe(viewLifecycleOwner) {
             it?.let {
+                profileData = it
+                locationPickerVM.userProfile.value = it
                 accountVM.updateProfile(it)
                 locationPickerVM.updateProfile(it)
             }
@@ -243,7 +248,14 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
     }
 
     override fun editLocation() {
-        getLocation.launch(LocationPickerActivity.getIntent(requireContext()))
+        var gson = Gson()
+        getLocation.launch(
+            LocationPickerActivity.getIntent(
+                requireContext(),
+                false,
+                gson.toJson(profileData)
+            )
+        )
     }
 
     override fun changeProfile() {
