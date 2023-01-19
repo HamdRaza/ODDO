@@ -227,6 +227,36 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
         )
     }
 
+    suspend fun forgotPasswordAPI(
+        email: String
+    ): CommonResponse2 {
+        return apiService.forgotPasswordAPI(
+            email = email
+        )
+    }
+
+    suspend fun forgotPasswordOtpVerify(
+        email: String,
+        otp: String
+    ): ForgotPasswordOtpResponse {
+        return apiService.forgotPasswordOtpVerify(
+            email = email,
+            otp = otp
+        )
+    }
+
+    suspend fun resetPasswordAPI(
+        access_token: String,
+        password: String,
+        confirm_password: String,
+    ): ForgotPasswordOtpResponse {
+        return apiService.resetPasswordAPI(
+            access_token = access_token,
+            password = password,
+            confirm_password = confirm_password,
+        )
+    }
+
     suspend fun updateProfile(profileRequest: ProfileRequest): CommonResponse {
         return apiService.updateProfile(
             access_token = profileRequest.access_token,

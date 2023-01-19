@@ -520,6 +520,75 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
         }
     }
 
+    private var _forgotPasswordAPILive = SingleLiveEvent<CommonResponse2>()
+    val forgotPasswordAPILive: SingleLiveEvent<CommonResponse2>
+        get() = _forgotPasswordAPILive
+
+    fun forgotPasswordAPI(
+        email: String
+    ) {
+        viewModelScope.launch {
+            try {
+                appRepository.forgotPasswordAPI(
+                    email = email
+                ).collect {
+                    _forgotPasswordAPILive.value = it
+                }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
+    private var _forgotPasswordOtpVerifyLive = SingleLiveEvent<ForgotPasswordOtpResponse>()
+    val forgotPasswordOtpVerifyLive: SingleLiveEvent<ForgotPasswordOtpResponse>
+        get() = _forgotPasswordOtpVerifyLive
+
+    fun forgotPasswordOtpVerify(
+        email: String,
+        otp: String
+    ) {
+        viewModelScope.launch {
+            try {
+                appRepository.forgotPasswordOtpVerify(
+                    email = email,
+                    otp = otp
+                ).collect {
+                    _forgotPasswordOtpVerifyLive.value = it
+                }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
+    private var _resetPasswordAPILive = SingleLiveEvent<ForgotPasswordOtpResponse>()
+    val resetPasswordAPILive: SingleLiveEvent<ForgotPasswordOtpResponse>
+        get() = _resetPasswordAPILive
+
+    fun resetPasswordAPI(
+        access_token: String,
+        password: String,
+        confirm_password: String,
+    ) {
+        viewModelScope.launch {
+            try {
+                appRepository.resetPasswordAPI(
+                    access_token = access_token,
+                    password = password,
+                    confirm_password = confirm_password,
+                ).collect {
+                    _resetPasswordAPILive.value = it
+                }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
 
     // Manage API Response Exception
     fun manageApiError(errorCode: String, errorMessage: String) {

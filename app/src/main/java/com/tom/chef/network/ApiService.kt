@@ -218,6 +218,28 @@ interface ApiService {
         @Field("id") id: String
     ): OrderDetailsResponse
 
+    @POST("forgot_password")
+    @FormUrlEncoded
+    suspend fun forgotPasswordAPI(
+        @Field("email") email: String,
+    ): CommonResponse2
+
+    @POST("forgot_otp_verify")
+    @FormUrlEncoded
+    suspend fun forgotPasswordOtpVerify(
+        @Field("email") email: String,
+        @Field("otp") otp: String,
+    ): ForgotPasswordOtpResponse
+
+    @POST("reset_password")
+    @FormUrlEncoded
+    suspend fun resetPasswordAPI(
+        @Field("access_token") access_token: String,
+        @Field("password") password: String,
+        @Field("confirm_password") confirm_password: String
+    ): ForgotPasswordOtpResponse
+
+
     @POST("auth/resend_phone_code")
     @FormUrlEncoded
     suspend fun resendPhoneOTP(

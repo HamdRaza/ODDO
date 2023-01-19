@@ -273,4 +273,52 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
         }
     }.flowOn(Dispatchers.IO)
 
+    fun forgotPasswordAPI(
+        email: String
+    ): Flow<CommonResponse2> = flow {
+        try {
+            emit(
+                apiServiceImple.forgotPasswordAPI(
+                    email = email
+                )
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun forgotPasswordOtpVerify(
+        email: String,
+        otp: String
+    ): Flow<ForgotPasswordOtpResponse> = flow {
+        try {
+            emit(
+                apiServiceImple.forgotPasswordOtpVerify(
+                    email = email,
+                    otp = otp
+                )
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun resetPasswordAPI(
+        access_token: String,
+        password: String,
+        confirm_password: String,
+    ): Flow<ForgotPasswordOtpResponse> = flow {
+        try {
+            emit(
+                apiServiceImple.resetPasswordAPI(
+                    access_token = access_token,
+                    password = password,
+                    confirm_password = confirm_password,
+                )
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
 }

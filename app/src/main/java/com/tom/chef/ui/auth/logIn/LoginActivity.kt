@@ -5,13 +5,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import com.google.firebase.messaging.FirebaseMessaging
 import com.tom.chef.R
 import com.tom.chef.databinding.ActivityLoginBinding
 import com.tom.chef.models.ProfileResponse2
 import com.tom.chef.models.auth.RequestGoogleLogIn
 import com.tom.chef.models.auth.RequestLogIn
+import com.tom.chef.network.app_view_model.AppViewModel
 import com.tom.chef.newBase.BaseActivity
 import com.tom.chef.ui.allBottomSheets.BottomSheets
 import com.tom.chef.ui.auth.otp.OTPActivity
@@ -30,6 +33,8 @@ class LoginActivity : BaseActivity(), LoginInterface {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var vm: LoginViewModel
     lateinit var googleLogInViewModel: GoogleLogInViewModel
+
+    val appViewModel: AppViewModel by viewModels()
 
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
@@ -97,7 +102,7 @@ class LoginActivity : BaseActivity(), LoginInterface {
     }
 
     override fun showResetInputEmail() {
-        BottomSheets().showInputEmail(this)
+        BottomSheets().showInputEmail(this, appViewModel)
     }
 
 
