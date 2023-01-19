@@ -5,11 +5,10 @@ import com.tom.chef.R
 import com.tom.chef.ui.comman.DataBindingRecyclerViewAdapter
 import com.tom.chef.ui.comman.ViewModel
 
-class PackageAdopter(viewModels: MutableList<ViewModel>) : DataBindingRecyclerViewAdapter(viewModels) {
+class PackageAdopter(viewModels: MutableList<ViewModel>) :
+    DataBindingRecyclerViewAdapter(viewModels) {
 
     private val mViewModelMap = HashMap<Class<*>, Int>()
-
-
 
     init {
         mViewModelMap[PackageViewModel::class.java] = R.layout.recycle_create_menu_variant
@@ -20,18 +19,20 @@ class PackageAdopter(viewModels: MutableList<ViewModel>) : DataBindingRecyclerVi
         mViewModels = itemList
         notifyDataSetChanged()
     }
+
     @SuppressLint("NotifyDataSetChanged")
-    fun addNewItem(item: ViewModel){
+    fun addNewItem(item: ViewModel) {
         mViewModels.add(item)
         notifyDataSetChanged()
     }
+
     @SuppressLint("NotifyDataSetChanged")
-    fun removeItem(item: ViewModel){
+    fun removeItem(item: ViewModel) {
         mViewModels.remove(item)
         notifyDataSetChanged()
     }
 
-    fun getList():List<ViewModel>{
+    fun getList(): List<ViewModel> {
         return mViewModels
     }
 

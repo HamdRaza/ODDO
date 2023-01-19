@@ -15,6 +15,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.hbisoft.pickit.PickiT
 import com.hbisoft.pickit.PickiTCallbacks
+import com.orhanobut.logger.Logger
 import com.permissionx.guolindev.PermissionX
 import com.tom.chef.R
 import com.tom.chef.databinding.FragmentAddNewBinding
@@ -57,7 +58,10 @@ class AddNewFragment : BaseFragment(), VariantToggle, AllMenuInterface, PickiTCa
     var allGranted = false
 
     var listImages = ArrayList<String>()
+    private var containPackage: String = "0"
 
+    var nameAr = ""
+    var descAr = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -112,12 +116,12 @@ class AddNewFragment : BaseFragment(), VariantToggle, AllMenuInterface, PickiTCa
     }
 
     override fun updated(boolean: Boolean) {
+        containPackage = if (boolean) "1" else "0"
         addNewViewModel.haveVariant.set(boolean)
         addNewViewModel.showPackage(mainActivity)
     }
 
     override fun onSubmitClicked() {
-        //contain_package, package
         var imageFile: File? = null
         var imageBody: RequestBody? = null
         if (listImages.size > 0) {
@@ -159,34 +163,53 @@ class AddNewFragment : BaseFragment(), VariantToggle, AllMenuInterface, PickiTCa
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        val packageItem = PackageItem(
-            title = binding.dishName.text.toString(),
-            packageTitleAr = binding.dishNameAr.text.toString(),
-            isDefault = 1,
-            outOfStock = 0,
-            sufficientFor = binding.dishSufficientFor.text.toString(),
-            quantity = binding.dishQuantity.text.toString(),
-            regularPrice = binding.dishPrice.text.toString(),
-            salePrice = binding.dishDiscountPrice.text.toString()
-        )
         val packageList = ArrayList<JsonObject>()
-//        val packageList = ArrayList<PackageItem>()
-        val gson = Gson()
-        val jsonInString = gson.toJson(packageItem)
-        val mJSONObject = JSONObject(jsonInString)
-        val jsonParser = JsonParser()
-        val jsonObject = jsonParser.parse(mJSONObject.toString()) as JsonObject
-        packageList.add(jsonObject)
+        if (containPackage == "1") {
+            nameAr = binding.dishNameAr2.text.toString()
+            descAr = binding.dishDescriptionAr2.text.toString()
+        } else {
+            nameAr = binding.dishNameAr.text.toString()
+            descAr = binding.dishDescriptionAr.text.toString()
+            val packageItem = PackageItem(
+                title = binding.dishName.text.toString(),
+                packageTitleAr = nameAr,
+                isDefault = 1,
+                outOfStock = 0,
+                sufficientFor = binding.dishSufficientFor.text.toString(),
+                quantity = binding.dishQuantity.text.toString(),
+                regularPrice = binding.dishPrice.text.toString(),
+                salePrice = binding.dishDiscountPrice.text.toString()
+            )
+            val gson = Gson()
+            val jsonInString = gson.toJson(packageItem)
+            val mJSONObject = JSONObject(jsonInString)
+            val jsonParser = JsonParser()
+            val jsonObject = jsonParser.parse(mJSONObject.toString()) as JsonObject
+            Logger.d(jsonObject)
+            packageList.add(jsonObject)
+        }
+
+        addNewViewModel.packageAdopter.getList().forEach {
+            val packageItem = it.getValues()
+            packageItem?.packageTitleAr = nameAr
+            packageItem?.salePrice = "0"
+            val gson = Gson()
+            val jsonInString = gson.toJson(packageItem)
+            val mJSONObject = JSONObject(jsonInString)
+            val jsonParser = JsonParser()
+            val jsonObject = jsonParser.parse(mJSONObject.toString()) as JsonObject
+            Logger.d(jsonObject)
+            packageList.add(jsonObject)
+        }
         val requestAddDish = AddDishRequest(
             access_token = sharedPreferenceManager.getAccessToken.toString()
                 .toRequestBody("text/plain".toMediaType()),
             name = binding.dishName.text.toString().toRequestBody("text/plain".toMediaType()),
-            name_ar = binding.dishNameAr.text.toString().toRequestBody("text/plain".toMediaType()),
+            name_ar = nameAr.toRequestBody("text/plain".toMediaType()),
             description = binding.dishDescription.text.toString()
                 .toRequestBody("text/plain".toMediaType()),
-            description_ar = binding.dishDescriptionAr.text.toString()
-                .toRequestBody("text/plain".toMediaType()),
-            contain_package = "0".toRequestBody("text/plain".toMediaType()),
+            description_ar = descAr.toRequestBody("text/plain".toMediaType()),
+            contain_package = containPackage.toRequestBody("text/plain".toMediaType()),
             menu_id = listMenus,
             cuisine_id = listCuisines,
             image = if (listImages.size == 0) null else MultipartBody.Part.createFormData(

@@ -6,7 +6,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import dagger.hilt.android.HiltAndroidApp
+
 
 @HiltAndroidApp
 class BaseApplication : Application() ,LifecycleObserver{
@@ -18,6 +21,7 @@ class BaseApplication : Application() ,LifecycleObserver{
     override fun onCreate() {
         super.onCreate()
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+        Logger.addLogAdapter(AndroidLogAdapter())
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)

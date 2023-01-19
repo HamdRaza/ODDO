@@ -142,6 +142,8 @@ dependencies {
 
     implementation 'com.guolindev.permissionx:permissionx:1.7.1'
     implementation 'com.github.HBiSoft:PickiT:2.0.5'
+
+    implementation 'com.orhanobut:logger:2.2.0'
 }
 repositories {
     mavenCentral()

@@ -264,7 +264,7 @@
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:ems="10"
                             android:hint="اسم الطبق"
-                            android:inputType="textPersonName"
+                            android:inputType="text"
                             android:layoutDirection="rtl"
                             tools:visibility="visible" />
 
@@ -278,7 +278,7 @@
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:ems="10"
                             android:hint="وصف الطبق"
-                            android:inputType="textPersonName"
+                            android:inputType="text"
                             android:layoutDirection="rtl"
                             tools:visibility="visible" />
                     </LinearLayout>
@@ -323,6 +323,7 @@
                         android:textColor="@color/black20" />
 
                     <EditText
+                        android:id="@+id/dish_name_ar2"
                         style="@style/input_back"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -331,11 +332,12 @@
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:ems="10"
                         android:hint="اسم الطبق"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:layoutDirection="rtl"
                         tools:visibility="visible" />
 
                     <EditText
+                        android:id="@+id/dish_description_ar2"
                         style="@style/input_back"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -344,7 +346,7 @@
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:ems="10"
                         android:hint="وصف الطبق"
-                        android:inputType="number"
+                        android:inputType="text"
                         android:layoutDirection="rtl"
                         tools:visibility="visible" />
                 </LinearLayout>

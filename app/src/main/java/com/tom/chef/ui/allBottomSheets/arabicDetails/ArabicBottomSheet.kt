@@ -7,11 +7,11 @@ import com.tom.chef.ui.comman.menuItems.packageMenu.PackageViewModel
 
 class ArabicBottomSheet {
 
-    fun addArabicDetails(context: Activity,packageViewModel: PackageViewModel) {
+    fun addArabicDetails(context: Activity, packageViewModel: PackageViewModel) {
         val dialog = BottomSheetDialog(context)
-        val binding= BottomSheetArabicDetailsBinding.inflate(context.layoutInflater)
+        val binding = BottomSheetArabicDetailsBinding.inflate(context.layoutInflater)
         dialog.setContentView(binding.root)
-        binding.viewModel=packageViewModel
+        binding.viewModel = packageViewModel
         dialog.setCanceledOnTouchOutside(true)
         binding.closeButton.setOnClickListener {
             dialog.dismiss()
