@@ -95,7 +95,11 @@ data class ProfileResponse2(
         @SerializedName("trade_license")
         val tradeLicense: Any? = null,
         @SerializedName("visa_copy")
-        val visaCopy: String? = null
+        val visaCopy: String? = null,
+        @SerializedName("nick_name")
+        val nickName: String? = null,
+        @SerializedName("apartment_no")
+        val apartmentNo: String? = null
     ) {
         data class ChefCuisine(
             @SerializedName("cuisine_id")

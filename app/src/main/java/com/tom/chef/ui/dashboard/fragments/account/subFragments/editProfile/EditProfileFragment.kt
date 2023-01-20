@@ -31,6 +31,7 @@ import com.tom.chef.ui.location.LocationPickerActivity
 import com.tom.chef.ui.location.LocationPickerViewModel
 import com.tom.chef.utils.ReduceImageSize
 import com.tom.chef.utils.SharedPreferenceManager
+import com.tom.chef.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -235,6 +236,20 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
                 locationPickerVM.userProfile.value = it
                 accountVM.updateProfile(it)
                 locationPickerVM.updateProfile(it)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        appViewModel.getProfile()
+        appViewModel.getProfileLive.observe(this) {
+            stopAnim()
+            if (it.status == "1") {
+                mainActivity.vm.userProfile.value = it.oData
+                sharedPreferenceManager.saveUser(it.oData, null)
+            } else {
+//                Toast.makeText(this, "Session Expired", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -75,7 +75,7 @@ class AccountViewModel(val mActivity: Activity) : ViewModel() {
         startTime.set(user.startTime)
         endTime.set(user.endTime)
         description.set(user.aboutMe)
-        userAddress.set("${user.building}, ${user.street}, ${user.landmark}")
+        userAddress.set("${user.apartmentNo}, ${user.building}, ${user.street}, ${user.landmark}, (${user.nickName})")
         latitude.set(user.latitude)
         longitude.set(user.longitude)
         profilePath.set(user.image)
