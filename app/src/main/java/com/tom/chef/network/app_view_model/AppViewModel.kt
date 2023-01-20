@@ -409,8 +409,8 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
         }
     }
 
-    private var _getEarningsLive = SingleLiveEvent<CommonResponse2>()
-    val getEarningsLive: SingleLiveEvent<CommonResponse2>
+    private var _getEarningsLive = SingleLiveEvent<FinancialResponse>()
+    val getEarningsLive: SingleLiveEvent<FinancialResponse>
         get() = _getEarningsLive
 
     fun getEarnings() {

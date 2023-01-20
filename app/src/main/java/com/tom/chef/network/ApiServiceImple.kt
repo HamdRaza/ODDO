@@ -179,7 +179,7 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
         )
     }
 
-    suspend fun getEarnings(): CommonResponse2 {
+    suspend fun getEarnings(): FinancialResponse {
         return apiService.getEarnings(
             access_token = sharedPreferenceManager.getAccessToken.toString()
         )

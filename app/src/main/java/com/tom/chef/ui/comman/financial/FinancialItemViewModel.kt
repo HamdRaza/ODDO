@@ -3,6 +3,7 @@ package com.tom.chef.ui.comman.financial
 import android.view.View
 import androidx.databinding.ObservableField
 import com.tom.chef.data.notifications.NotificationModel
+import com.tom.chef.models.FinancialResponse
 import com.tom.chef.newBase.BaseActivity
 import com.tom.chef.ui.comman.ViewModel
 import com.tom.chef.ui.dialogs.ConfirmDialogInterface
@@ -22,10 +23,9 @@ class FinancialItemViewModel() : ViewModel {
     @JvmField
     val mDate = ObservableField<String>()
 
-    init {
-        mTitle.set("AED 200.00")
-        mDescription.set("Unpaid Amount")
+    fun update(financeData: FinancialResponse.OData.Label) {
+        mTitle.set(financeData.amount.toString())
+        mDescription.set(financeData.title.toString())
         mDate.set("28/04/2022")
     }
-
 }

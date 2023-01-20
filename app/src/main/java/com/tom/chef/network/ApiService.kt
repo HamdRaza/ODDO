@@ -223,7 +223,7 @@ interface ApiService {
     @FormUrlEncoded
     suspend fun getEarnings(
         @Field("access_token") access_token: String
-    ): CommonResponse2
+    ): FinancialResponse
 
     @POST("user/update_available")
     @FormUrlEncoded
