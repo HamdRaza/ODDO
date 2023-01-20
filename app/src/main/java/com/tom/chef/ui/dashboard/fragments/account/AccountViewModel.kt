@@ -61,6 +61,9 @@ class AccountViewModel(val mActivity: Activity) : ViewModel() {
     @JvmField
     var backTitle = ObservableField<String>()
 
+    @JvmField
+    var isWeekly = ObservableField<Boolean>()
+
     init {
         backTitle.set("My Profile")
     }
@@ -85,7 +88,17 @@ class AccountViewModel(val mActivity: Activity) : ViewModel() {
             "1" -> orderType.set("Current")
             "2" -> orderType.set("Scheduled")
         }
-        cuisine.set(user.chefCuisines?.get(0)?.cuisineName)
+        val sb = StringBuilder()
+        user.chefCuisines?.forEachIndexed { index, it ->
+            if (index == user.chefCuisines.size - 1) {
+                sb.append(it.cuisineName)
+            } else {
+                sb.append(it.cuisineName + ", ")
+            }
+        }
+        val cuisines = sb.toString()
+        cuisine.set(cuisines)
+        isWeekly.set(user.weeklyMode == 1)
         preparationTime.set(user.preparationTime)
         when (user.preparationUnit) {
             "mins" -> preparationUnits.set("mins")

@@ -99,7 +99,10 @@ data class ProfileResponse2(
         @SerializedName("nick_name")
         val nickName: String? = null,
         @SerializedName("apartment_no")
-        val apartmentNo: String? = null
+        val apartmentNo: String? = null,
+        @SerializedName("weekly_mode")
+        val weeklyMode: Int? = 0,
+
     ) {
         data class ChefCuisine(
             @SerializedName("cuisine_id")

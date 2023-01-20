@@ -31,7 +31,6 @@ import com.tom.chef.ui.location.LocationPickerActivity
 import com.tom.chef.ui.location.LocationPickerViewModel
 import com.tom.chef.utils.ReduceImageSize
 import com.tom.chef.utils.SharedPreferenceManager
-import com.tom.chef.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -76,6 +75,14 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
     var longitude = ""
 
     var profileData: ProfileResponse2.OData? = null
+
+    private val c = Calendar.getInstance()
+
+    private var startHour = c.get(Calendar.HOUR_OF_DAY)
+    private var startMinute = c.get(Calendar.MINUTE)
+
+    private var endHour = c.get(Calendar.HOUR_OF_DAY)
+    private var endMinute = c.get(Calendar.MINUTE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -136,51 +143,39 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
             changeBackground()
         }
         binding?.startTime?.setOnClickListener {
-            val c = Calendar.getInstance()
-
-            val hour = c.get(Calendar.HOUR_OF_DAY)
-            val minute = c.get(Calendar.MINUTE)
-
             val timePickerDialog = TimePickerDialog(
                 requireActivity(),
                 { view, hourOfDay, minute ->
                     binding?.startTime?.setText(
                         String.format(
                             "%02d",
-                            "$hourOfDay"
-                        ) + ":" + String.format("%02d", "$minute")
+                            Integer.parseInt("$hourOfDay")
+                        ) + ":" + String.format("%02d", Integer.parseInt("$minute"))
                     )
                 },
-                hour,
-                minute,
+                startHour,
+                startMinute,
                 false
             )
             timePickerDialog.show()
         }
         binding?.endTime?.setOnClickListener {
-            val c = Calendar.getInstance()
-
-            val hour = c.get(Calendar.HOUR_OF_DAY)
-            val minute = c.get(Calendar.MINUTE)
-
             val timePickerDialog = TimePickerDialog(
                 requireActivity(),
                 { view, hourOfDay, minute ->
                     binding?.endTime?.setText(
                         String.format(
                             "%02d",
-                            "$hourOfDay"
-                        ) + ":" + String.format("%02d", "$minute")
+                            Integer.parseInt("$hourOfDay")
+                        ) + ":" + String.format("%02d", Integer.parseInt("$minute"))
                     )
                 },
-                hour,
-                minute,
+                endHour,
+                endMinute,
                 false
             )
             timePickerDialog.show()
         }
-        getCuisines()
-
     }
 
     private fun getCuisines() {
@@ -192,6 +187,14 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
 
                 binding.selectCousine.items = cuisines
 
+                profileData?.chefCuisines?.forEach {
+                    cuisineList.forEachIndexed { index, cuisine ->
+                        if (it.cuisineId == cuisine.id) {
+                            binding.selectCousine.setSelection(index)
+                        }
+                    }
+                }
+
                 val type = arrayOf("mins", "hrs", "days")
 
                 val adapter2 = ArrayAdapter(
@@ -199,6 +202,7 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
                     android.R.layout.simple_list_item_1,
                     type
                 )
+                selectedUnit = profileData?.preparationUnit!!
                 binding.selectUnit.setAdapter(adapter2)
                 binding.selectUnit.setOnItemClickListener { adapterView, view, position, l ->
                     if (position == 0) {
@@ -216,6 +220,14 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
                     android.R.layout.simple_list_item_1,
                     order
                 )
+
+                orderType = when (profileData?.allowOrdertype) {
+                    "0" -> 0
+                    "1" -> 1
+                    "2" -> 2
+                    else -> 0
+                }
+
                 binding.selectType.setAdapter(adapter3)
                 binding.selectType.setOnItemClickListener { adapterView, view, position, l ->
                     orderType = position
@@ -233,11 +245,20 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
         mainActivity.vm.userProfile.observe(viewLifecycleOwner) {
             it?.let {
                 profileData = it
+                getCuisines()
+                getTime()
                 locationPickerVM.userProfile.value = it
                 accountVM.updateProfile(it)
                 locationPickerVM.updateProfile(it)
             }
         }
+    }
+
+    private fun getTime() {
+        startHour = Integer.parseInt(profileData?.startTime?.split(":")?.get(0)!!)
+        startMinute = Integer.parseInt(profileData?.startTime?.split(":")?.get(1)!!)
+        endHour = Integer.parseInt(profileData?.endTime?.split(":")?.get(0)!!)
+        endMinute = Integer.parseInt(profileData?.endTime?.split(":")?.get(1)!!)
     }
 
     override fun onResume() {
