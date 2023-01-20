@@ -143,6 +143,48 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
         )
     }
 
+    suspend fun acceptOrder(order_id: String): CommonResponse2 {
+        return apiService.acceptOrder(
+            access_token = sharedPreferenceManager.getAccessToken.toString(),
+            order_id = order_id
+        )
+    }
+
+    suspend fun acceptOrder2(order_id: String): CommonResponse2 {
+        return apiService.acceptOrder2(
+            access_token = sharedPreferenceManager.getAccessToken.toString(),
+            order_id = order_id
+        )
+    }
+
+    suspend fun rejectOrder(order_id: String, reason: String): CommonResponse2 {
+        return apiService.rejectOrder(
+            access_token = sharedPreferenceManager.getAccessToken.toString(),
+            order_id = order_id,
+            reason = reason
+        )
+    }
+
+    suspend fun foodReady(order_id: String): CommonResponse2 {
+        return apiService.foodReady(
+            access_token = sharedPreferenceManager.getAccessToken.toString(),
+            order_id = order_id
+        )
+    }
+
+    suspend fun toggleStatus(order_id: String): CommonResponse2 {
+        return apiService.toggleStatus(
+            access_token = sharedPreferenceManager.getAccessToken.toString(),
+            order_id = order_id
+        )
+    }
+
+    suspend fun getEarnings(): CommonResponse2 {
+        return apiService.getEarnings(
+            access_token = sharedPreferenceManager.getAccessToken.toString()
+        )
+    }
+
     suspend fun setAvailability(available: String): CommonResponse {
         return apiService.setAvailability(
             access_token = sharedPreferenceManager.getAccessToken.toString(),

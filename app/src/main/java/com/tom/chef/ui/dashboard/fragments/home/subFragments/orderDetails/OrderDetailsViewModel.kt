@@ -10,7 +10,9 @@ import com.tom.chef.ui.comman.orderItem.OrderItemInterface
 import com.tom.chef.ui.comman.orderItem.OrderItemViewModel
 
 class OrderDetailsViewModel(var baseActivity: BaseActivity) : ViewModel(), OrderItemInterface {
+
     lateinit var orderDetailsInterface: OrderDetailsInterface
+
     fun onAcceptClicked() {
         status.set("Accepted")
         orderDetailsInterface.onAcceptClicked()
@@ -18,9 +20,9 @@ class OrderDetailsViewModel(var baseActivity: BaseActivity) : ViewModel(), Order
     }
 
     fun onRejectClicked() {
-        RejectOfferBottomSheet().showRejectOffer(context = baseActivity) {
+        RejectOfferBottomSheet().showRejectOffer(context = baseActivity) { flag, reason ->
             status.set("Rejected")
-            orderDetailsInterface.onRejectClicked()
+            orderDetailsInterface.onRejectClicked(reason)
             updateStatus()
         }
     }
@@ -77,7 +79,6 @@ class OrderDetailsViewModel(var baseActivity: BaseActivity) : ViewModel(), Order
     var orderItemAdopter = OrderItemAdopter(ArrayList())
 
     init {
-
         updateStatus()
     }
 
@@ -88,12 +89,12 @@ class OrderDetailsViewModel(var baseActivity: BaseActivity) : ViewModel(), Order
                 showPrepared.set(false)
                 showRequestExtraTime.set(false)
             }
-            "Accepted" -> {
+            "Accepted", "Order Accepted" -> {
                 showAcceptReject.set(false)
                 showPrepared.set(true)
                 showRequestExtraTime.set(true)
             }
-            "Rejected", "Ready", "Completed" -> {
+            "Rejected", "Order Rejected", "Ready", "Completed" -> {
                 showAcceptReject.set(false)
                 showPrepared.set(false)
                 showRequestExtraTime.set(false)
@@ -113,6 +114,7 @@ class OrderDetailsViewModel(var baseActivity: BaseActivity) : ViewModel(), Order
         if (data.driver != null) {
             riderName.set(data.driver.name)
         }
+        updateStatus()
         val viewModels = ArrayList<com.tom.chef.ui.comman.ViewModel>()
         if (data.orderItems != null) {
             data.orderItems.forEach {

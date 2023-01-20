@@ -109,7 +109,7 @@ class AllOrdersFragment : BaseFragment(), OrderInterface {
                 orderStatus = "0"
             }
             "ACCEPTED" -> {
-                orderStatus = "1"
+                orderStatus = "1,2,3,6,7"
             }
             "REJECTED" -> {
                 orderStatus = "15"

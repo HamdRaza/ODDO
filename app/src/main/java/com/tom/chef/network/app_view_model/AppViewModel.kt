@@ -319,6 +319,114 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
         }
     }
 
+    private var _acceptOrderLive = SingleLiveEvent<CommonResponse2>()
+    val acceptOrderLive: SingleLiveEvent<CommonResponse2>
+        get() = _acceptOrderLive
+
+    fun acceptOrder(order_id: String) {
+        viewModelScope.launch {
+            try {
+                appRepository.acceptOrder(order_id)
+                    .collect {
+                        _acceptOrderLive.value = it
+                    }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
+    private var _acceptOrder2Live = SingleLiveEvent<CommonResponse2>()
+    val acceptOrder2Live: SingleLiveEvent<CommonResponse2>
+        get() = _acceptOrder2Live
+
+    fun acceptOrder2(order_id: String) {
+        viewModelScope.launch {
+            try {
+                appRepository.acceptOrder2(order_id)
+                    .collect {
+                        _acceptOrder2Live.value = it
+                    }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
+    private var _rejectOrderLive = SingleLiveEvent<CommonResponse2>()
+    val rejectOrderLive: SingleLiveEvent<CommonResponse2>
+        get() = _rejectOrderLive
+
+    fun rejectOrder(order_id: String, reason: String) {
+        viewModelScope.launch {
+            try {
+                appRepository.rejectOrder(order_id, reason)
+                    .collect {
+                        _rejectOrderLive.value = it
+                    }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
+    private var _foodReadyLive = SingleLiveEvent<CommonResponse2>()
+    val foodReadyLive: SingleLiveEvent<CommonResponse2>
+        get() = _foodReadyLive
+
+    fun foodReady(order_id: String) {
+        viewModelScope.launch {
+            try {
+                appRepository.foodReady(order_id)
+                    .collect {
+                        _foodReadyLive.value = it
+                    }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
+    private var _toggleStatusLive = SingleLiveEvent<CommonResponse2>()
+    val toggleStatusLive: SingleLiveEvent<CommonResponse2>
+        get() = _toggleStatusLive
+
+    fun toggleStatus(order_id: String) {
+        viewModelScope.launch {
+            try {
+                appRepository.toggleStatus(order_id)
+                    .collect {
+                        _toggleStatusLive.value = it
+                    }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
+    private var _getEarningsLive = SingleLiveEvent<CommonResponse2>()
+    val getEarningsLive: SingleLiveEvent<CommonResponse2>
+        get() = _getEarningsLive
+
+    fun getEarnings() {
+        viewModelScope.launch {
+            try {
+                appRepository.getEarnings()
+                    .collect {
+                        _getEarningsLive.value = it
+                    }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
     private var _setAvailabilityLive = SingleLiveEvent<CommonResponse>()
     val setAvailabilityLive: SingleLiveEvent<CommonResponse>
         get() = _setAvailabilityLive

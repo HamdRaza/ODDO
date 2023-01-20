@@ -183,6 +183,48 @@ interface ApiService {
         @Field("access_token") access_token: String,
     ): ProfileResponse2
 
+    @POST("chef/accept_order")
+    @FormUrlEncoded
+    suspend fun acceptOrder(
+        @Field("access_token") access_token: String,
+        @Field("order_id") order_id: String,
+    ): CommonResponse2
+
+    @POST("chef/acceptsecond")
+    @FormUrlEncoded
+    suspend fun acceptOrder2(
+        @Field("access_token") access_token: String,
+        @Field("order_id") order_id: String,
+    ): CommonResponse2
+
+    @POST("chef/reject_order")
+    @FormUrlEncoded
+    suspend fun rejectOrder(
+        @Field("access_token") access_token: String,
+        @Field("order_id") order_id: String,
+        @Field("reason") reason: String,
+    ): CommonResponse2
+
+    @POST("chef/order_ready_for_delivery")
+    @FormUrlEncoded
+    suspend fun foodReady(
+        @Field("access_token") access_token: String,
+        @Field("order_id") order_id: String,
+    ): CommonResponse2
+
+    @POST("chef/toggle_stock_status")
+    @FormUrlEncoded
+    suspend fun toggleStatus(
+        @Field("access_token") access_token: String,
+        @Field("order_id") order_id: String,
+    ): CommonResponse2
+
+    @POST("chef/earning")
+    @FormUrlEncoded
+    suspend fun getEarnings(
+        @Field("access_token") access_token: String
+    ): CommonResponse2
+
     @POST("user/update_available")
     @FormUrlEncoded
     suspend fun setAvailability(

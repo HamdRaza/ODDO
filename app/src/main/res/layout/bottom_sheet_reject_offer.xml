@@ -1,85 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
 
     </data>
+
     <com.google.android.material.card.MaterialCardView
-        android:layout_marginHorizontal="@dimen/_5sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/_16sdp"
-        app:cardBackgroundColor="@color/white">
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/_16sdp">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <com.balysv.materialripple.MaterialRippleLayout
-                android:layout_gravity="end"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="end">
+
                 <ImageView
-                    android:clickable="false"
-                    android:visibility="gone"
                     android:id="@+id/closeButton"
-                    android:padding="@dimen/_10sdp"
-                    android:src="@drawable/ic_baseline_close_24"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:padding="@dimen/_10sdp"
+                    android:src="@drawable/ic_baseline_close_24"
+                    android:visibility="gone"
                     app:tint="@color/colorPrimary" />
             </com.balysv.materialripple.MaterialRippleLayout>
 
             <LinearLayout
-                android:paddingTop="@dimen/_5sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_10sdp"
                 android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_marginVertical="@dimen/_10sdp"
-                    android:textColor="@color/colorPrimary"
-                    style="@style/montserrat_semiBol_24"
-                    android:text="Reject Order"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                android:paddingTop="@dimen/_5sdp">
 
                 <TextView
-                    android:layout_marginVertical="@dimen/_10sdp"
-                    android:textColor="@color/black"
-                    style="@style/montserrat_semiBols_13"
-                    android:text="Reason For Rejection"
-                    android:layout_gravity="center_horizontal"
+                    style="@style/montserrat_semiBol_24"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:text="Reject Order"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    style="@style/montserrat_semiBols_13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginVertical="@dimen/_10sdp"
+                    android:text="Reason For Rejection"
+                    android:textColor="@color/black" />
+
                 <EditText
-                    android:paddingTop="@dimen/_10sdp"
-                    android:gravity="start"
-                    tools:visibility="visible"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:hint="Describe in detail"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:id="@+id/txt_describe"
                     style="@style/input_back"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_100sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     android:ems="10"
-                    android:inputType="textMultiLine" />
-
-
+                    android:gravity="start"
+                    android:hint="Describe in detail"
+                    android:inputType="textMultiLine"
+                    android:paddingTop="@dimen/_10sdp"
+                    tools:visibility="visible" />
 
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/next_button"
-                    android:layout_marginBottom="@dimen/_30sdp"
                     style="@style/button_big"
-                    android:layout_marginHorizontal="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_50sdp"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginBottom="@dimen/_30sdp"
                     android:text="Submit" />
             </LinearLayout>
 

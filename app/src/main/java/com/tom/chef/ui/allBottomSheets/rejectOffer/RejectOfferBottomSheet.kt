@@ -8,16 +8,16 @@ import com.tom.chef.ui.comman.menuItems.packageMenu.PackageViewModel
 
 class RejectOfferBottomSheet {
 
-    fun showRejectOffer(context: Activity,callBack:(Boolean)->Unit) {
+    fun showRejectOffer(context: Activity, callBack: (Boolean, String) -> Unit) {
         val dialog = BottomSheetDialog(context)
-        val binding= BottomSheetRejectOfferBinding.inflate(context.layoutInflater)
+        val binding = BottomSheetRejectOfferBinding.inflate(context.layoutInflater)
         dialog.setContentView(binding.root)
         dialog.setCanceledOnTouchOutside(true)
         binding.closeButton.setOnClickListener {
             dialog.dismiss()
         }
         binding.nextButton.setOnClickListener {
-            callBack.invoke(true)
+            callBack.invoke(true, binding.txtDescribe.text.toString())
             dialog.dismiss()
         }
 

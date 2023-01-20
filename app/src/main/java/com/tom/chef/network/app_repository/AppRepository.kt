@@ -131,6 +131,54 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
         }
     }.flowOn(Dispatchers.IO)
 
+    fun acceptOrder(order_id: String): Flow<CommonResponse2> = flow {
+        try {
+            emit(apiServiceImple.acceptOrder(order_id))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun acceptOrder2(order_id: String): Flow<CommonResponse2> = flow {
+        try {
+            emit(apiServiceImple.acceptOrder2(order_id))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun rejectOrder(order_id: String, reason: String): Flow<CommonResponse2> = flow {
+        try {
+            emit(apiServiceImple.rejectOrder(order_id, reason))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun foodReady(order_id: String): Flow<CommonResponse2> = flow {
+        try {
+            emit(apiServiceImple.foodReady(order_id))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun toggleStatus(order_id: String): Flow<CommonResponse2> = flow {
+        try {
+            emit(apiServiceImple.toggleStatus(order_id))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
+    fun getEarnings(): Flow<CommonResponse2> = flow {
+        try {
+            emit(apiServiceImple.getEarnings())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
     fun setAvailability(available: String): Flow<CommonResponse> = flow {
         try {
             emit(apiServiceImple.setAvailability(available))

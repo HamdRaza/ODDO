@@ -5,17 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.tom.chef.R
-import com.tom.chef.databinding.FragmentDashboardHomeScheduledorderBinding
 import com.tom.chef.databinding.FragmentOrderDetailsBinding
 import com.tom.chef.network.app_view_model.AppViewModel
 import com.tom.chef.newBase.BaseFragment
-import com.tom.chef.ui.comman.tabsAdopter.ViewStateAdapter
-import com.tom.chef.ui.dashboard.fragments.home.subFragments.allOrders.AllOrdersFragment
-import com.tom.chef.utils.handleClick
 import com.tom.chef.utils.handleHull
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -96,19 +90,41 @@ class OrderDetailsFragment : BaseFragment(), OrderDetailsInterface {
 
     }
 
-    override fun onFoodPreparedClicked() {
+    override fun onAcceptClicked() {
+//        appViewModel.acceptOrder(id)
+//        appViewModel.acceptOrderLive.observe(viewLifecycleOwner) {
+//            if (it.status == "1") {
+//
+//            } else {
+//
+//            }
+//        }
+    }
 
+    override fun onRejectClicked(reason: String) {
+//        appViewModel.rejectOrder(id, reason)
+//        appViewModel.rejectOrderLive.observe(viewLifecycleOwner) {
+//            if (it.status == "1") {
+//
+//            } else {
+//
+//            }
+//        }
+
+    }
+
+    override fun onFoodPreparedClicked() {
+//        appViewModel.foodReady(id)
+//        appViewModel.foodReadyLive.observe(viewLifecycleOwner) {
+//            if (it.status == "1") {
+//
+//            } else {
+//
+//            }
+//        }
     }
 
     override fun onRequestExtraTimeClicked() {
-
-    }
-
-    override fun onRejectClicked() {
-
-    }
-
-    override fun onAcceptClicked() {
 
     }
 
