@@ -91,37 +91,43 @@ class OrderDetailsFragment : BaseFragment(), OrderDetailsInterface {
     }
 
     override fun onAcceptClicked() {
-//        appViewModel.acceptOrder(id)
-//        appViewModel.acceptOrderLive.observe(viewLifecycleOwner) {
-//            if (it.status == "1") {
-//
-//            } else {
-//
-//            }
-//        }
+        appViewModel.acceptOrder(id)
+        appViewModel.acceptOrderLive.observe(viewLifecycleOwner) {
+            if (it.status == "1") {
+                Toast.makeText(requireActivity(), "Order Accepted", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(requireActivity(), "Error", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
     }
 
     override fun onRejectClicked(reason: String) {
-//        appViewModel.rejectOrder(id, reason)
-//        appViewModel.rejectOrderLive.observe(viewLifecycleOwner) {
-//            if (it.status == "1") {
-//
-//            } else {
-//
-//            }
-//        }
+        appViewModel.rejectOrder(id, reason)
+        appViewModel.rejectOrderLive.observe(viewLifecycleOwner) {
+            if (it.status == "1") {
+                Toast.makeText(requireActivity(), "Order Rejected", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(requireActivity(), "Error", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
 
     }
 
     override fun onFoodPreparedClicked() {
-//        appViewModel.foodReady(id)
-//        appViewModel.foodReadyLive.observe(viewLifecycleOwner) {
-//            if (it.status == "1") {
-//
-//            } else {
-//
-//            }
-//        }
+        appViewModel.foodReady(id)
+        appViewModel.foodReadyLive.observe(viewLifecycleOwner) {
+            if (it.status == "1") {
+                Toast.makeText(requireActivity(), "Food is ready", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(requireActivity(), "Error", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
     }
 
     override fun onRequestExtraTimeClicked() {

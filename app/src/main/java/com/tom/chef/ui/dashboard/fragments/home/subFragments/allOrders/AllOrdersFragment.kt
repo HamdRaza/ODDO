@@ -118,20 +118,20 @@ class AllOrdersFragment : BaseFragment(), OrderInterface {
                 orderStatus = "4"
             }
         }
-        appViewModel.orderListAPI(
-            order_type = "2",
-            page = "1",
-            limit = "15",
-            order_status = orderStatus,
-            user_timezone = "Asia/Kolkata"
-        )
 //        appViewModel.orderListAPI(
-//            order_type = orderType,
+//            order_type = "2",
 //            page = "1",
 //            limit = "15",
 //            order_status = orderStatus,
 //            user_timezone = "Asia/Kolkata"
 //        )
+        appViewModel.orderListAPI(
+            order_type = orderType,
+            page = "1",
+            limit = "15",
+            order_status = orderStatus,
+            user_timezone = "Asia/Kolkata"
+        )
         appViewModel.orderListLive.observe(mActivity) {
             if (it.status == "1") {
                 it?.oData?.let {
