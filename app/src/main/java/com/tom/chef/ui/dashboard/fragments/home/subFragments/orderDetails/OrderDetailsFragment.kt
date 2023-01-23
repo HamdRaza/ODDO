@@ -114,7 +114,6 @@ class OrderDetailsFragment : BaseFragment(), OrderDetailsInterface {
                     .show()
             }
         }
-
     }
 
     override fun onFoodPreparedClicked() {

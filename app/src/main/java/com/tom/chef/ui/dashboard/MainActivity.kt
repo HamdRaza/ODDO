@@ -106,6 +106,13 @@ class MainActivity : BaseActivity(), ToolBarInterface, MainInterface, AccountInt
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (vm != null) {
+            vm.init()
+        }
+    }
+
     override fun onHomeClicked() {
         supportFragmentManager.findFragmentById(binding.fragmentView.id).let { fragment ->
             if (fragment !is HomeFragment) {
