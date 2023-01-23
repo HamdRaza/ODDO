@@ -28,6 +28,7 @@ import com.tom.chef.newBase.BaseFragment
 import com.tom.chef.ui.dashboard.fragments.menu.subFragments.AllMenuInterface
 import com.tom.chef.ui.dashboard.toolBar.VariantToggle
 import com.tom.chef.utils.SharedPreferenceManager
+import com.tom.chef.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -201,42 +202,91 @@ class AddNewFragment : BaseFragment(), VariantToggle, AllMenuInterface, PickiTCa
             Logger.d(jsonObject)
             packageList.add(jsonObject)
         }
-        val requestAddDish = AddDishRequest(
-            access_token = sharedPreferenceManager.getAccessToken.toString()
-                .toRequestBody("text/plain".toMediaType()),
-            name = binding.dishName.text.toString().toRequestBody("text/plain".toMediaType()),
-            name_ar = nameAr.toRequestBody("text/plain".toMediaType()),
-            description = binding.dishDescription.text.toString()
-                .toRequestBody("text/plain".toMediaType()),
-            description_ar = descAr.toRequestBody("text/plain".toMediaType()),
-            contain_package = containPackage.toRequestBody("text/plain".toMediaType()),
-            menu_id = listMenus,
-            cuisine_id = listCuisines,
-            image = if (listImages.size == 0) null else MultipartBody.Part.createFormData(
-                "image",
-                imageFile?.name,
-                imageBody!!
-            ),
-            gallery = if (listImages.size <= 1) null else listMultipartGallery,
-            packageList = packageList,
-            sufficient_for = binding.dishSufficientFor.text.toString()
-                .toRequestBody("text/plain".toMediaType()),
-            quantity = binding.dishQuantity.text.toString()
-                .toRequestBody("text/plain".toMediaType()),
-            regular_price = binding.dishPrice.text.toString()
-                .toRequestBody("text/plain".toMediaType()),
-            sale_price = binding.dishDiscountPrice.text.toString()
-                .toRequestBody("text/plain".toMediaType())
-        )
-        appViewModel.addDish(requestAddDish)
-        appViewModel.addDishLive.observe(viewLifecycleOwner) {
-            if (it.status == "1") {
-                Toast.makeText(requireActivity(), "Item Added", Toast.LENGTH_SHORT).show()
-                mainActivity.vm.onBackButtonClicked()
-            } else {
-                Log.i("tag", it.message)
+        if (validate()) {
+            val requestAddDish = AddDishRequest(
+                access_token = sharedPreferenceManager.getAccessToken.toString()
+                    .toRequestBody("text/plain".toMediaType()),
+                name = binding.dishName.text.toString().toRequestBody("text/plain".toMediaType()),
+                name_ar = nameAr.toRequestBody("text/plain".toMediaType()),
+                description = binding.dishDescription.text.toString()
+                    .toRequestBody("text/plain".toMediaType()),
+                description_ar = descAr.toRequestBody("text/plain".toMediaType()),
+                contain_package = containPackage.toRequestBody("text/plain".toMediaType()),
+                menu_id = listMenus,
+                cuisine_id = listCuisines,
+                image = if (listImages.size == 0) null else MultipartBody.Part.createFormData(
+                    "image",
+                    imageFile?.name,
+                    imageBody!!
+                ),
+                gallery = if (listImages.size <= 1) null else listMultipartGallery,
+                packageList = packageList,
+                sufficient_for = binding.dishSufficientFor.text.toString()
+                    .toRequestBody("text/plain".toMediaType()),
+                quantity = binding.dishQuantity.text.toString()
+                    .toRequestBody("text/plain".toMediaType()),
+                regular_price = binding.dishPrice.text.toString()
+                    .toRequestBody("text/plain".toMediaType()),
+                sale_price = binding.dishDiscountPrice.text.toString()
+                    .toRequestBody("text/plain".toMediaType())
+            )
+            appViewModel.addDish(requestAddDish)
+            appViewModel.addDishLive.observe(viewLifecycleOwner) {
+                if (it.status == "1") {
+                    Toast.makeText(requireActivity(), "Item Added", Toast.LENGTH_SHORT).show()
+                    mainActivity.vm.onBackButtonClicked()
+                } else {
+                    Log.i("tag", it.message)
+                }
             }
         }
+    }
+
+    private fun validate(): Boolean {
+        val valid = Validation
+        if (valid.checkIsEmpty(binding.dishName)) {
+            return false
+        }
+        if (valid.checkIsEmpty(binding.dishDescription)) {
+            return false
+        }
+        if (containPackage == "1") {
+            if (valid.checkIsEmpty(binding.dishNameAr2)) {
+                return false
+            }
+            if (valid.checkIsEmpty(binding.dishDescriptionAr2)) {
+                return false
+            }
+
+        } else {
+            if (valid.checkIsEmpty(binding.dishNameAr)) {
+                return false
+            }
+            if (valid.checkIsEmpty(binding.dishDescriptionAr)) {
+                return false
+            }
+            if (valid.checkIsEmpty(binding.dishPrice)) {
+                return false
+            }
+            if (valid.checkIsEmpty(binding.dishDiscountPrice)) {
+                return false
+            }
+            if (valid.checkIsEmpty(binding.dishSufficientFor)) {
+                return false
+            }
+            if (valid.checkIsEmpty(binding.dishQuantity)) {
+                return false
+            }
+        }
+        if (valid.checkIsEmpty(binding.selectMenu)) {
+            return false
+        }
+        if (valid.checkIsEmpty(binding.selectCousine)) {
+            return false
+        }
+
+
+        return true
     }
 
     override fun pickFileClicked() {

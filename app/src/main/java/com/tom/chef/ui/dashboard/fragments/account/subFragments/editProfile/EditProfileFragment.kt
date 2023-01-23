@@ -31,6 +31,7 @@ import com.tom.chef.ui.location.LocationPickerActivity
 import com.tom.chef.ui.location.LocationPickerViewModel
 import com.tom.chef.utils.ReduceImageSize
 import com.tom.chef.utils.SharedPreferenceManager
+import com.tom.chef.utils.Validation
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -365,49 +366,87 @@ class EditProfileFragment : BaseFragment(), ProfileInterface, AccountInterface,
         } catch (e: Exception) {
             e.printStackTrace()
         }
+        if (validate()) {
 
-        val requestProfile = ProfileRequest(
-            access_token = sharedPreferenceManager.getAccessToken.toString()
-                .toRequestBody("text/plain".toMediaType()),
-            first_name = firstName.toRequestBody("text/plain".toMediaType()),
-            last_name = lastName.toRequestBody("text/plain".toMediaType()),
-            address = address.toRequestBody("text/plain".toMediaType()),
-            latitude = latitude.toRequestBody("text/plain".toMediaType()),
-            longitude = longitude.toRequestBody("text/plain".toMediaType()),
-            about_me = binding.yourStory.text.toString().toRequestBody("text/plain".toMediaType()),
-            brand_name = binding.brandName.text.toString()
-                .toRequestBody("text/plain".toMediaType()),
-            image = if (imagePath.isEmpty()) null else MultipartBody.Part.createFormData(
-                "image",
-                imageFile.name,
-                imageBody
-            ),
-            cover_image = if (coverPath.isEmpty()) null else MultipartBody.Part.createFormData(
-                "cover_image",
-                coverFile.name,
-                coverBody
-            ),
-            preparation_unit = selectedUnit.toRequestBody("text/plain".toMediaType()),
-            preparation_time = binding.prepTime.text.toString()
-                .toRequestBody("text/plain".toMediaType()),
-            cuisines = listCuisines,
-            order_limit_per_hour = "".toRequestBody("text/plain".toMediaType()),
-            weekly_mode = isWeekly.toRequestBody("text/plain".toMediaType()),
-            allow_ordertype = orderType.toString().toRequestBody("text/plain".toMediaType()),
-            start_time = binding?.startTime?.text.toString()
-                .toRequestBody("text/plain".toMediaType()),
-            end_time = binding?.endTime?.text.toString().toRequestBody("text/plain".toMediaType())
-        )
+            val requestProfile = ProfileRequest(
+                access_token = sharedPreferenceManager.getAccessToken.toString()
+                    .toRequestBody("text/plain".toMediaType()),
+                first_name = firstName.toRequestBody("text/plain".toMediaType()),
+                last_name = lastName.toRequestBody("text/plain".toMediaType()),
+                address = address.toRequestBody("text/plain".toMediaType()),
+                latitude = latitude.toRequestBody("text/plain".toMediaType()),
+                longitude = longitude.toRequestBody("text/plain".toMediaType()),
+                about_me = binding.yourStory.text.toString()
+                    .toRequestBody("text/plain".toMediaType()),
+                brand_name = binding.brandName.text.toString()
+                    .toRequestBody("text/plain".toMediaType()),
+                image = if (imagePath.isEmpty()) null else MultipartBody.Part.createFormData(
+                    "image",
+                    imageFile.name,
+                    imageBody
+                ),
+                cover_image = if (coverPath.isEmpty()) null else MultipartBody.Part.createFormData(
+                    "cover_image",
+                    coverFile.name,
+                    coverBody
+                ),
+                preparation_unit = selectedUnit.toRequestBody("text/plain".toMediaType()),
+                preparation_time = binding.prepTime.text.toString()
+                    .toRequestBody("text/plain".toMediaType()),
+                cuisines = listCuisines,
+                order_limit_per_hour = "".toRequestBody("text/plain".toMediaType()),
+                weekly_mode = isWeekly.toRequestBody("text/plain".toMediaType()),
+                allow_ordertype = orderType.toString().toRequestBody("text/plain".toMediaType()),
+                start_time = binding?.startTime?.text.toString()
+                    .toRequestBody("text/plain".toMediaType()),
+                end_time = binding?.endTime?.text.toString()
+                    .toRequestBody("text/plain".toMediaType())
+            )
 
-        appViewModel.updateProfileAPI(requestProfile)
-        appViewModel.updateProfileAPILive.observe(viewLifecycleOwner) {
-            if (it.status == "1") {
-                Toast.makeText(requireActivity(), "Profile Saved", Toast.LENGTH_SHORT).show()
-                mainActivity.vm.onBackButtonClicked()
-            } else {
-                Log.i("tag", it.message)
+            appViewModel.updateProfileAPI(requestProfile)
+            appViewModel.updateProfileAPILive.observe(viewLifecycleOwner) {
+                if (it.status == "1") {
+                    Toast.makeText(requireActivity(), "Profile Saved", Toast.LENGTH_SHORT).show()
+                    mainActivity.vm.onBackButtonClicked()
+                } else {
+                    Log.i("tag", it.message)
+                }
             }
         }
+
+    }
+
+    private fun validate(): Boolean {
+        val valid = Validation
+        if (valid.checkIsEmpty(binding.fullName)) {
+            return false
+        }
+        if (valid.checkIsEmpty(binding.brandName)) {
+            return false
+        }
+        if (valid.checkIsEmpty(binding.yourStory)) {
+            return false
+        }
+        if (valid.checkIsEmpty(binding.startTime)) {
+            return false
+        }
+        if (valid.checkIsEmpty(binding.endTime)) {
+            return false
+        }
+        if (valid.checkIsEmpty(binding.selectCousine)) {
+            return false
+        }
+        if (valid.checkIsEmpty(binding.selectType)) {
+            return false
+        }
+        if (valid.checkIsEmpty(binding.prepTime)) {
+            return false
+        }
+        if (valid.checkIsEmpty(binding.selectUnit)) {
+            return false
+        }
+
+        return true
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

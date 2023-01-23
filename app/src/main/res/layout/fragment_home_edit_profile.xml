@@ -167,7 +167,8 @@
                         android:ems="10"
                         android:gravity="start"
                         android:hint="What's your story ?"
-                        android:inputType="textPersonName"
+                        android:scrollbars="vertical"
+                        android:inputType="textMultiLine"
                         android:paddingVertical="@dimen/_10sdp"
                         android:text="@{viewModel.description}"
                         tools:visibility="visible" />

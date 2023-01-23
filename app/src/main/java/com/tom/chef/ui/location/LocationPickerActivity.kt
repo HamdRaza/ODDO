@@ -174,27 +174,52 @@ class LocationPickerActivity : BaseActivity(), LocationPickerInterface, ToolBarI
         if (isSignup) {
             returnResult()
         } else {
-            var locationRequest = LocationRequest(
-                access_token = sharedPreferenceManager.getAccessToken.toString(),
-                building = binding.building.text.toString(),
-                street = binding.streetAddress.text.toString(),
-                landmark = binding.landmark.text.toString(),
-                latitude = vm.userLocation!!.latitude.toString(),
-                longitude = vm.userLocation!!.longitude.toString(),
-                location = binding.location.text.toString(),
-                nick_name = binding.nickname.text.toString(),
-                apartment_no = binding.apartment.text.toString()
-            )
-            appViewModel.updateLocation(locationRequest)
-            appViewModel.updateLocationLive.observe(this) {
-                if (it.status == "1") {
-                    Toast.makeText(this, "Location updated", Toast.LENGTH_SHORT).show()
-                    returnResult()
-                } else {
-                    Toast.makeText(this, "Error while updating", Toast.LENGTH_SHORT).show()
+            if (validate()) {
+                var locationRequest = LocationRequest(
+                    access_token = sharedPreferenceManager.getAccessToken.toString(),
+                    building = binding.building.text.toString(),
+                    street = binding.streetAddress.text.toString(),
+                    landmark = binding.landmark.text.toString(),
+                    latitude = vm.userLocation!!.latitude.toString(),
+                    longitude = vm.userLocation!!.longitude.toString(),
+                    location = binding.location.text.toString(),
+                    nick_name = binding.nickname.text.toString(),
+                    apartment_no = binding.apartment.text.toString()
+                )
+                appViewModel.updateLocation(locationRequest)
+                appViewModel.updateLocationLive.observe(this) {
+                    if (it.status == "1") {
+                        Toast.makeText(this, "Location updated", Toast.LENGTH_SHORT).show()
+                        returnResult()
+                    } else {
+                        Toast.makeText(this, "Error while updating", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
+    }
+
+    private fun validate(): Boolean {
+        val valid = Validation
+        if (valid.checkIsEmpty(binding.apartment)) {
+            return false
+        }
+        if (valid.checkIsEmpty(binding.building)) {
+            return false
+        }
+        if (valid.checkIsEmpty(binding.streetAddress)) {
+            return false
+        }
+        if (valid.checkIsEmpty(binding.landmark)) {
+            return false
+        }
+        if (valid.checkIsEmpty(binding.location)) {
+            return false
+        }
+        if (valid.checkIsEmpty(binding.nickname)) {
+            return false
+        }
+        return true
     }
 
     fun returnResult() {
