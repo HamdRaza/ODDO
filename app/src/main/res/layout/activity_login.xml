@@ -111,6 +111,12 @@
                                 android:paddingVertical="@dimen/_5sdp"
                                 android:src="@drawable/icon_facebook" />
                         </com.google.android.material.card.MaterialCardView>
+
+                        <com.facebook.login.widget.LoginButton
+                            android:id="@+id/facebookButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:visibility="gone" />
                     </LinearLayout>
 
 

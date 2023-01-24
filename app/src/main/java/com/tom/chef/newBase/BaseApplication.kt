@@ -9,6 +9,8 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import dagger.hilt.android.HiltAndroidApp
+import com.facebook.FacebookSdk
+import com.facebook.appevents.AppEventsLogger
 
 
 @HiltAndroidApp
@@ -22,6 +24,8 @@ class BaseApplication : Application() ,LifecycleObserver{
         super.onCreate()
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         Logger.addLogAdapter(AndroidLogAdapter())
+        FacebookSdk.sdkInitialize(applicationContext)
+        AppEventsLogger.activateApp(this)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)

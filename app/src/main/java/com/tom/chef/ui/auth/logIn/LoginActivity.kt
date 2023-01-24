@@ -7,7 +7,10 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginResult
 import com.google.firebase.messaging.FirebaseMessaging
 import com.tom.chef.R
 import com.tom.chef.databinding.ActivityLoginBinding
@@ -25,6 +28,7 @@ import com.tom.chef.ui.comman.googleLogIn.GoogleLoginInterface
 import com.tom.chef.ui.dashboard.MainActivity
 import com.tom.chef.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 import javax.inject.Inject
 
 
@@ -35,6 +39,10 @@ class LoginActivity : BaseActivity(), LoginInterface {
     lateinit var googleLogInViewModel: GoogleLogInViewModel
 
     val appViewModel: AppViewModel by viewModels()
+
+    lateinit var callbackManager: CallbackManager
+
+    private val EMAIL = "email"
 
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
@@ -70,11 +78,38 @@ class LoginActivity : BaseActivity(), LoginInterface {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         window.setWhiteColor(this)
         window.makeTransparentStatusBarBlack()
+
+        callbackManager = CallbackManager.Factory.create();
+        binding.facebookButton.setReadPermissions(Arrays.asList(EMAIL));
+
+        // Callback registration
+        binding.facebookButton.registerCallback(
+            callbackManager,
+            object : FacebookCallback<LoginResult> {
+                override fun onSuccess(loginResult: LoginResult) {
+                    startActivity(MainActivity.getIntent(this@LoginActivity))
+                    finishAffinity()
+
+                }
+
+                override fun onCancel() {
+                    // App code
+                }
+
+                override fun onError(exception: FacebookException) {
+                    // App code
+                }
+            })
         vm = LoginViewModel(this)
         binding.viewModel = vm
         vm.mCallback = this
         vm.init()
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun init() {
@@ -218,8 +253,7 @@ class LoginActivity : BaseActivity(), LoginInterface {
     }
 
     override fun callFaceBook() {
-        startActivity(MainActivity.getIntent(this))
-        finishAffinity()
+        binding.facebookButton.performClick()
     }
 
 }

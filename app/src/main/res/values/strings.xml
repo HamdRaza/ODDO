@@ -70,4 +70,10 @@
     <string name="piece">Piece</string>
     <string name="AED">AED</string>
     <string name="space">\u0020</string>
+
+
+    <string name="facebook_app_id">1228527051407651</string>
+    <string name="fb_login_protocol_scheme">fb1228527051407651</string>
+    <string name="facebook_client_token">439631fe272f352578a426a565a2d2d1</string>
+
 </resources>
