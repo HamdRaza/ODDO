@@ -4,6 +4,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import com.tom.chef.models.OrderDetailsResponse
 import com.tom.chef.newBase.BaseActivity
+import com.tom.chef.ui.allBottomSheets.ExtraTimeBottomSheet
 import com.tom.chef.ui.allBottomSheets.rejectOffer.RejectOfferBottomSheet
 import com.tom.chef.ui.comman.orderItem.OrderItemAdopter
 import com.tom.chef.ui.comman.orderItem.OrderItemInterface
@@ -34,8 +35,11 @@ class OrderDetailsViewModel(var baseActivity: BaseActivity) : ViewModel(), Order
     }
 
     fun onRequestExtraTimeClicked() {
-        orderDetailsInterface.onRequestExtraTimeClicked()
-        updateStatus()
+        ExtraTimeBottomSheet().showExtraTime(activity = baseActivity) { flag, reason ->
+            orderDetailsInterface.onRequestExtraTimeClicked()
+            updateStatus()
+        }
+
     }
 
     fun callRiderClicked() {
