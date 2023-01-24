@@ -219,8 +219,8 @@ interface ApiService {
     @FormUrlEncoded
     suspend fun toggleStatus(
         @Field("access_token") access_token: String,
-        @Field("order_id") order_id: String,
-    ): CommonResponse2
+        @Field("id") id: String,
+    ): CommonResponse
 
     @POST("chef/earning")
     @FormUrlEncoded

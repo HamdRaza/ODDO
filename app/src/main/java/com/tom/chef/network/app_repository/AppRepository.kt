@@ -171,9 +171,9 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
         }
     }.flowOn(Dispatchers.IO)
 
-    fun toggleStatus(order_id: String): Flow<CommonResponse2> = flow {
+    fun toggleStatus(id: String): Flow<CommonResponse> = flow {
         try {
-            emit(apiServiceImple.toggleStatus(order_id))
+            emit(apiServiceImple.toggleStatus(id))
         } catch (e: Exception) {
             e.printStackTrace()
         }

@@ -42,6 +42,8 @@ class MenuItemViewModel : ViewModel {
 
     var variantItemAdopter = VariantItemAdopter(ArrayList())
 
+    var data: DishListResponse.OData? = null
+
     init {
 
     }
@@ -51,7 +53,7 @@ class MenuItemViewModel : ViewModel {
     }
 
     fun onSwitched(view: View, bool: Boolean) {
-        menuItemInterface.onToggleStatus()
+        menuItemInterface.onToggleStatus(data?.id.toString())
     }
 
     private fun showVariants() {
@@ -69,6 +71,7 @@ class MenuItemViewModel : ViewModel {
     }
 
     fun update(data: DishListResponse.OData) {
+        this.data = data
         itemName.set(data.name)
         val description = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(data.description, Html.FROM_HTML_MODE_COMPACT)
@@ -77,7 +80,7 @@ class MenuItemViewModel : ViewModel {
         }
         itemDescription.set(description.toString())
         servingForPeople.set("${data.sufficientFor} People")
-        isInStock.set(data.outOfStock == null)
+        isInStock.set(data.outOfStock == "0")
         itemOldPrice.set("AED ${data.regularPrice}")
         itemPrice.set("AED ${data.salePrice}")
         itemImage.set(data.image)

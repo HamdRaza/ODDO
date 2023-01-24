@@ -58,8 +58,17 @@ class AllMenuFragment : BaseFragment(), MenuItemInterface {
 
     }
 
-    override fun onToggleStatus() {
-
+    override fun onToggleStatus(id: String) {
+        appViewModel.toggleStatus(id)
+        appViewModel.toggleStatusLive.observe(viewLifecycleOwner) {
+            if (it.status == "1") {
+                Toast.makeText(requireActivity(), "Status updated", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
     }
 
     private fun getMenuList() {

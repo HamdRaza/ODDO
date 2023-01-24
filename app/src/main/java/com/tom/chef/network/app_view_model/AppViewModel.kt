@@ -409,14 +409,14 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
         }
     }
 
-    private var _toggleStatusLive = SingleLiveEvent<CommonResponse2>()
-    val toggleStatusLive: SingleLiveEvent<CommonResponse2>
+    private var _toggleStatusLive = SingleLiveEvent<CommonResponse>()
+    val toggleStatusLive: SingleLiveEvent<CommonResponse>
         get() = _toggleStatusLive
 
-    fun toggleStatus(order_id: String) {
+    fun toggleStatus(id: String) {
         viewModelScope.launch {
             try {
-                appRepository.toggleStatus(order_id)
+                appRepository.toggleStatus(id)
                     .collect {
                         _toggleStatusLive.value = it
                     }

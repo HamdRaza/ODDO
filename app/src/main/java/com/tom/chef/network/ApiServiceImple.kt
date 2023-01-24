@@ -175,10 +175,10 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
         )
     }
 
-    suspend fun toggleStatus(order_id: String): CommonResponse2 {
+    suspend fun toggleStatus(id: String): CommonResponse {
         return apiService.toggleStatus(
             access_token = sharedPreferenceManager.getAccessToken.toString(),
-            order_id = order_id
+            id = id
         )
     }
 
