@@ -319,6 +319,24 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
         }
     }
 
+    private var _getFaqLive = SingleLiveEvent<FaqResponse>()
+    val getFaqLive: SingleLiveEvent<FaqResponse>
+        get() = _getFaqLive
+
+    fun getFaq() {
+        viewModelScope.launch {
+            try {
+                appRepository.getFaq()
+                    .collect {
+                        _getFaqLive.value = it
+                    }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
     private var _acceptOrderLive = SingleLiveEvent<CommonResponse2>()
     val acceptOrderLive: SingleLiveEvent<CommonResponse2>
         get() = _acceptOrderLive

@@ -136,6 +136,9 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
         return s.toRequestBody("text/plain".toMediaTypeOrNull())
     }
 
+    suspend fun getFaq(): FaqResponse {
+        return apiService.getFaq()
+    }
 
     suspend fun getProfile(): ProfileResponse2 {
         return apiService.getProfile(

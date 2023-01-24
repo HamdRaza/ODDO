@@ -123,6 +123,14 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
             }
         }.flowOn(Dispatchers.IO)
 
+    fun getFaq(): Flow<FaqResponse> = flow {
+        try {
+            emit(apiServiceImple.getFaq())
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
     fun getProfile(): Flow<ProfileResponse2> = flow {
         try {
             emit(apiServiceImple.getProfile())

@@ -177,6 +177,9 @@ interface ApiService {
         @Query("package[]") packageList: ArrayList<JsonObject>? = null
     ): CommonResponse2
 
+    @POST("cms/faq")
+    suspend fun getFaq(): FaqResponse
+
     @POST("chef/profile")
     @FormUrlEncoded
     suspend fun getProfile(

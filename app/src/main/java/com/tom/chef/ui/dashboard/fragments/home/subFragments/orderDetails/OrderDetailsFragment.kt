@@ -25,7 +25,7 @@ class OrderDetailsFragment : BaseFragment(), OrderDetailsInterface {
     lateinit var orderNumber: String
     var fromOrderHistory: Boolean = false
     val appViewModel: AppViewModel by viewModels()
-
+    var isScheduled = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -47,6 +47,9 @@ class OrderDetailsFragment : BaseFragment(), OrderDetailsInterface {
         orderNumber = arguments?.getString("orderNumber", "").handleHull()
         arguments?.getBoolean("fromOrderHistory", false)?.let {
             fromOrderHistory = it
+        }
+        arguments?.getBoolean("isScheduled", false)?.let {
+            isScheduled = it
         }
         mActivity.toolbarVM.manageToolBar(
             showToolbar = true,
@@ -91,14 +94,27 @@ class OrderDetailsFragment : BaseFragment(), OrderDetailsInterface {
     }
 
     override fun onAcceptClicked() {
-        appViewModel.acceptOrder(id)
-        appViewModel.acceptOrderLive.observe(viewLifecycleOwner) {
-            if (it.status == "1") {
-                Toast.makeText(requireActivity(), "Order Accepted", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                Toast.makeText(requireActivity(), "Error", Toast.LENGTH_SHORT)
-                    .show()
+        if (isScheduled) {
+            appViewModel.acceptOrder2(id)
+            appViewModel.acceptOrder2Live.observe(viewLifecycleOwner) {
+                if (it.status == "1") {
+                    Toast.makeText(requireActivity(), "Order Accepted", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    Toast.makeText(requireActivity(), "Error", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        } else {
+            appViewModel.acceptOrder(id)
+            appViewModel.acceptOrderLive.observe(viewLifecycleOwner) {
+                if (it.status == "1") {
+                    Toast.makeText(requireActivity(), "Order Accepted", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    Toast.makeText(requireActivity(), "Error", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         }
     }

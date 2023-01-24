@@ -9,8 +9,6 @@ class MenuItemAdopter(viewModels: MutableList<ViewModel>) : DataBindingRecyclerV
 
     private val mViewModelMap = HashMap<Class<*>, Int>()
 
-
-
     init {
         mViewModelMap[MenuItemViewModel::class.java] = R.layout.recycle_menu_item
     }

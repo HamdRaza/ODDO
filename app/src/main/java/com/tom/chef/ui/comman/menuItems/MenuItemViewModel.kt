@@ -2,6 +2,7 @@ package com.tom.chef.ui.comman.menuItems
 
 import android.os.Build
 import android.text.Html
+import android.view.View
 import androidx.databinding.ObservableField
 import com.tom.chef.R
 import com.tom.chef.models.DishListResponse
@@ -47,6 +48,10 @@ class MenuItemViewModel : ViewModel {
 
     fun onClicked() {
         menuItemInterface.onMenuItemClicked()
+    }
+
+    fun onSwitched(view: View, bool: Boolean) {
+        menuItemInterface.onToggleStatus()
     }
 
     private fun showVariants() {

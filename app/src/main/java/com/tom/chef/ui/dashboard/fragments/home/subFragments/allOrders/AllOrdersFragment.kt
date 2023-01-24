@@ -74,7 +74,8 @@ class AllOrdersFragment : BaseFragment(), OrderInterface {
                     orderDetailsFragment.arguments = bundleOf(
                         Pair("tabName", status),
                         Pair("id", "${data.id}"),
-                        Pair("orderNumber", data.orderNumber)
+                        Pair("orderNumber", data.orderNumber),
+                        Pair("isScheduled", type=="scheduled")
                     )
                     mainActivity.replaceFragment(orderDetailsFragment)
                 }

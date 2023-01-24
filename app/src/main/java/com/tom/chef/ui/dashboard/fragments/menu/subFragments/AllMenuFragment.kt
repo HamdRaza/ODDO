@@ -58,6 +58,10 @@ class AllMenuFragment : BaseFragment(), MenuItemInterface {
 
     }
 
+    override fun onToggleStatus() {
+
+    }
+
     private fun getMenuList() {
         appViewModel.getDishList(if (isThisVariant) "1" else "All")
         appViewModel.getDishListLive.observe(viewLifecycleOwner) {
