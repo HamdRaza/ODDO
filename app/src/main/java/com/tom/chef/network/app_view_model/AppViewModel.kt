@@ -427,6 +427,24 @@ class AppViewModel @Inject constructor(private val appRepository: AppRepository)
         }
     }
 
+    private var _earningWithdrawLive = SingleLiveEvent<CommonResponse>()
+    val earningWithdrawLive: SingleLiveEvent<CommonResponse>
+        get() = _earningWithdrawLive
+
+    fun earningWithdraw(order_id: String) {
+        viewModelScope.launch {
+            try {
+                appRepository.earningWithdraw(order_id)
+                    .collect {
+                        _earningWithdrawLive.value = it
+                    }
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                manageApiError(e.code().toString(), e.message.toString())
+            }
+        }
+    }
+
     private var _getEarningsLive = SingleLiveEvent<FinancialResponse>()
     val getEarningsLive: SingleLiveEvent<FinancialResponse>
         get() = _getEarningsLive

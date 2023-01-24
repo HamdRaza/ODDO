@@ -1,5 +1,6 @@
 package com.tom.chef.ui.comman.orders
 
+import android.provider.SyncStateContract.Helpers.update
 import androidx.databinding.ObservableField
 import com.tom.chef.models.OrderListResponse
 import com.tom.chef.ui.comman.ViewModel
@@ -30,6 +31,12 @@ class OrderViewModel(val data: OrderListResponse.ODataItem) : ViewModel {
 
     init {
         update(data)
+    }
+
+    fun onWithdrawClicked() {
+        if (status.get() == "Request For Payment") {
+            orderInterface.earningWithdraw(data.id.toString())
+        }
     }
 
     fun onClicked() {

@@ -182,6 +182,13 @@ class ApiServiceImple @Inject constructor(val apiService: ApiService) : BaseData
         )
     }
 
+    suspend fun earningWithdraw(order_id: String): CommonResponse {
+        return apiService.earningWithdraw(
+            access_token = sharedPreferenceManager.getAccessToken.toString(),
+            order_id = order_id
+        )
+    }
+
     suspend fun getEarnings(): FinancialResponse {
         return apiService.getEarnings(
             access_token = sharedPreferenceManager.getAccessToken.toString()

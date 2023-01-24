@@ -179,6 +179,14 @@ class AppRepository @Inject constructor(private val apiServiceImple: ApiServiceI
         }
     }.flowOn(Dispatchers.IO)
 
+    fun earningWithdraw(order_id: String): Flow<CommonResponse> = flow {
+        try {
+            emit(apiServiceImple.earningWithdraw(order_id))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }.flowOn(Dispatchers.IO)
+
     fun getEarnings(): Flow<FinancialResponse> = flow {
         try {
             emit(apiServiceImple.getEarnings())

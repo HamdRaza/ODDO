@@ -72,6 +72,19 @@ class OrderHistoryFragment : BaseFragment(), OrderInterface {
 
     }
 
+    override fun earningWithdraw(id: String) {
+        appViewModel.earningWithdraw(id)
+        appViewModel.earningWithdrawLive.observe(viewLifecycleOwner) {
+            if (it.status == "1") {
+                Toast.makeText(requireActivity(), "Earnings Withdrawn", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(requireActivity(), it.message, Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+    }
+
     override fun onOrderClicked(data: OrderListResponse.ODataItem) {
         childFragmentManager.findFragmentById(mainActivity.binding.fragmentView.id)
             .let { fragment ->
