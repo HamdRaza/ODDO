@@ -4,39 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="toolbarViewModel"
-            type="com.tom.chef.ui.dashboard.toolBar.ToolBarViewModel" />
+            type="com.tom.chef.ui.comman.toolBar.ToolBarViewModel" />
         <variable
             name="profile"
-            type="com.tom.chef.ui.dashboard.fragments.account.AccountViewModel" />
+            type="com.tom.chef.ui.comman.profile.ProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        tools:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@{toolbarViewModel.backCorner?@drawable/toolbar_back_rounded:@drawable/toolbar_back_not_rounded,default=@drawable/toolbar_back_not_rounded}"
         android:elevation="@dimen/_4sdp"
-        android:visibility="@{toolbarViewModel.showToolBar?View.VISIBLE:View.GONE,default=gone}"
         android:paddingHorizontal="@dimen/_15sdp"
         android:paddingTop="@dimen/_20sdp"
-        android:background="@{toolbarViewModel.backCorner?@drawable/toolbar_back_rounded:@drawable/toolbar_back_not_rounded,default=@drawable/toolbar_back_not_rounded}"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:visibility="@{toolbarViewModel.showToolBar?View.VISIBLE:View.GONE,default=gone}"
+        tools:visibility="visible">
 
         <LinearLayout
-            android:layout_marginBottom="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:visibility="visible"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="@{toolbarViewModel.showUserProfile?View.VISIBLE:View.GONE,default=gone}"
+            app:layout_constraintBottom_toBottomOf="@id/minimizer"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible"
+            android:onClick="@{()->toolbarViewModel.moveToProfile()}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:onClick="@{()->toolbarViewModel.moveToProfile()}"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/userImage"
@@ -44,11 +48,11 @@
                     android:layout_height="@dimen/_35sdp"
                     app:civ_border_color="@color/colorPrimary"
                     app:civ_border_width="@dimen/_1sdp"
-                    app:imageUrl="@{profile.profilePath}"
+                    app:imageUrl="@{profile.profile}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/stripe_ic_unionpay" />
+                    tools:src="@mipmap/odoo_luncher" />
 
                 <ImageView
                     android:layout_width="@dimen/_10sdp"
@@ -59,7 +63,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
-                android:onClick="@{()->toolbarViewModel.showUpdateStatus()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -70,139 +73,78 @@
                     style="@style/montserrat_medium_14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{profile.userName}"
+                    android:text="@{profile.name}"
                     android:textColor="@color/black"
                     tools:text="Hamid Raza" />
-
-                <TextView
-                    style="@style/montserrat_medium_12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
-                    android:drawableTint="@color/colorPrimary"
-                    android:gravity="center"
-                    android:text="@{toolbarViewModel.userOnline?@string/available:@string/unavailable,default=@string/available}"
-                    android:textColor="@color/black45"
-                    tools:text="@string/available" />
             </LinearLayout>
         </LinearLayout>
 
-        <ImageView
-            android:layout_marginBottom="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:onClick="@{()->toolbarViewModel.moveToNotifications()}"
-            tools:visibility="visible"
-            android:visibility="@{toolbarViewModel.showNotificationIcon?View.VISIBLE:View.GONE,default=gone}"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/icon_notification"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
         <LinearLayout
-            android:layout_marginBottom="@dimen/_15sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/backLayout"
-            tools:visibility="visible"
-            android:visibility="@{toolbarViewModel.showBackButton?View.VISIBLE:View.GONE,default=gone}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:gravity="center"
+            android:onClick="@{()->toolbarViewModel.onBackClicked()}"
+            android:orientation="horizontal"
+            android:visibility="@{toolbarViewModel.showBackButton?View.VISIBLE:View.GONE,default=gone}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone">
+
             <ImageView
                 android:onClick="@{()->toolbarViewModel.onBackClicked()}"
-                android:src="@drawable/back_button_icon"
                 android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"/>
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/back_button_icon" />
+
             <TextView
-                android:ellipsize="end"
-                android:maxLength="35"
-                android:textColor="@color/black02"
                 style="@style/montserrat_medium_16"
-                tools:text="#TM-011550455587"
-                android:text="@{toolbarViewModel.backButtonText}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:onClick="@{()->toolbarViewModel.addNewMenuItem()}"
-            android:paddingHorizontal="@dimen/_5sdp"
-            app:cornerRadius="@dimen/_6sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:visibility="visible"
-            android:visibility="@{toolbarViewModel.showAddButton?View.VISIBLE:View.GONE,default=gone}"
-            style="@style/montserrat_semiBols_12"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:textAllCaps="false"
-            android:paddingVertical="@dimen/_1sdp"
-            android:text="Add Items"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-
-
-        <LinearLayout
-            android:layout_marginBottom="@dimen/_10sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:visibility="visible"
-            android:visibility="@{toolbarViewModel.showDishVariety?View.VISIBLE:View.GONE,default=gone}"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:gravity="end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:onCheckedChanged="@{(view,bool)->toolbarViewModel.onSwitched(view,bool)}"
-                app:track="@drawable/rectangle_26242__1_"
-                style="@style/montserrat_semiBols_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dish Contains Variety    "
-                android:textColor="@color/colorPrimary"
-                app:thumbTint="@color/tumb_color"
-                app:trackTint="@color/divider_line" />
+                android:ellipsize="end"
+                android:maxLength="35"
+                android:text="@{toolbarViewModel.backButtonText}"
+                android:textColor="@color/black02"
+                tools:text="#TM-011550455587" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:onClick="@{()->toolbarViewModel.reloadWebPage()}"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout">
+
+
+            <ImageView
+                android:padding="@dimen/_5sdp"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="match_parent"
+                android:src="@drawable/baseline_refresh_24"
+                app:tint="@color/colorAccent" />
         </LinearLayout>
 
 
-        <TextView
-            android:layout_marginBottom="@dimen/_15sdp"
+        <ImageView
+            app:updateExpanded="@{toolbarViewModel.minimize}"
             tools:visibility="visible"
-            android:visibility="@{toolbarViewModel.showCenterText?View.VISIBLE:View.GONE,default=gone}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{toolbarViewModel.showMinimizer?View.VISIBLE:View.GONE,default=gone}"
+            android:onClick="@{()->toolbarViewModel.onMinimizerClicked()}"
+            android:id="@+id/minimizer"
+            android:layout_marginBottom="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:ellipsize="end"
-            android:maxLength="35"
-            android:textColor="@color/black02"
-            style="@style/montserrat_medium_16"
-            tools:text="Notifications"
-            android:text="@{toolbarViewModel.centerButtonText}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:visibility="visible"
-            android:paddingBottom="@dimen/_5sdp"
-            android:visibility="@{toolbarViewModel.showClearButton?View.VISIBLE:View.GONE,default=gone}"
-            android:onClick="@{()->toolbarViewModel.deleteAllNotification()}"
-            style="@style/poppin_semiBol_12"
-            android:text="Clear All"
-            android:layout_marginHorizontal="@dimen/_5sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:textColor="@color/redD4"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:background="@drawable/backgroun_minimizer"
+            android:src="@drawable/ic_baseline_keyboard_arrow_up_24"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:tint="@color/white" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

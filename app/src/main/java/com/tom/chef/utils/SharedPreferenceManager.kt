@@ -3,8 +3,7 @@ package com.tom.chef.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
-import com.tom.chef.models.ProfileResponse2
-import com.tom.chef.models.auth.User
+import com.tom.chef.models.auth.LoginResponse
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -45,35 +44,32 @@ class SharedPreferenceManager @Inject constructor(@ApplicationContext context: C
             it.putInt(tempId.first, value)
         }
 
-
-    fun saveUser(user: ProfileResponse2.OData?, accessToken: String?) {
-        user?.let { thisUser ->
-            prefs.edit {
-                it.putString(savedUser.first, Gson().toJson(thisUser))
-                accessToken?.let {
-                    getAccessToken = accessToken
-                }
-            }
-        }
-
-    }
-
     var getAccessToken: String?
         get() = prefs.getString(access_token.first, access_token.second)
         set(value) = prefs.edit {
             it.putString(access_token.first, value)
         }
 
-    fun getSavedUser(): User? {
+    fun clear() {
+        prefs.edit().clear()
+    }
+
+    fun saveUser(user: LoginResponse.Result) {
+        user.let { thisUser ->
+            prefs.edit {
+                it.putString(savedUser.first, Gson().toJson(thisUser))
+            }
+        }
+
+    }
+
+
+    fun getSavedUser(): LoginResponse.Result? {
         prefs.getString(savedUser.first, savedUser.second)?.let {
-            Gson().fromJson(it, User::class.java)?.let {
+            Gson().fromJson(it, LoginResponse.Result::class.java)?.let {
                 return it
             }
         }
         return null
-    }
-
-    fun clear() {
-        prefs.edit().clear()
     }
 }

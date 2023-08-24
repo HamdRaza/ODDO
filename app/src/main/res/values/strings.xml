@@ -1,18 +1,5 @@
 <resources>
-    <string name="app_name">TOM Chef</string>
-
-    <!--Menu Items-->
-    <string name="menu_home">Home</string>
-    <string name="menu_order">Orders</string>
-    <string name="menu_notification">Notifications</string>
-    <string name="menu_account">My Account</string>
-    <string name="terms_conditions">I accept the Terms &amp; Conditions</string>
-    <string name="terms_conditionsClick">Terms &amp; Conditions</string>
-    <string name="about_message_01">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</string>
-    <string name="about_heading_01">Amet minim mollit non deserunt ?</string>
-
-    <string name="about_pharmacy">A new bold and dynamic line is joining the sneakers collection. Featuring an ultra-light upper, the line is inspired by our iconic Day Master sneakers and is perfect for wearing when off-duty. Coming in nylon and calfskin, it features suede details and a rubber label with micro-injection logo:</string>
-
+    <string name="app_name">ODOO</string>
 
     <!--VALIDATION ERROR-->
     <string name="err_name">Name not valid</string>
@@ -41,39 +28,6 @@
     <string name="notifications">Notifications</string>
     <string name="account">Account</string>
 
-    <string-array name="dayvisible">
-        <item>M</item>
-        <item>T</item>
-        <item>W</item>
-        <item>T</item>
-        <item>F</item>
-        <item>S</item>
-        <item>S</item>
-    </string-array>
 
-    <string name="google_maps_key">AIzaSyB8QkOt74HuPCD8N6m1OfwSzyb0NWnjorg</string>
-
-    <string name="picker_select_this">Select this location</string>
-    <string name="confirm_location">Confirm Location</string>
-    <string name="picker_or_select_nearby">Or choose a nearby place</string>
-
-    <string name="storage_permission_denied">Go to Settings and allow Healthy Wealthy to access your photos.</string>
-    <string name="no_result_found">No result found</string>
-    <string name="cart_is_empty">Cart is empty</string>
-
-    
-    
-    <string name="available">Available</string>
-    <string name="unavailable">Unavailable</string>
-    <string name="people">People</string>
-    <string name="sufficient">Sufficient</string>
-    <string name="piece">Piece</string>
-    <string name="AED">AED</string>
-    <string name="space">\u0020</string>
-
-
-    <string name="facebook_app_id">1228527051407651</string>
-    <string name="fb_login_protocol_scheme">fb1228527051407651</string>
-    <string name="facebook_client_token">439631fe272f352578a426a565a2d2d1</string>
 
 </resources>

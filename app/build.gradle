@@ -11,12 +11,12 @@ android {
     compileSdkVersion 33
 
     defaultConfig {
-        applicationId "com.tom.chef"
+        applicationId "com.android.odoo"
         minSdkVersion 23
         targetSdkVersion 33
         versionCode 1
         versionName "0.1"
-        setProperty("archivesBaseName", "TomChef-VC-$versionCode-VN-$versionName-$BUILD_DATE")
+        setProperty("archivesBaseName", "ODoo-VC-$versionCode-VN-$versionName-$BUILD_DATE")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -121,29 +121,19 @@ dependencies {
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
     implementation 'com.daimajia.androidanimations:library:2.4@aar'
     implementation 'com.google.code.gson:gson:2.9.0'
-    implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
-    implementation 'com.seatgeek:placesautocomplete:0.3-SNAPSHOT'
 
     //retrofit
     implementation 'com.google.code.gson:gson:2.9.0'
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
-    implementation 'com.google.android.gms:play-services-places:17.0.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.+'
     // Country code and Dial Code picker
-    implementation 'com.hbb20:ccp:2.5.1'
-    implementation 'com.stripe:stripe-android:20.15.4'
     implementation 'com.github.kittinunf.fuel:fuel:2.3.1'
     implementation 'com.github.kittinunf.fuel:fuel-json:2.3.1'
     implementation "com.airbnb.android:lottie:5.2.0"
     implementation 'androidx.work:work-runtime:2.7.1'
-
-    implementation 'com.guolindev.permissionx:permissionx:1.7.1'
-    implementation 'com.github.HBiSoft:PickiT:2.0.5'
-
-    implementation 'com.orhanobut:logger:2.2.0'
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:31.2.0')
@@ -154,8 +144,8 @@ dependencies {
 
     // Also add the dependency for the Google Play services library and specify its version
     implementation 'com.google.android.gms:play-services-auth:20.4.1'
+    implementation 'net.openid:appauth:0.11.1'
 
-    implementation 'com.facebook.android:facebook-android-sdk:15.2.0'
 }
 repositories {
     mavenCentral()

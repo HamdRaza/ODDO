@@ -33,12 +33,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.Tab
 import com.google.android.material.textfield.TextInputEditText
-import com.hbb20.CountryCodePicker
 import com.tom.chef.BuildConfig
 import com.tom.chef.R
-import com.tom.chef.models.auth.User
-import com.tom.chef.models.profile.Address
-import com.prolificinteractive.materialcalendarview.CalendarDay
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -159,9 +155,6 @@ fun View.getLocalText(): String {
     if (this is TextView) {
         return this.text.toString()
     }
-    if (this is CountryCodePicker) {
-        return this.selectedCountryCode
-    }
     return ""
 }
 
@@ -254,26 +247,34 @@ fun List<EditText>.validOTP(): Boolean {
 }
 
 fun Any?.checkForSuccess(): Boolean {
-    if (this is Int) {
-        return this.intToBool()
-    }
-    if (this is Double) {
-        return this.toInt().intToBool()
-    }
-    if (this is Long) {
-        return this.toInt().intToBool()
-    }
-    if (this is String) {
-        when (this) {
-            "1" -> {
-                return true
-            }
-            else -> {
-                return false
+
+    when(this){
+        is Int->{
+            return this.intToBool()
+        }
+        is Double->{
+            return this.toInt().intToBool()
+        }
+        is Long->{
+            return this.toInt().intToBool()
+        }
+        is String->{
+            when (this) {
+                "1" -> {
+                    return true
+                }
+                else -> {
+                    return false
+                }
             }
         }
+        is Boolean->{
+            return this
+        }
+        else->{
+            return false
+        }
     }
-    return false
 }
 
 fun String?.makeNull(): String? {
@@ -332,16 +333,6 @@ fun Double.addPriceTag(): String {
     return "AED ${this}"
 }
 
-fun User.maskPhone(): String {
-    return buildString {
-        if (!this@maskPhone.dialCode.contains("+")) {
-            append("+")
-        }
-        append(this@maskPhone.dialCode)
-        append(this@maskPhone.phoneNumber.addStarsPhone())
-    }
-}
-
 fun String?.addStarsPhone(): String {
     if (this.isNullOrEmpty()) {
         return ""
@@ -351,65 +342,12 @@ fun String?.addStarsPhone(): String {
     }.joinToString("")
 }
 
-fun CalendarDay.getDateTime(): Date {
-    val calender = Calendar.getInstance()
-    calender.set(Calendar.MONTH, this.month - 1)
-    calender.set(Calendar.DAY_OF_MONTH, this.day)
-    calender.set(Calendar.YEAR, this.year)
-    return calender.time
-}
+
 
 fun Date.getOnlyMonth(): String {
     return SimpleDateFormat("MMMM yyyy", Locale.ENGLISH).format(this)
 }
 
-fun Date.nextMonth(): CalendarDay {
-    val calender = Calendar.getInstance()
-    calender.timeInMillis = this.time
-    calender.set(Calendar.MONTH, calender.get(Calendar.MONTH) + 1)
-
-    return CalendarDay.from(
-        calender.get(Calendar.YEAR),
-        calender.get(Calendar.MONTH) + 1,
-        calender.get(Calendar.DAY_OF_MONTH)
-    )
-}
-
-fun Date.previousMonth(): CalendarDay {
-    val calender = Calendar.getInstance()
-    calender.timeInMillis = this.time
-    calender.set(Calendar.MONTH, calender.get(Calendar.MONTH) - 1)
-
-    return CalendarDay.from(
-        calender.get(Calendar.YEAR),
-        calender.get(Calendar.MONTH) + 1,
-        calender.get(Calendar.DAY_OF_MONTH)
-    )
-}
-
-fun Date.tomorrow(): CalendarDay {
-    val calender = Calendar.getInstance()
-    calender.timeInMillis = this.time
-    calender.set(Calendar.DAY_OF_YEAR, calender.get(Calendar.DAY_OF_YEAR) + 1)
-    return CalendarDay.from(
-        calender.get(Calendar.YEAR),
-        calender.get(Calendar.MONTH) + 1,
-        calender.get(Calendar.DAY_OF_MONTH)
-    )
-
-}
-
-fun Date.after6Month(): CalendarDay {
-    val calender = Calendar.getInstance()
-    calender.timeInMillis = this.time
-    calender.set(Calendar.MONTH, calender.get(Calendar.MONTH) + 6)
-    return CalendarDay.from(
-        calender.get(Calendar.YEAR),
-        calender.get(Calendar.MONTH) + 1,
-        calender.get(Calendar.DAY_OF_MONTH)
-    )
-
-}
 
 fun Date.getFormatedDate(): String {
     return SimpleDateFormat("yyyy-MM-dd").format(this)
@@ -678,19 +616,6 @@ fun TextView.makeLinks(vararg links: Pair<String, View.OnClickListener>) {
 }
 
 
-fun Address.userAddressComplete(showBuilding: Boolean = false): String {
-    return buildString {
-        if (showBuilding) {
-            append(buildingName)
-            append("  ")
-        }
-        append(landMark)
-        append("  ")
-        append(address)
-        append("  ")
-        append(location)
-    }
-}
 
 fun Activity.startEmailIntent(email: String, subject: String?) {
 

@@ -6,7 +6,8 @@ import android.net.ConnectivityManager
 
 object NetworkUtils {
     const val API_KEY = "dummy_key"
-    const val BASE_URL="https://jarsite.com/tom/api/v1/"
+    const val BASE_URL="https://odoodev.myezcare.com/web/"
+    const val PageURL="https://odoodev.myezcare.com/"
 
     fun isNetworkConnected(activity: Activity): Boolean {
         val cm = activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?

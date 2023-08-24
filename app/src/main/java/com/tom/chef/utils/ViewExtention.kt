@@ -47,9 +47,7 @@ fun LoadingDialog?.hideLocal(){
     }
 }
 
-fun MaterialCardView.setCustomBackground(color:Int){
-    this.setCardBackgroundColor(color)
-}
+
 fun Window?.setWhiteColor(activity:Activity){
        this?.setColors(activity.getColor(R.color.white),activity.getColor(R.color.white))
 }
@@ -77,42 +75,3 @@ fun Window?.makeTransparentStatusBarBlack(){
 
 
 
-fun AppCompatActivity.hideSystemBars() {
-    val actionBar = supportActionBar
-    if (actionBar != null) actionBar.hide()
-
-    val windowInsetsController =
-        WindowCompat.getInsetsController(window, window.decorView) ?: return
-    windowInsetsController.systemBarsBehavior =
-        WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-    windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
-}
-
-fun TextView.updateSelectedColor(boolean: Boolean){
-    val contact=this.context
-    val selectedColor=contact.getColor(R.color.redD1)
-    val notSelectedColor=contact.getColor(R.color.black40)
-    if (boolean){
-        this.setTextColor(ColorStateList.valueOf(selectedColor))
-    }else{
-        this.setTextColor(ColorStateList.valueOf(notSelectedColor))
-    }
-}
-
-fun Activity.mainNavigation(int: Int){
-    Navigation.findNavController(this, R.id.fragment_view)
-        .navigate(int)
-}
-
-fun String?.handleHull():String{
-    this?.let {
-        return this
-    }
-    return ""
-}
-
-fun TextView.makeUnderLined(){
-    this.paint?.let {
-        it.isUnderlineText=true
-    }
-}

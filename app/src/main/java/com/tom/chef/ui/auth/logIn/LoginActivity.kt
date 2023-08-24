@@ -2,47 +2,27 @@ package com.tom.chef.ui.auth.logIn
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import com.facebook.CallbackManager
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
-import com.facebook.login.LoginResult
-import com.google.firebase.messaging.FirebaseMessaging
 import com.tom.chef.R
 import com.tom.chef.databinding.ActivityLoginBinding
-import com.tom.chef.models.ProfileResponse2
-import com.tom.chef.models.auth.RequestGoogleLogIn
-import com.tom.chef.models.auth.RequestLogIn
-import com.tom.chef.network.app_view_model.AppViewModel
+import com.tom.chef.models.auth.LogInRequest
+import com.tom.chef.network.NetworkUtils
 import com.tom.chef.newBase.BaseActivity
-import com.tom.chef.ui.allBottomSheets.BottomSheets
-import com.tom.chef.ui.auth.otp.OTPActivity
-import com.tom.chef.ui.auth.phoneNumber.PhoneNumberActivity
-import com.tom.chef.ui.auth.signUp.SignUpActivity
-import com.tom.chef.ui.comman.googleLogIn.GoogleLogInViewModel
-import com.tom.chef.ui.comman.googleLogIn.GoogleLoginInterface
-import com.tom.chef.ui.dashboard.MainActivity
+import com.tom.chef.ui.webview.WebViewActivity
 import com.tom.chef.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
+import net.openid.appauth.AuthorizationServiceConfiguration
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity(), LoginInterface {
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var vm: LoginViewModel
-    lateinit var googleLogInViewModel: GoogleLogInViewModel
-
-    val appViewModel: AppViewModel by viewModels()
-
-    lateinit var callbackManager: CallbackManager
-
-    private val EMAIL = "email"
+    val vm: LoginViewModel by viewModels()
 
     @Inject
     lateinit var sharedPreferenceManager: SharedPreferenceManager
@@ -53,69 +33,19 @@ class LoginActivity : BaseActivity(), LoginInterface {
         }
     }
 
-    fun implementGoogleLogIn() {
-        googleLogInViewModel = GoogleLogInViewModel(
-            registry = activityResultRegistry,
-            context = this,
-            sharedPreferenceManager = sharedPreferenceManager
-        )
-        googleLogInViewModel.googleLoginInterface = object : GoogleLoginInterface {
-            override fun onLogInCompleted(requestGoogleLogIn: RequestGoogleLogIn) {
-                vm.moveToOTP()
-                //vm.callGoogleLogInAPI(requestGoogleLogIn = requestGoogleLogIn)
-            }
-        }
-        lifecycle.addObserver(googleLogInViewModel)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        implementGoogleLogIn()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         window.setWhiteColor(this)
         window.makeTransparentStatusBarBlack()
-
-        callbackManager = CallbackManager.Factory.create();
-        binding.facebookButton.setReadPermissions(Arrays.asList(EMAIL));
-
-        // Callback registration
-        binding.facebookButton.registerCallback(
-            callbackManager,
-            object : FacebookCallback<LoginResult> {
-                override fun onSuccess(loginResult: LoginResult) {
-                    startActivity(MainActivity.getIntent(this@LoginActivity))
-                    finishAffinity()
-
-                }
-
-                override fun onCancel() {
-                    // App code
-                }
-
-                override fun onError(exception: FacebookException) {
-                    // App code
-                }
-            })
-        vm = LoginViewModel(this)
         binding.viewModel = vm
         vm.mCallback = this
         vm.init()
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        callbackManager.onActivityResult(requestCode, resultCode, data)
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
     override fun init() {
-        val items = listOf("EN", "AR")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, items)
-        binding.layoutChangeLanguage.languageInput.setAdapter(adapter)
+
     }
 
     override fun logInClicked() {
@@ -123,137 +53,72 @@ class LoginActivity : BaseActivity(), LoginInterface {
             loginPostAPI(
                 email = binding.editTextTextEmailAddress.getLocalText(),
                 password = binding.editTextTextPassword.getLocalText(),
-                fcm_token = sharedPreferenceManager.getFcmToken
             )
         }
     }
 
-    override fun registerClicked() {
-        startActivity(SignUpActivity.getIntent(this@LoginActivity))
-    }
-
-    override fun onResetClicked() {
-        vm.showResetInputEmail()
-    }
-
-    override fun showResetInputEmail() {
-        BottomSheets().showInputEmail(this, appViewModel)
-    }
 
 
-    fun validate(): Boolean {
+    private fun validate(): Boolean {
         val valid = Validation
-        listOf(binding.editTextTextEmailAddress).forEach {
+        listOf(binding.editTextTextEmailAddress,binding.editTextTextPassword).forEach {
             if (valid.checkIsEmpty(it)) {
                 return false
             }
         }
-        listOf(binding.editTextTextEmailAddress).forEach {
-            if (!valid.checkIsAnEmail(it)) {
-                return false
-            }
-        }
-        if (!valid.isAValidPassword(binding.editTextTextPassword)) {
-            return false
-        }
         return true
     }
-
-    override fun loadFcmToken() {
-        FirebaseMessaging.getInstance().subscribeToTopic("Android").addOnSuccessListener {}
-        FirebaseMessaging.getInstance().token.addOnSuccessListener {
-            Log.i("Token", it.toString())
-            it?.let {
-                sharedPreferenceManager.getFcmToken = it
-            }
-        }
-    }
-
-    private fun loginPostAPI(email: String, password: String, fcm_token: String) {
+    private fun loginPostAPI(email: String, password: String) {
+        hideSoftKeyboard(activity = this)
+        val logInRequest=LogInRequest(params = LogInRequest.Params(login = email, password = password))
         startAnim()
-        viewModel.loginAPI(
-            RequestLogIn(
-                email = email,
-                password = password,
-                fcm_token = fcm_token
-            )
-        ) {
+        viewModel.loginAPI(logInRequest) {
             stopAnim()
-            if (!it.status.checkForSuccess()) {
-                myToast(it.message)
+            it.error?.let {
+                myToast(message = it.message)
                 return@loginAPI
-            } else {
-                myToast("Login Successful")
-                val data = ProfileResponse2.OData(
-                    id = it.oData.id,
-                    email = it.oData.email,
-                    name = it.oData.name,
-                    dialCode = it.oData.dialCode,
-                    firebaseUserKey = it.oData.firebaseUserKey,
-                    firstName = it.oData.firstName,
-                    lastName = it.oData.lastName,
-                    phoneNumber = it.oData.phoneNumber
-                )
-                sharedPreferenceManager.saveUser(data, it.accessToken)
-                vm.moveToDashboard()
-                //vm.moveToOTP()
             }
-
-            /* Move to OTP get check
-            it.oData?.let {user->
-                sharedPreferenceManager.saveUser(user = user,it.accessToken)
-                vm.moveToOTP()
-                return@let
-            }
-              */
+            sharedPreferenceManager.saveUser(it.result)
+            myToast("Login Successful")
+            vm.moveToDashboard()
         }
     }
 
-    override fun moveToOTP() {
-        startActivity(OTPActivity.getIntent(this@LoginActivity))
-    }
 
     override fun moveToDashboard() {
         sharedPreferenceManager.isLogedIn = true
-        startActivity(MainActivity.getIntent(this@LoginActivity))
-        finishAffinity()
+        startActivity(WebViewActivity.getIntent(context = this, urlToShow = NetworkUtils.PageURL))
     }
 
-    override fun callGoogleLogIn() {
-        googleLogInViewModel.callGoogleLogIn()
+    override fun onStart() {
+        super.onStart()
+        handleAuthenToken()
     }
-
-
-    override fun callGoogleLogInAPI(requestGoogleLogIn: RequestGoogleLogIn) {
-        startAnim()
-        viewModel.googleLogIn(requestGoogleLogIn)
-        viewModel.googleLogIn.observe(this) {
-            stopAnim()
-            if (it.status.intToBool()) {
-//                sharedPreferenceManager.saveUser(it.user, it.access_token)
-                /* Phone verified missing
-                it.user?.let {
-                    if (it.phone_verified.checkForSuccess()){
-                        vm.moveToDashboard()
-                        return@observe
-                    }else{
-                        vm.moveToAddPhone()
-                        return@observe
+    private fun handleAuthenToken() {
+        viewModel.tokenValidation.observe(this) {
+            it?.let {
+                when (it) {
+                    "500" -> {
+                        myToast("Internal Server Error")
+                        stopAnim()
                     }
-                }*/
-                vm.moveToDashboard()
-                return@observe
+                    else -> {
+                        myToast("Error code it")
+                    }
+                }
+                Log.i("errorCode", it)
             }
-            myToast(it.message)
         }
     }
 
-    override fun moveToAddPhone() {
-        startActivity(PhoneNumberActivity.getIntent(this))
+    override fun keyClockSetUP() {
+        val serviceConfig = AuthorizationServiceConfiguration(
+            Uri.parse("https://idp.example.com/auth"),  // authorization endpoint
+            Uri.parse("https://idp.example.com/token")
+        ) // token endpoint
     }
 
-    override fun callFaceBook() {
-        binding.facebookButton.performClick()
-    }
+    override fun keyClockLogIn() {
 
+    }
 }

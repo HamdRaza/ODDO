@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
-import com.google.gson.Gson
-import com.tom.chef.ui.dashboard.MainActivity
 import com.tom.chef.utils.SharedPreferenceManager
 import com.tom.chef.utils.app_loader.CustomLoaderDialog
 import javax.inject.Inject
@@ -17,7 +15,6 @@ open class BaseFragment : Fragment() {
     protected var TAG = "BNFT Application"
     protected lateinit var mActivity: BaseActivity
     internal lateinit var context: Context
-    protected lateinit var mainActivity: MainActivity
 
     private var mProgressDialog: ProgressDialog? = null
     @Inject
@@ -26,7 +23,6 @@ open class BaseFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivity = getActivity() as BaseActivity
-        mainActivity = getActivity() as MainActivity
 
         mActivity.window.setSoftInputMode(
             WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN

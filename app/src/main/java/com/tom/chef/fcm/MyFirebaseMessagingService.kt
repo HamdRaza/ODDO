@@ -45,10 +45,11 @@ class MyFirebaseMessagingService  : FirebaseMessagingService() {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setStyle(NotificationCompat.BigTextStyle())
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setSmallIcon(R.mipmap.ic_tom_chef)
+                .setSmallIcon(R.mipmap.odoo_luncher_foreground)
                 .setContentIntent(notificationIntent(this))
                 .setAutoCancel(true)
             val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
             notificationManager.notify(id, notificationBuilder.build())
         }
     }

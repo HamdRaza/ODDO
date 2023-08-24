@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.tom.chef.network.NetworkUtils
 import com.tom.chef.ui.auth.logIn.LoginActivity
-import com.tom.chef.ui.dashboard.MainActivity
+import com.tom.chef.ui.webview.WebViewActivity
 import com.tom.chef.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -24,11 +25,10 @@ class SplashScreen : AppCompatActivity() {
     }
 
 
-    fun callToNextActivity(){
+   private fun callToNextActivity(){
         Handler(mainLooper).postDelayed({
-//            sharedPreferenceManager.isLogedIn=false
             if (sharedPreferenceManager.isLogedIn){
-                startActivity(MainActivity.getIntent(this).putExtras(intent.extras.handleEmpty()))
+                startActivity(WebViewActivity.getIntent(context = this, urlToShow = NetworkUtils.BASE_URL))
             }else{
                 startActivity(LoginActivity.getIntent(this))
             }

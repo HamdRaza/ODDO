@@ -11,7 +11,10 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="android:layoutDirection">locale</item>
+
     </style>
+
 
 
     <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
@@ -38,7 +41,7 @@
         <!-- Set the splash screen background, animated icon, and animation duration. -->
         <item name="windowSplashScreenBackground">@color/white</item>
         <item name="postSplashScreenTheme">@style/AppTheme</item>
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_new_splash_01</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/odoo_luncher_splash_foreground</item>
     </style>
 
     <style name="RippleStyleBlack" parent="RippleStyleWhite">
